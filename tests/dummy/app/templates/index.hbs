@@ -15,7 +15,7 @@
 
 {{!--{{component-showcase title="Header" target=(component "fa-icon" "code" border=true)}}--}}
 
-{{#component-showcase title="Header" as |s|}}
+{{#component-showcase "Testing" as |s|}}
   {{s.docs "Plain buttons and their disabled."}}
   {{#s.example}}
     {{fa-icon "code"}}
@@ -23,58 +23,12 @@
   {{s.source}}
 {{/component-showcase}}
 
-{{#component-showcase title="Header" as |s|}}
-	{{s.docs "Switch Sample"}}
-	{{#s.example}}
-		<h1>Foobar!</h1>
-	{{/s.example}}
-	{{s.source}}
+{{#component-showcase "Ember Power Select" as |s|}}
+  {{s.docs "Ember Power Select"}}
+  {{#s.example}}
+    {{#power-select options=countries selected=country onchange=(action "foo") as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  {{/s.example}}
+  {{s.source}}
 {{/component-showcase}}
-
-{{!--{{#component-showcase title="Plain Buttons" as |s|}}--}}
-	{{!--{{s.docs "Plain buttons and their disabled." api="Super-Table"}}--}}
-	{{!--{{#s.example}}--}}
-		{{!--<!-- Basic Button -->--}}
-		{{!--{{wombat-btn "Foobar"}}--}}
-		{{!--<!-- Button w/ Icon -->--}}
-		{{!--{{wombat-btn "Upload" icon="upload"}}--}}
-		{{!--<!-- Button w/Icon without text -->--}}
-		{{!--{{wombat-btn icon="plus"}}--}}
-		{{!--<!-- Button w/ classes (class param) -->--}}
-		{{!--{{wombat-btn "Save" class="btn-large btn-primary" icon="save"}}--}}
-		{{!--<!-- Button w/ classes (positional params) -->--}}
-		{{!--{{wombat-btn "Save" "large" "primary" icon="save" disabled=true}}--}}
-
-	{{!--{{/s.example}}--}}
-	{{!--{{s.source}}--}}
-{{!--{{/component-showcase}}--}}
-
-{{!--{{#component-showcase title="Plain Buttons" as |s|}}--}}
-	{{!--{{s.docs "Plain buttons and their disabled."}}--}}
-	{{!--{{#s.example}}--}}
-		{{!--{{wombat-btn "Save" "large" "primary" icon="save"}}--}}
-	{{!--{{/s.example}}--}}
-	{{!--{{s.source}}--}}
-{{!--{{/component-showcase}}--}}
-
-{{!--{{#component-showcase title="Sample Test"}}--}}
-	{{!--<!-- Testing Comments -->--}}
-	{{!--{{fa-icon "camera"}} Test Sample--}}
-{{!--{{/component-showcase}}--}}
-
-{{!--{{#component-showcase title="Card"}}--}}
-	{{!--<!-- Testing another -->--}}
-	{{!--<div class="card">--}}
-		{{!--<div class="card-image">--}}
-			{{!--<img src="images/wombat-purple-keyboard.jpg">--}}
-			{{!--<h1 class="card-title">Card Title</h1>--}}
-		{{!--</div>--}}
-		{{!--<div class="card-content">--}}
-			{{!--<p>I am a very simple card. I am good at containing small bits of information.--}}
-				{{!--I am convenient because I require little markup to use effectively.</p>--}}
-		{{!--</div>--}}
-		{{!--<div class="card-action">--}}
-			{{!--<a href="#">This is an action</a>--}}
-		{{!--</div>--}}
-	{{!--</div>--}}
-{{!--{{/component-showcase}}--}}

@@ -1,0 +1,16 @@
+<hr>
+<nav id="{{elementId}}-collapse" role="tablist">
+	{{#if hasBlock}}
+      <p>Source should not use block syntax</p>
+		{{!--{{yield (hash--}}
+			{{!--source=(component 'showcase/s-snippet' sourceId=sourceId)--}}
+			{{!--snippet=(component 'showcase/s-snippet')--}}
+			{{!--tabs=(component 'showcase/s-tabs' sourceId=sourceId)--}}
+		{{!--)}}--}}
+	{{else}}
+    {{showcase/s-tabs (array
+      (hash title="Handlebars" language="Handlebars" src=hbs active=false)
+      (hash title="Markup" language="Markup" sourceId=sourceId active=false)
+    )}}
+	{{/if}}
+</nav>

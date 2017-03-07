@@ -1,0 +1,1 @@
+export { default } from 'ember-component-showcase/components/component-showcase';

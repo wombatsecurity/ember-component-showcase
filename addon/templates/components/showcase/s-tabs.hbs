@@ -1,0 +1,17 @@
+<nav class="tab-nav">
+	{{#each tabs as |tab|}}
+		<span {{action "setSelectedTab" tab}} class="tab-nav-item {{if tab.active 'active'}}">{{fa-icon 'code'}} {{tab.title}}</span>
+	{{/each}}
+</nav>
+
+{{#each tabs as |tab|}}
+  {{#if tab.active}}
+    {{#if tab.src}}
+      {{code-sample language=tab.language src=tab.src}}
+    {{/if}}
+
+    {{#if tab.sourceId}}
+      {{from-elsewhere name=tab.sourceId}}
+    {{/if}}
+  {{/if}}
+{{/each}}

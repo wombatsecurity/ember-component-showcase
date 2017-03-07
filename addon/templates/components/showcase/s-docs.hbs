@@ -1,0 +1,53 @@
+<div class="description">
+	<p>{{md-text text=src}}</p>
+	{{#if classDocs}}
+		{{md-text text=classDocs.description}}
+	{{/if}}
+</div>
+{{#if apiDocs}}
+	<div class="l-section">
+		<h4 class="text-muted sample-docs-class-title">
+			{{fa-icon 'gear'}}
+			{{classDocs.name}} API
+		</h4>
+
+		<ul class="list-unstyled">
+			{{#each apiDocs as |doc|}}
+				<li class="sample-docs-api">
+					<div class="sample-docs-api-title">
+						<code>{{doc.name}}</code>
+						<small class="sample-docs-api-type">
+							{{#if doc.types}}
+								{{#each doc.types as |type|}}
+									{{#if type.link}}
+										<a href="{{type.link}}" target="_blank">{{type.label}}</a>
+									{{else}}
+										{{type.label}}
+									{{/if}}
+								{{/each}}
+							{{else}}
+								{{doc.type}}
+							{{/if}}
+							{{#if doc.required}}
+								<label>(required)</label>
+							{{/if}}
+						</small>
+						{{#if doc.default}}
+							<small>- Default: {{doc.default}}</small>
+						{{/if}}
+					</div>
+
+					<div class="sample-docs-api-description">
+						{{md-text text=doc.description}}
+						<div>
+							<small>Defined in <a target="_blank" href="{{doc.github}}">{{doc.file}}:{{doc.line}}</a></small>
+						</div>
+						{{#each doc.examples as |example|}}
+							{{showcase/s-snippet src=example.content title=example.title language=example.language}}
+						{{/each}}
+					</div>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+{{/if}}

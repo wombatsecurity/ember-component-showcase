@@ -1,27 +1,36 @@
 # ember-component-showcase
 
-This README outlines the details of collaborating on this Ember addon.
+Need to demonstrate how to configure your ember component?  Want some easy to setup front-end documentation for its usage?  Ember component showcase will let you easily exhibit your amazing ember addons with automatically generated HBS and HTML snippets, and support for component API documentation via JSDocs.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-component-showcase`
-* `npm install`
-* `bower install`
+* `ember install ember-component-showcase`
 
-## Running
+## Demo Site
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+* Coming soon...
 
-## Running Tests
+## Simple Usage Examples
+If you just want to see your HBS source code, simply wrap a component with the component-showcase block.
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+`
+{{#component-showcase}}
+  {{my-component "hello world" api=true onchange=(action "foobar") }}
+{{/component-showcase}}
+`
 
-## Building
+Usually you will want a little more documentation along with your samples.  Configure these with `docs` `example` and `source` sub-components.
+`
+{{#component-showcase "My Component" as |s|}}
+  {{s.docs "A simple explanation of what my component does."}}
+  {{#s.example}}
+    {{my-component "hello world" api=true onchange=(action "foobar") }}
+  {{/s.example}}
+  {{s.source}}
+{{/component-showcase}}
+`
 
-* `ember build`
+## How does it work?
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+* HBS = Ember-CLI hooks + Regex + Glimmer AST traversal
+* HTML = Ember Component hooks + jQuery selectors

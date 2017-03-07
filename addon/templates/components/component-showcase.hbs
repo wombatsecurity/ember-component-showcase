@@ -1,0 +1,28 @@
+<div class="card" id="{{anchorId}}">
+  <div class="card-content">
+    <h2 class="card-title">
+      {{title}}
+      <span class="pull-right">
+        {{#link-to currentPath (query-params anchor=anchorId) class='btn btn-lg btn-square btn-link'}}
+          {{fa-icon "link"}}
+        {{/link-to}}
+      </span>
+    </h2>
+    {{#if hasBlock}}
+      {{yield (hash
+                src=src
+                hbs=hbs
+                docs=(component 'showcase/s-docs' sample=this)
+                example=(component 'showcase/s-example' sample=this)
+                source=(component 'showcase/s-source' sample=this)
+              )}}
+    {{else}}
+      <p>Showcase requires use of the block syntax to work correctly.</p>
+      {{!--{{showcase/s-docs sample=this}}--}}
+      {{!--{{#showcase/s-example sample=this}}--}}
+        {{!--{{component target}}--}}
+      {{!--{{/showcase/s-example}}--}}
+      {{!--{{showcase/s-source sample=this}}--}}
+    {{/if}}
+  </div>
+</div>

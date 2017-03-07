@@ -11,7 +11,6 @@ const showcaseRegex = /[^!-]{{#component-showcase\s(.*)}}([\s\S]*?){{\/component
 const titleRegex = /title="(.*)"/;
 // Specifically extract the example hbs markup
 const exampleRegex = /[^!-]{{#\w.example}}([\s\S]*?){{\/\w.example}}/;
-const showcaseKey = "showcaseId";
 
 function ShowcaseHBSTreeCopier(inputNodes, options) {
   options = options || {};
@@ -61,7 +60,7 @@ ShowcaseHBSTreeCopier.prototype.processString = function (string, relativePath) 
     }
 
     // append uuid to match configuration
-    let updatedMatchConfig = `${showcaseKey}="${matchUuid}" ${matchConfig}`;
+    let updatedMatchConfig = `"${matchUuid}" ${matchConfig}`;
     let updatedShowcaseMatch = matchShowcase.replace(matchConfig, updatedMatchConfig);
     let matchStartIndex = match.index + indexDelta;
     let matchEndIndex = matchStartIndex + matchShowcase.length;
@@ -85,23 +84,15 @@ ShowcaseHBSInsertion.prototype.transform = function(ast) {
 
   walker.visit(ast, (node) => {
     if (node.type === 'BlockStatement' && node.path.original === 'component-showcase') {
-
       if (node.hash && node.hash.pairs) {
-        // THIS IS HOW READ A PROPERTY ON A COMPONENT
-        for (var i = 0; i < node.hash.pairs.length; i++) {
-          var pair = node.hash.pairs[i];
-          if (pair.key === showcaseKey && pair.value.type === 'StringLiteral') {
-            let key = pair.value.value;
-            let hbs = showcaseHBS[key].example;
-
-            if (hbs) {
-              // THIS IS HOW YOU EDIT THAT PROPERTY
-              // pair.value = this.syntax.builders.string('Foobar!');
-
-              // THIS IS HOW YOU WRITE A PROPERTY TO A COMPONENT
-              let newPair = this.syntax.builders.pair('hbs', this.syntax.builders.string(hbs));
-              node.hash.pairs.push(newPair);
-            }
+        // THIS IS HOW READ A PARAMETER ON A COMPONENT
+        if (node.params && node.params[0] && node.params[0].value) {
+          let showcaseUuid = node.params[0].value;
+          let hbs = showcaseHBS[showcaseUuid].example;
+          if (hbs) {
+            // THIS IS HOW YOU WRITE A PROPERTY TO A COMPONENT
+            let newPair = this.syntax.builders.pair('hbs', this.syntax.builders.string(hbs));
+            node.hash.pairs.push(newPair);
           }
         }
       }
