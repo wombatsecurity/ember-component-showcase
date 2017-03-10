@@ -80,7 +80,7 @@ function ShowcaseHBSInsertion(options) {
 }
 
 ShowcaseHBSInsertion.prototype.transform = function(ast) {
-  var walker = new this.syntax.Walker();
+  let walker = new this.syntax.Walker();
 
   walker.visit(ast, (node) => {
     if (node.type === 'BlockStatement' && node.path.original === 'component-showcase') {
@@ -127,6 +127,22 @@ module.exports = {
     app.registry.add('htmlbars-ast-plugin', {
       name: 'ember-component-showcase',
       plugin: ShowcaseHBSInsertion
+    });
+
+
+    // // Per the ember-cli documentation
+    // // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
+    // let target = (parentAddon || app);
+    // let modulesPath = this.project.nodeModulesPath;
+    // if (target.bowerDirectory) {
+    //
+    //
+    //
+    // }
+
+    app.import('vendor/ember-remarkable/shim.js', {
+      type: 'vendor',
+      exports: { 'remarkable': ['default'] }
     });
 
     this._super.included(app, parentAddon);
