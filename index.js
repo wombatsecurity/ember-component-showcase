@@ -1,6 +1,7 @@
 /* jshint node: true */
 'use strict';
 
+const deepAssign = require('deep-assign');
 let showcaseHBS = {};
 
 const uuid = require('node-uuid');
@@ -130,6 +131,16 @@ module.exports = {
     });
 
     let bowerDirectory = this.project.bowerDirectory;
+    let addonOptions = {
+      'remarkable': {
+        excludeHighlightJs: false
+      }
+    };
+    // Override options configurations for nested addons
+    app.options = app.options || {}; // Ember app options
+    // merge options
+    deepAssign(app.options, addonOptions);
+
     app.import(bowerDirectory + '/remarkable/dist/remarkable.js');
     app.import('vendor/ember-remarkable/shim.js', {
       type: 'vendor',
