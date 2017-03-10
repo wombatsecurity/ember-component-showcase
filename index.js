@@ -124,7 +124,7 @@ module.exports = {
       app = app.app || app.parent;
     }
 
-    this.app.registry.add('htmlbars-ast-plugin', {
+    app.registry.add('htmlbars-ast-plugin', {
       name: 'ember-component-showcase',
       plugin: ShowcaseHBSInsertion
     });

@@ -13,7 +13,7 @@
   "repository": "",
   "scripts": {
     "build": "ember build",
-    "start": "ember server",
+    "start": "ember server -p 4800",
     "test": "ember try:each"
   },
   "dependencies": {
@@ -25,7 +25,8 @@
     "ember-font-awesome": "3.0.1",
     "ember-lodash": "0.0.10",
     "ember-remarkable": "3.6.0",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "remarkable": "^1.7.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
