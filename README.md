@@ -4,7 +4,12 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 
 ## Installation
 
+Someday it will just be:
 * `ember install ember-component-showcase`
+
+But for now you have to:
+* Add `"ember-component-showcase": "git+ssh://git@github.com/wombatsecurity/ember-component-showcase.git"` to your `package.json` devDependencies
+* `ember init ember-component-showcase`
 
 ## Demo Site
 
@@ -12,12 +17,6 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 
 ## Simple Usage Examples
 If you just want to see your HBS source code, simply wrap a component with the component-showcase block.
-
-```
-{{#component-showcase}}
-  {{my-component "hello world" api=true onchange=(action "foobar") }}
-{{/component-showcase}}
-```
 
 Usually you will want a little more documentation along with your samples.  Configure these with `docs` `example` and `source` sub-components.
 ```
