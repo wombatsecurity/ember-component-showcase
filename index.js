@@ -129,17 +129,8 @@ module.exports = {
       plugin: ShowcaseHBSInsertion
     });
 
-
-    // // Per the ember-cli documentation
-    // // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
-    // let target = (parentAddon || app);
-    // let modulesPath = this.project.nodeModulesPath;
-    // if (target.bowerDirectory) {
-    //
-    //
-    //
-    // }
-
+    let bowerDirectory = this.project.bowerDirectory;
+    app.import(bowerDirectory + '/remarkable/dist/remarkable.js');
     app.import('vendor/ember-remarkable/shim.js', {
       type: 'vendor',
       exports: { 'remarkable': ['default'] }
