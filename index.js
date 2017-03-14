@@ -1,17 +1,17 @@
 /* jshint node: true */
 'use strict';
 
-const deepAssign = require('deep-assign');
+const importPrismSources = require('ember-prism').importPrismSources;
 let showcaseHBS = {};
 
 const uuid = require('node-uuid');
 const Filter = require('broccoli-filter');
 // Regex digs through HBS templates to extract uncompiled source from component-showcase blocks
-const showcaseRegex = /[^!-]{{#component-showcase\s(.*)}}([\s\S]*?){{\/component-showcase}}/g;
+const showcaseRegex = /{{#component-showcase\s(.*[^-])}}([\s\S]*?){{\/component-showcase}}/g;
 // get the title property of the component-showcase block
 const titleRegex = /title="(.*)"/;
 // Specifically extract the example hbs markup
-const exampleRegex = /[^!-]{{#\w.example}}([\s\S]*?){{\/\w.example}}/;
+const exampleRegex = /[^!-]{{#\w+.example}}([\s\S]*?){{\/\w+.example}}/;
 
 function ShowcaseHBSTreeCopier(inputNodes, options) {
   options = options || {};
@@ -25,7 +25,6 @@ ShowcaseHBSTreeCopier.prototype = Object.create(Filter.prototype);
 ShowcaseHBSTreeCopier.prototype.extensions = ['hbs'];
 ShowcaseHBSTreeCopier.prototype.targetExtension = 'hbs';
 ShowcaseHBSTreeCopier.prototype.processString = function (string, relativePath) {
-
   // find hbs source to process
   let matches = [];
   let m;
@@ -89,8 +88,9 @@ ShowcaseHBSInsertion.prototype.transform = function(ast) {
         // THIS IS HOW READ A PARAMETER ON A COMPONENT
         if (node.params && node.params[0] && node.params[0].value) {
           let showcaseUuid = node.params[0].value;
-          let hbs = showcaseHBS[showcaseUuid].example;
-          if (hbs) {
+          let match = showcaseHBS[showcaseUuid];
+          if (match && match.example) {
+            let hbs = showcaseHBS[showcaseUuid].example;
             // THIS IS HOW YOU WRITE A PROPERTY TO A COMPONENT
             let newPair = this.syntax.builders.pair('hbs', this.syntax.builders.string(hbs));
             node.hash.pairs.push(newPair);
@@ -131,22 +131,16 @@ module.exports = {
     });
 
     let bowerDirectory = this.project.bowerDirectory;
-    let addonOptions = {
-      'remarkable': {
-        excludeHighlightJs: false
-      }
-    };
-    // Override options configurations for nested addons
-    app.options = app.options || {}; // Ember app options
-    // merge options
-    deepAssign(app.options, addonOptions);
-
     app.import(bowerDirectory + '/remarkable/dist/remarkable.js');
+    app.import(bowerDirectory + '/js-beautify/js/lib/beautify.js');
+    app.import(bowerDirectory + '/js-beautify/js/lib/beautify-html.js');
+
     app.import('vendor/ember-remarkable/shim.js', {
       type: 'vendor',
       exports: { 'remarkable': ['default'] }
     });
 
+    importPrismSources(app, app.options['ember-prism']);
     this._super.included(app, parentAddon);
   }
 };

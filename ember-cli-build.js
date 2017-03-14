@@ -17,8 +17,5 @@ module.exports = function(defaults) {
     }
   });
 
-  app.import(app.bowerDirectory + '/js-beautify/js/lib/beautify.js');
-  app.import(app.bowerDirectory + '/js-beautify/js/lib/beautify-html.js');
-
   return app.toTree();
 };

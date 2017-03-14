@@ -23,12 +23,18 @@
   {{s.source}}
 {{/component-showcase}}
 
-{{#component-showcase "Ember Power Select" as |s|}}
-  {{s.docs "Ember Power Select"}}
+{{#component-showcase "Testing" as |s|}}
+  {{s.docs "Plain buttons and their disabled."}}
   {{#s.example}}
-    {{#power-select options=countries selected=country onchange=(action "foo") as |country|}}
-      {{country.name}}
-    {{/power-select}}
+    {{fa-icon "code"}}
   {{/s.example}}
-  {{s.source}}
+  {{#s.source as |src|}}
+    {{src.tabs (array
+        src.hbs
+        src.html
+        (hash title="Route.js" language="JavaScript" src="var foo = 'foo'")
+    )}}
+  {{/s.source}}
 {{/component-showcase}}
+
+{{outlet}}
