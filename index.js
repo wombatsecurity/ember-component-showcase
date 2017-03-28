@@ -57,6 +57,10 @@ ShowcaseHBSTreeCopier.prototype.processString = function (string, relativePath) 
     if (hasExample) {
       let matchExample = hasExample[1];
       sample.example = matchExample;
+      sample.simple = false;
+    } else {
+      sample.example = matchContent;
+      sample.simple = true;
     }
 
     // append uuid to match configuration
@@ -92,8 +96,14 @@ ShowcaseHBSInsertion.prototype.transform = function(ast) {
           if (match && match.example) {
             let hbs = showcaseHBS[showcaseUuid].example;
             // THIS IS HOW YOU WRITE A PROPERTY TO A COMPONENT
-            let newPair = this.syntax.builders.pair('hbs', this.syntax.builders.string(hbs));
-            node.hash.pairs.push(newPair);
+            let hbsPair = this.syntax.builders.pair('hbs', this.syntax.builders.string(hbs));
+            node.hash.pairs.push(hbsPair);
+            // if there isn't any example content set simple mode flag
+            let simpleMode = showcaseHBS[showcaseUuid].simple;
+            if (simpleMode) {
+              let simpleModePair = this.syntax.builders.pair('simple', this.syntax.builders.boolean(simpleMode));
+              node.hash.pairs.push(simpleModePair);
+            }
           }
         }
       }

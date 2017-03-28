@@ -9,6 +9,8 @@ const ComponentShowcase = Ember.Component.extend({
   title: '',
   hbs: '', // where the hbs source code will end up from ast hook
   showcaseId: null, // uuid created by template preprocessor hook
+  simple: false,
+  description: '',
 
   sourceId: Ember.computed('elementId', function() {
     return this.get('elementId') + '-source';
@@ -21,7 +23,7 @@ const ComponentShowcase = Ember.Component.extend({
 
 ComponentShowcase.reopenClass({
   // showcaseId is always inserted as the first positional parameter
-  positionalParams: ['showcaseId', 'title']
+  positionalParams: ['showcaseId', 'title', 'description']
 });
 
 export default ComponentShowcase;

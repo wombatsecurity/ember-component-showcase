@@ -32,8 +32,9 @@ export default CodeBlock.extend({
 	didInsertElement() {
 		let wrapper = Ember.$(this.getElement());
 		let html = wrapper.html().trim();
+		let language = this.get('language').toLowerCase();
 
-		if (this.get('language').toLowerCase() === 'markup') {
+		if (language === 'markup' || language === 'handlebars') {
 			html = wrapper.wrap('<div/>').parent().html();
 
 			// temporarily remove escaping for tags
@@ -51,7 +52,9 @@ export default CodeBlock.extend({
 
 			// reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
 			html = html_beautify(html, {
-				unformatted: ['i']
+				unformatted: ['i'],
+        indent_handlebars: true,
+        indent_size: 2
 			});
 
 			// return tag escaping for proper rendering in HTML
@@ -62,11 +65,13 @@ export default CodeBlock.extend({
 			wrapper.html(html).unwrap();
 		}
 
-		if (this.get('language').toLowerCase() === 'javascript') {
+		if (language === 'javascript') {
       // Remove ALL newlines
       html = html.replace(/\n/g, '');
       // reindent and align js whitespace
-      html = js_beautify(html);
+      html = js_beautify(html, {
+        indent_size: 2
+      });
     }
 
 		wrapper.html(html);

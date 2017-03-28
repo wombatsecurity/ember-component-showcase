@@ -26,7 +26,7 @@ export default Ember.Component.extend({
     }
   }),
   tabs: Ember.computed('hideHBS', 'hbsTab', 'hideHTML', 'htmlTab', function() {
-    let tabs = [];
+    let  tabs = [];
     if (!this.get('hideHBS')) tabs.push(this.get('hbsTab'));
     if (!this.get('hideHTML')) tabs.push(this.get('htmlTab'));
     return tabs;
