@@ -34,7 +34,7 @@ export default CodeBlock.extend({
 		let html = wrapper.html().trim();
 		let language = this.get('language').toLowerCase();
 
-		if (language === 'markup' || language === 'handlebars') {
+		if (language === 'markup') {
 			html = wrapper.wrap('<div/>').parent().html();
 
 			// temporarily remove escaping for tags
@@ -53,8 +53,8 @@ export default CodeBlock.extend({
 			// reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
 			html = html_beautify(html, {
 				unformatted: ['i'],
-        indent_handlebars: true,
-        indent_size: 2
+        indent_size: 2,
+        wrap_line_length: 0
 			});
 
 			// return tag escaping for proper rendering in HTML
@@ -72,6 +72,24 @@ export default CodeBlock.extend({
       html = js_beautify(html, {
         indent_size: 2
       });
+    }
+
+    if (language === 'handlebars') {
+
+      // temporarily remove escaping for tags
+      html = html.replace(/&lt;/g, '<');
+      html = html.replace(/&gt;/g, '>');
+
+      // reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
+      html = html_beautify(html, {
+        unformatted: ['i'],
+        indent_handlebars: true,
+        indent_size: 2,
+        wrap_line_length: 0
+      });
+
+      html = html.replace(/</g, '&lt;');
+      html = html.replace(/>/g, '&gt;');
     }
 
 		wrapper.html(html);

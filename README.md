@@ -17,6 +17,11 @@ But for now you have to:
 
 ## Simple Usage Examples
 If you just want to see your HBS source code, simply wrap a component with the component-showcase block.
+```
+{{#component-showcase "My Component" as |s|}}
+    {{my-component "hello world" api=true onchange=(action "foobar") }}
+{{/component-showcase}}
+```
 
 Usually you will want a little more documentation along with your samples.  Configure these with `docs` `example` and `source` sub-components.
 ```

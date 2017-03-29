@@ -11,6 +11,8 @@ const ComponentShowcase = Ember.Component.extend({
   showcaseId: null, // uuid created by template preprocessor hook
   simple: false,
   description: '',
+  selfHBS: '',
+  self: false,
 
   sourceId: Ember.computed('elementId', function() {
     return this.get('elementId') + '-source';

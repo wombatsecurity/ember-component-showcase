@@ -7,10 +7,11 @@ export default Ember.Component.extend({
 	sourceId: Ember.computed.alias('sample.sourceId'),
 	src: Ember.computed.alias('sample.src'),
   hbs: Ember.computed.alias('sample.hbs'),
+  selfHBS: Ember.computed.alias('sample.selfHBS'),
   hideHTML: false,
   htmlTab: Ember.computed('sourceId', function() {
     return {
-      title: "Markup",
+      title: "markup.html",
       language: "Markup",
       sourceId: this.get('sourceId'),
       active: false
@@ -19,14 +20,25 @@ export default Ember.Component.extend({
   hideHBS: false,
   hbsTab: Ember.computed('hbs', function() {
     return {
-      title: "Handlebars",
+      title: "example.hbs",
       language: "Handlebars",
       src: this.get('hbs'),
       active: false
     }
   }),
-  tabs: Ember.computed('hideHBS', 'hbsTab', 'hideHTML', 'htmlTab', function() {
+  showSelfHBS: false,
+  selfHBSTab: Ember.computed('selfHBS', function() {
+    return {
+      title: "showcase.hbs",
+      language: "Handlebars",
+      src: this.get('selfHBS'),
+      active: false
+    }
+  }),
+
+  tabs: Ember.computed('hideHBS', 'hbsTab', 'hideHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', function() {
     let  tabs = [];
+    if (this.get('showSelfHBS')) tabs.push(this.get('selfHBSTab'));
     if (!this.get('hideHBS')) tabs.push(this.get('hbsTab'));
     if (!this.get('hideHTML')) tabs.push(this.get('htmlTab'));
     return tabs;

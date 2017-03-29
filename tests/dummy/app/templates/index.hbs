@@ -15,16 +15,14 @@
 
 {{!--{{component-showcase title="Header" target=(component "fa-icon" "code" border=true)}}--}}
 
-{{#component-showcase "Simple" "Super easy inline description makes this really easy"}}
-  {{#code-sample}}
-    <h1>Earth</h1>
-    <h1>Water</h1>
-    <h1>Fire</h1>
-  {{/code-sample}}
+{{#component-showcase "Simple Showcase" "For simple usage just put your component sample inside the `component-showcase` block." self=true}}
+  {{#power-select options=countries selected=country onchange=(action "foo") as |country|}}
+    {{country.name}}
+  {{/power-select}}
 {{/component-showcase}}
 
-{{#component-showcase "Testing" as |s|}}
-  {{s.docs "Plain buttons and their disabled."}}
+{{#component-showcase "Custom Block Showcase" self=true as |s|}}
+  {{s.docs "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`."}}
   {{#s.example}}
     {{fa-icon "code"}}
   {{/s.example}}

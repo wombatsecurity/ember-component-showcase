@@ -14,14 +14,14 @@
         {{#showcase/s-example sample=this}}
           {{yield}}
         {{/showcase/s-example}}
-        {{showcase/s-source sample=this hideHTML=true}}
+        {{showcase/s-source sample=this hideHTML=true showSelfHBS=self}}
       {{else}}
         {{yield (hash
                   src=src
                   hbs=hbs
                   docs=(component 'showcase/s-docs' sample=this)
                   example=(component 'showcase/s-example' sample=this)
-                  source=(component 'showcase/s-source' sample=this)
+                  source=(component 'showcase/s-source' sample=this showSelfHBS=self)
                 )}}
       {{/if}}
     {{else}}

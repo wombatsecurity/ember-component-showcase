@@ -44,7 +44,8 @@ ShowcaseHBSTreeCopier.prototype.processString = function (string, relativePath) 
     let matchContent = match[2];
     let matchUuid = uuid.v4();
     let sample = {
-      id: matchUuid
+      id: matchUuid,
+      self: matchShowcase
     };
 
     let hasTitle =  matchConfig.match(titleRegex);
@@ -94,8 +95,11 @@ ShowcaseHBSInsertion.prototype.transform = function(ast) {
           let showcaseUuid = node.params[0].value;
           let match = showcaseHBS[showcaseUuid];
           if (match && match.example) {
-            let hbs = showcaseHBS[showcaseUuid].example;
             // THIS IS HOW YOU WRITE A PROPERTY TO A COMPONENT
+            let selfHBS = showcaseHBS[showcaseUuid].self;
+            let selfHBSPair = this.syntax.builders.pair('selfHBS', this.syntax.builders.string(selfHBS));
+            node.hash.pairs.push(selfHBSPair);
+            let hbs = showcaseHBS[showcaseUuid].example;
             let hbsPair = this.syntax.builders.pair('hbs', this.syntax.builders.string(hbs));
             node.hash.pairs.push(hbsPair);
             // if there isn't any example content set simple mode flag
