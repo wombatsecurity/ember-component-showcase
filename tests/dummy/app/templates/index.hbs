@@ -15,24 +15,30 @@
 
 {{!--{{component-showcase title="Header" target=(component "fa-icon" "code" border=true)}}--}}
 
-{{#component-showcase "Simple Showcase" "For simple usage just put your component sample inside the `component-showcase` block." self=true}}
+{{#component-showcase "Simple Showcase" "For simple usage just put your component sample inside the `component-showcase` block."}}
   {{#power-select options=countries selected=country onchange=(action "foo") as |country|}}
     {{country.name}}
   {{/power-select}}
 {{/component-showcase}}
 
 {{#component-showcase "Custom Block Showcase" self=true as |s|}}
-  {{s.docs "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`."}}
+  {{s.docs "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`, as well as any other markup you want to include."}}
+  <p>You can have as many source blocks as you'd like.</p>
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{#fa-stack size="lg" as |s|}}
+      {{s.stack-2x "circle"}}
+      {{s.stack-1x "flag" inverse=true}}
+    {{/fa-stack}}
   {{/s.example}}
+  <p>You can even qualify source examples.</p>
   {{s.source}}
+  <p>Or after them!</p>
 {{/component-showcase}}
 
 {{#component-showcase "Testing" as |s|}}
   {{s.docs "Plain buttons and their disabled."}}
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{fa-icon "user"}}
   {{/s.example}}
   {{#s.source as |src|}}
     {{src.tabs (array

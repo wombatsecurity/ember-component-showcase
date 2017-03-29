@@ -1,0 +1,28 @@
+.code-block[class*='language-'] {
+  border-left-width: 2px;
+
+  &:before,
+  &:after {
+    box-shadow: none;
+  }
+}
+
+code {
+  color: $color-primary;
+}
+
+code[class*="language-"] {
+  padding: 1em;
+  font-size: 12px;
+}
+
+pre.code-toolbar > .toolbar {
+  span {
+    margin: 0;
+    padding: 5px 10px;
+  }
+
+  .toolbar-item {
+    padding: 5px;
+  }
+}

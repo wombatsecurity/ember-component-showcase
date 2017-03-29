@@ -1,1 +1,11 @@
 @import "ember-power-select";
+@import "ember-component-showcase";
+
+html, body {
+  background-color: $color-gray-100;
+}
+
+.container {
+  margin: auto;
+  max-width: 960px;
+}

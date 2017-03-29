@@ -3,8 +3,8 @@ import layout from '../templates/components/component-showcase';
 
 const ComponentShowcase = Ember.Component.extend({
   layout: layout,
-  pageTitleList: Ember.inject.service(),
-  currentPath: Ember.computed.readOnly('pageTitleList.currentPath'),
+  // Ember voodoo to get current route name
+  currentPath: '',
   tagName: 'section',
   title: '',
   hbs: '', // where the hbs source code will end up from ast hook
@@ -20,7 +20,12 @@ const ComponentShowcase = Ember.Component.extend({
 
   anchorId: Ember.computed('title', function() {
     return Ember.String.dasherize(this.get('title'));
-  }).readOnly()
+  }).readOnly(),
+
+  init() {
+    this.set('currentPath', Ember.getOwner(this).lookup('route:application').get('controller.currentRouteName'));
+    this._super(...arguments);
+  }
 });
 
 ComponentShowcase.reopenClass({
