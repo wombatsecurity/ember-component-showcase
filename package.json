@@ -6,7 +6,7 @@
     "ember-addon"
   ],
   "author": "Nicholas McClay <nmcclay@wombatsecurity.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "directories": {
     "test": "tests"
   },
