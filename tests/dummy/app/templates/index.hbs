@@ -1,52 +1,29 @@
-<p>Section is a test page to get this ball rolling...</p>
-
-{{!--{{#code-sample}}--}}
-  {{!--<h1>Earth</h1>--}}
-  {{!--<h1>Water</h1>--}}
-  {{!--<h1>Fire</h1>--}}
-{{!--{{/code-sample}}--}}
-
-{{!--{{#code-sample language="JavaScript"}}--}}
-  {{!--var earth = 'earth';--}}
-  {{!--let wind = ['w', 'i', 'n', 'd'];--}}
-  {{!--const fire = {'fire': true};--}}
-  {{!--console.log(earth, wind, fire);--}}
-{{!--{{/code-sample}}--}}
-
-{{!--{{component-showcase title="Header" target=(component "fa-icon" "code" border=true)}}--}}
-
 {{#component-showcase "Simple Showcase" "For simple usage just put your component sample inside the `component-showcase` block."}}
-  {{#power-select options=countries selected=country onchange=(action "foo") as |country|}}
-    {{country.name}}
-  {{/power-select}}
+  {{#fa-stack size="lg" as |s|}}
+    {{s.stack-2x "circle"}}
+    {{s.stack-1x "flag" inverse=true}}
+  {{/fa-stack}}
 {{/component-showcase}}
 
-{{#component-showcase "Custom Block Showcase" self=true as |s|}}
-  {{s.docs "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`, as well as any other markup you want to include."}}
-  <p>You can have as many source blocks as you'd like.</p>
+{{#component-showcase "Custom Block Showcase" as |s|}}
+  {{s.docs "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`."}}
+  {{s.docs "You can have as many source blocks as you'd like, they *automatically compile* from [markdown](https://daringfireball.net/projects/markdown/syntax) for you."}}
   {{#s.example}}
-    {{#fa-stack size="lg" as |s|}}
-      {{s.stack-2x "circle"}}
-      {{s.stack-1x "flag" inverse=true}}
-    {{/fa-stack}}
+    {{#power-select options=countries selected=country onchange=(action "foo") as |country|}}
+      {{country.name}}
+    {{/power-select}}
   {{/s.example}}
-  <p>You can even qualify source examples.</p>
-  {{s.source}}
+  <p>You can even qualify your examples with any other markup you want.</p>
+  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) hideHTML=false}}
   <p>Or after them!</p>
 {{/component-showcase}}
 
-{{#component-showcase "Testing" as |s|}}
-  {{s.docs "Plain buttons and their disabled."}}
+{{#component-showcase "Additional Sources" self=true as |s|}}
+  {{s.docs "You can pass additional source documents into the `source` sub-component, this is useful for explaining component configurations in Routes and Controllers."}}
   {{#s.example}}
     {{fa-icon "user"}}
   {{/s.example}}
-  {{#s.source as |src|}}
-    {{src.tabs (array
-        src.hbs
-        src.html
-        (hash title="Route.js" language="JavaScript" src="var foo = 'foo'")
-    )}}
-  {{/s.source}}
+  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) hideHTML=false}}
 {{/component-showcase}}
 
 {{outlet}}

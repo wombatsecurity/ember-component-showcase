@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import layout from '../../templates/components/showcase/s-source';
 
-export default Ember.Component.extend({
+const ShowcaseSource = Ember.Component.extend({
   layout: layout,
 	sample: null,
 	sourceId: Ember.computed.alias('sample.sourceId'),
 	src: Ember.computed.alias('sample.src'),
   hbs: Ember.computed.alias('sample.hbs'),
   selfHBS: Ember.computed.alias('sample.selfHBS'),
-  hideHTML: false,
+  hideHTML: true,
   htmlTab: Ember.computed('sourceId', function() {
     return {
       title: "markup.html",
@@ -36,11 +36,38 @@ export default Ember.Component.extend({
     }
   }),
 
-  tabs: Ember.computed('hideHBS', 'hbsTab', 'hideHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', function() {
+  extraTabs: Ember.computed('tabsInput', function() {
+    let tabsInput = this.get('tabsInput');
+    let tabs = [];
+
+    // for some reason the array helper wraps our input into another array, this correct this behavior
+    if (tabsInput && tabsInput.length > 0 && tabsInput[0].length > 0) {
+      tabsInput[0].forEach(function(tab) {
+        tabs.push(tab);
+      });
+    }
+
+    return tabs;
+  }),
+
+  tabs: Ember.computed('hideHBS', 'hbsTab', 'hideHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', 'extraTabs', function() {
     let  tabs = [];
     if (this.get('showSelfHBS')) tabs.push(this.get('selfHBSTab'));
     if (!this.get('hideHBS')) tabs.push(this.get('hbsTab'));
     if (!this.get('hideHTML')) tabs.push(this.get('htmlTab'));
+
+    let extraTabs = this.get('extraTabs');
+    if (extraTabs.length > 0) {
+      extraTabs.forEach(function(tab) {
+        tabs.push(tab);
+      });
+    }
     return tabs;
   })
 });
+
+ShowcaseSource.reopenClass({
+  positionalParams: 'tabsInput'
+});
+
+export default ShowcaseSource;
