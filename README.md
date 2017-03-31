@@ -4,12 +4,7 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 
 ## Installation
 
-Someday it will just be:
 * `ember install ember-component-showcase`
-
-But for now you have to:
-* Add `"ember-component-showcase": "git+ssh://git@github.com/wombatsecurity/ember-component-showcase.git"` to your `package.json` devDependencies
-* `ember generate ember-component-showcase`
 
 ## Demo Site
 
