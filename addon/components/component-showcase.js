@@ -12,7 +12,7 @@ const ComponentShowcase = Ember.Component.extend({
   simple: false,
   description: '',
   selfHBS: '',
-  self: false,
+  selfReflection: false,
 
   sourceId: Ember.computed('elementId', function() {
     return this.get('elementId') + '-source';
@@ -23,7 +23,11 @@ const ComponentShowcase = Ember.Component.extend({
   }).readOnly(),
 
   init() {
-    this.set('currentPath', Ember.getOwner(this).lookup('route:application').get('controller.currentRouteName'));
+    let currentApplication = Ember.getOwner(this).lookup('route:application');
+    if (!Ember.isEmpty(currentApplication)) {
+      this.set('currentPath', currentApplication.get('controller.currentRouteName'));
+    }
+
     this._super(...arguments);
   }
 });

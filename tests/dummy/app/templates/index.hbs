@@ -14,16 +14,16 @@
     {{/power-select}}
   {{/s.example}}
   <p>You can even qualify your examples with any other markup you want.</p>
-  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) hideHTML=false}}
+  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) showHTML=true}}
   <p>Or after them!</p>
 {{/component-showcase}}
 
-{{#component-showcase "Additional Sources" self=true as |s|}}
+{{#component-showcase "Additional Sources" selfReflection=true as |s|}}
   {{s.docs "You can pass additional source documents into the `source` sub-component, this is useful for explaining component configurations in Routes and Controllers."}}
   {{#s.example}}
     {{fa-icon "user"}}
   {{/s.example}}
-  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) hideHTML=false}}
+  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) showHTML=true}}
 {{/component-showcase}}
 
 {{outlet}}

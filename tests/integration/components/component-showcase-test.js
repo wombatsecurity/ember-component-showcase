@@ -19,7 +19,8 @@ test('it renders', function(assert) {
 
   assert.equal(this.$('.card-title').text().trim(), '', 'renders no title when empty');
   assert.equal(this.$('.description').text().trim(), '', 'renders no description when empty');
-  assert.equal(this.$('.tab-nav').children().length, 2, 'shows 2 tabs');
+  assert.equal(this.$('.tab-nav').children().length, 1, 'shows 1 tab');
+  assert.equal(this.$('.tab-nav').children().text().trim(), 'example.hbs', 'only tab visible is Handlebars');
 
   this.render(hbs`
 {{#component-showcase "123" "Title" as |s|}}
@@ -39,11 +40,11 @@ test('it renders', function(assert) {
   {{#s.example}}
     {{fa-icon "code"}}
   {{/s.example}}
-  {{s.source hideHTML=true}}
+  {{s.source showHTML=true}}
 {{/component-showcase}}`);
 
-  assert.equal(this.$('.tab-nav').children().length, 1, 'hideHTML hides one tab');
-  assert.equal(this.$('.tab-nav').children().text().trim(), 'Handlebars', 'only tab visible is Handlebars');
+  assert.equal(this.$('.tab-nav').children().length, 2, 'showHTML shows two tabs');
+  assert.equal(this.$('.tab-nav').children().text().trim(), 'example.hbs markup.html', 'shows both Handlebars and HTML');
 
   this.render(hbs`
 {{#component-showcase "123" as |s|}}
@@ -51,11 +52,11 @@ test('it renders', function(assert) {
   {{#s.example}}
     {{fa-icon "code"}}
   {{/s.example}}
-  {{s.source hideHBS=true}}
+  {{s.source hideHBS=true showHTML=true}}
 {{/component-showcase}}`);
 
-  assert.equal(this.$('.tab-nav').children().length, 1, 'hideHBS hides one tab');
-  assert.equal(this.$('.tab-nav').children().text().trim(), 'Markup', 'only tab visible is Markup');
+  assert.equal(this.$('.tab-nav').children().length, 1, 'hideHBS hides hbs, and showHTML leaves 1 tab');
+  assert.equal(this.$('.tab-nav').children().text().trim(), 'markup.html', 'only tab visible is Markup');
 
   this.render(hbs`
 {{#component-showcase "123" as |s|}}
@@ -72,29 +73,21 @@ test('it renders', function(assert) {
   {{#s.example}}
     {{fa-icon "code"}}
   {{/s.example}}
-  {{#s.source as |src|}}
-    {{src.tabs (array
-        src.hbs
-        src.html
-        (hash title="Route.js" language="JavaScript" src="var foo = 'foo';")
-    )}}
-  {{/s.source}}
+  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo';")) showHTML=true }}
 {{/component-showcase}}`);
 
   assert.equal(this.$('.tab-nav').children().length, 3, 'using showcase/s-source you can add custom tabs');
-  assert.equal(this.$('.tab-nav').children().text().trim(), 'Handlebars Markup Route.js', 'will show custom tab names and orders correctly');
+  assert.equal(this.$('.tab-nav').children().text().trim(), 'example.hbs markup.html route.js', 'will show custom tab names and orders correctly');
 
   this.render(hbs`
 {{#component-showcase as |s|}}
   {{#s.example}}
     {{fa-icon "code"}}
   {{/s.example}}
-  {{#s.source as |src|}}
-    {{src.tabs (array
+  {{s.source (array
         (hash title="Route.js" language="JavaScript" src="var foo = 'foo';")
         (hash title="Controller.js" language="JavaScript" src="var bar = 'bar';")
-    )}}
-  {{/s.source}}
+  ) hideHBS=true }}
 {{/component-showcase}}`);
 
   assert.equal(this.$('.tab-nav').children().length, 2, 'using showcase/s-source you can remove default tabs');

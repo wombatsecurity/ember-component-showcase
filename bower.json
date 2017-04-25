@@ -3,6 +3,6 @@
   "dependencies": {
     "prism": "^1.6.0",
     "remarkable": "^1.7.1",
-    "js-beautify": "^1.6.8"
+    "js-beautify": "^1.6.12"
   }
 }

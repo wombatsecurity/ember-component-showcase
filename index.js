@@ -138,6 +138,8 @@ module.exports = {
       app = app.app || app.parent;
     }
 
+    console.log("RUNNING COMPONENT-SHOWCASE");
+
     app.registry.add('htmlbars-ast-plugin', {
       name: 'ember-component-showcase',
       plugin: ShowcaseHBSInsertion

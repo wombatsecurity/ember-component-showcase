@@ -9,6 +9,7 @@ const ShowcaseSource = Ember.Component.extend({
   hbs: Ember.computed.alias('sample.hbs'),
   selfHBS: Ember.computed.alias('sample.selfHBS'),
   hideHTML: true,
+  showHTML: Ember.computed.not('hideHTML'),
   htmlTab: Ember.computed('sourceId', function() {
     return {
       title: "markup.html",
@@ -18,6 +19,7 @@ const ShowcaseSource = Ember.Component.extend({
     }
   }),
   hideHBS: false,
+  showHBS: Ember.computed.not('hideHBS'),
   hbsTab: Ember.computed('hbs', function() {
     return {
       title: "example.hbs",
@@ -26,7 +28,8 @@ const ShowcaseSource = Ember.Component.extend({
       active: false
     }
   }),
-  showSelfHBS: false,
+  hideSelfHBS: true,
+  showSelfHBS: Ember.computed.not('hideSelfHBS'),
   selfHBSTab: Ember.computed('selfHBS', function() {
     return {
       title: "showcase.hbs",
@@ -50,11 +53,11 @@ const ShowcaseSource = Ember.Component.extend({
     return tabs;
   }),
 
-  tabs: Ember.computed('hideHBS', 'hbsTab', 'hideHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', 'extraTabs', function() {
+  tabs: Ember.computed('showHBS', 'hbsTab', 'showHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', 'extraTabs', function() {
     let  tabs = [];
     if (this.get('showSelfHBS')) tabs.push(this.get('selfHBSTab'));
-    if (!this.get('hideHBS')) tabs.push(this.get('hbsTab'));
-    if (!this.get('hideHTML')) tabs.push(this.get('htmlTab'));
+    if (this.get('showHBS')) tabs.push(this.get('hbsTab'));
+    if (this.get('showHTML')) tabs.push(this.get('htmlTab'));
 
     let extraTabs = this.get('extraTabs');
     if (extraTabs.length > 0) {

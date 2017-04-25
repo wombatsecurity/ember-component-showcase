@@ -9,6 +9,16 @@ export default CodeBlock.extend({
 	attributeBindings: ['language:data-language'],
 	src: '',
 
+  getMatches(string, regex, index) {
+    index || (index = 0); // default to the first capturing group
+    var matches = [];
+    var match;
+    while (match = regex.exec(string)) {
+      matches.push(match[index]);
+    }
+    return matches;
+  },
+
 	// clean up Ember droppings
 	cleanEmberHTML(html) {
 		let $element = Ember.$(html);
@@ -54,7 +64,7 @@ export default CodeBlock.extend({
 			html = html_beautify(html, {
 				unformatted: ['i'],
         indent_size: 2,
-        wrap_line_length: 0
+        wrap_line_length: 100
 			});
 
 			// return tag escaping for proper rendering in HTML
@@ -70,7 +80,8 @@ export default CodeBlock.extend({
       html = html.replace(/\n/g, '');
       // reindent and align js whitespace
       html = js_beautify(html, {
-        indent_size: 2
+        indent_size: 2,
+        wrap_line_length: 100
       });
     }
 
@@ -85,8 +96,11 @@ export default CodeBlock.extend({
         unformatted: ['i'],
         indent_handlebars: true,
         indent_size: 2,
-        wrap_line_length: 0
+        wrap_line_length: 100
       });
+
+      // currently there is no good way to format inline handlebars content: https://github.com/beautify-web/js-beautify/issues/1173
+      // let handlebarsMatches = this.getMatches(html, new RegExp('{{([^#\/{]+)}}', 'g'));
 
       html = html.replace(/</g, '&lt;');
       html = html.replace(/>/g, '&gt;');
