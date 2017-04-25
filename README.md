@@ -6,6 +6,8 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 
 * `ember install ember-component-showcase`
 
+You must also have both `ember-cli-htmlbars` & `ember-cli-htmlbars-inline-precompile` in your dependencies section.
+
 ## Demo Site
 
 * Coming soon...

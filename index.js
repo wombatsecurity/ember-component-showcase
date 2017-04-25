@@ -72,7 +72,6 @@ ShowcaseHBSTreeCopier.prototype.processString = function (string, relativePath) 
     string = string.substring(0, matchStartIndex) + updatedShowcaseMatch + string.substring(matchEndIndex);
     indexDelta += updatedShowcaseMatch.length - matchShowcase.length;
     sample.container = updatedShowcaseMatch;
-
     showcaseHBS[matchUuid] = sample;
   });
 
