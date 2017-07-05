@@ -1,5 +1,8 @@
 /* jshint node: true */
 'use strict';
+const DocGenerator = require('./lib/documentation');
+const writeFile = require('broccoli-file-creator');
+const mergeTrees = require('broccoli-merge-trees');
 
 const importPrismSources = require('ember-prism').importPrismSources;
 let showcaseHBS = {};
@@ -118,6 +121,34 @@ ShowcaseHBSInsertion.prototype.transform = function(ast) {
 
 module.exports = {
   name: 'ember-component-showcase',
+  yuidocs: null,
+
+  // TODO: add support for genuine yuidocs
+  // postprocessTree: function(type, workingTree) {
+  //   if(type === 'all') {
+  //     var env = this.app.env;
+  //     let options = this.app.options['yuidocjs'] || {};
+  //     let docs = this.yuidocs;
+	//
+  //     if (options.enabled) {
+  //       var yuidocTree = new BroccoliYuiDocs(docs, options);
+  //       return mergeTrees([workingTree, yuidocTree], { overwrite: true });
+  //     }
+  //   }
+  //   return workingTree;
+  // },
+
+  treeForVendor: function(tree) {
+    let app = this.app;
+    let options = this.app.options['yuidocjs'] || {};
+
+    this.yuidocs = DocGenerator(options);
+
+
+    let file = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
+    var mergedTree = mergeTrees([tree, file], { overwrite: true });
+    return mergedTree;
+  },
 
   setupPreprocessorRegistry: function(type, registry) {
     registry.add('template', {
@@ -131,6 +162,8 @@ module.exports = {
   },
 
   included: function(app, parentAddon) {
+    this.ui.writeLine('Generating Component Showcase Documentation...');
+
     // Quick fix for add-on nesting
     // https://github.com/aexmachina/ember-cli-sass/blob/v5.3.0/index.js#L73-L75
     // see: https://github.com/ember-cli/ember-cli/issues/3718
@@ -138,7 +171,21 @@ module.exports = {
       app = app.app || app.parent;
     }
 
-    console.log("RUNNING COMPONENT-SHOWCASE");
+    // Per the ember-cli documentation
+    // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
+    var target = (parentAddon || app);
+
+    target.options = target.options || {};
+    target.options['yuidocjs'] = target.options['yuidocjs'] || {
+      "enabled": true,
+      "writeJSON": false,
+      "paths": ["addon", "app"],
+      "exclude": "vendor",
+      "linkNatives": true,
+      "quiet": true,
+      "parseOnly": true,
+      "lint": false
+    };
 
     app.registry.add('htmlbars-ast-plugin', {
       name: 'ember-component-showcase',
@@ -154,6 +201,7 @@ module.exports = {
       type: 'vendor',
       exports: { 'remarkable': ['default'] }
     });
+    app.import('vendor/documentation.js');
 
     importPrismSources(app, app.options['ember-prism']);
     this._super.included(app, parentAddon);

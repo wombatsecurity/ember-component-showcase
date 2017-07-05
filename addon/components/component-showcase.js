@@ -1,11 +1,22 @@
 import Ember from 'ember';
 import layout from '../templates/components/component-showcase';
 
+/**
+ * The Component-Showcase documentation component.
+ *
+ * @module Component-Showcase
+ * @class ComponentShowcase
+ */
 const ComponentShowcase = Ember.Component.extend({
   layout: layout,
-  // Ember voodoo to get current route name
   currentPath: '',
   tagName: 'section',
+  /**
+   * The title for the current showcase sample.
+   *
+   * @property foobar
+   * @type {User}
+   */
   title: '',
   hbs: '', // where the hbs source code will end up from ast hook
   showcaseId: null, // uuid created by template preprocessor hook
@@ -25,6 +36,7 @@ const ComponentShowcase = Ember.Component.extend({
   init() {
     let currentApplication = Ember.getOwner(this).lookup('route:application');
     if (!Ember.isEmpty(currentApplication)) {
+      // Ember voodoo to get current route name
       this.set('currentPath', currentApplication.get('controller.currentRouteName'));
     }
 

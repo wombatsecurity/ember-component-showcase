@@ -1,5 +1,5 @@
 import Ember from 'ember';
-// import Docs from '../../../docs/documentation';
+import Docs from 'documentation';
 import layout from '../../templates/components/showcase/s-docs';
 
 const SampleDocComponent = Ember.Component.extend({

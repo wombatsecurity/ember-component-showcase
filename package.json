@@ -23,12 +23,13 @@
     "ember-cli-htmlbars-inline-precompile": "^0.3.3",
     "ember-cli-sass": "6.1.1",
     "ember-elsewhere": "0.4.1",
-    "ember-prism": "0.0.8",
     "ember-font-awesome": "3.0.1",
     "ember-lodash": "0.0.10",
+    "ember-prism": "0.0.8",
     "ember-remarkable": "3.6.0",
     "node-uuid": "^1.4.7",
-    "remarkable": "^1.7.1"
+    "remarkable": "^1.7.1",
+    "broccoli-file-creator": "^1.1.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
