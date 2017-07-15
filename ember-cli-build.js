@@ -1,6 +1,7 @@
 /*jshint node:true*/
 /* global require, module */
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+var getVersion = require('git-repo-version');
 
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
@@ -20,7 +21,7 @@ module.exports = function(defaults) {
       "writeJSON": false,
       "paths": ["addon"],
       "githubRepo": "https://github.com/wombatsecurity/ember-component-showcase",
-      "githubTag": "v0.1.2",
+      "githubTag": "v" + getVersion(),
       "linkNatives": true,
       "quiet": true,
       "parseOnly": false,
