@@ -30,8 +30,7 @@
     "ember-remarkable": "3.6.1",
     "node-uuid": "^1.4.7",
     "prismjs": "^1.6.0",
-    "remarkable": "^1.7.1",
-    "yuidocjs": "^0.10.2"
+    "remarkable": "^1.7.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -55,7 +54,8 @@
     "ember-resolver": "^2.0.3",
     "ember-source": "^2.11.2",
     "git-repo-version": "^0.4.1",
-    "loader.js": "^4.0.10"
+    "loader.js": "^4.0.10",
+    "yuidocjs": "^0.10.2"
   },
   "engines": {
     "node": ">= 0.12.0"
