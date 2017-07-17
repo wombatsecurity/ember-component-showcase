@@ -10,6 +10,19 @@ module.exports = function(environment, appConfig) {
       'theme': 'coy',
       'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
       'plugins': ['toolbar', 'show-language']
+    },
+    'yuidocjs': {
+      "enabled": true,
+      "writeJSON": false,
+      "paths": ["addon", "app"],
+      "exclude": "vendor",
+      "linkNatives": true,
+      "quiet": true,
+      "parseOnly": true,
+      "lint": false
+    },
+    'ember-font-awesome': {
+      includeFontFiles: false
     }
   };
 };
