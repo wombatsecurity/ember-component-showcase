@@ -1,4 +1,4 @@
-{{#component-showcase "Simple Showcase" "For simple usage just put your component sample inside the `component-showcase` block."}}
+{{#component-showcase "Simple Showcase" "For simple usage just put your component sample inside the `component-showcase` block." selfReflection=true}}
   {{#fa-stack size="lg" as |s|}}
     {{s.stack-2x "circle"}}
     {{s.stack-1x "flag" inverse=true}}
@@ -11,7 +11,7 @@
   {{s.docs api="ComponentShowcase"}}
 {{/component-showcase}}
 
-{{#component-showcase title="Custom Block Showcase" as |s|}}
+{{#component-showcase title="Custom Block Showcase" selfReflection=true as |s|}}
   {{s.docs "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`."}}
   {{s.docs "You can have as many source blocks as you'd like, they *automatically compile* from [markdown](https://daringfireball.net/projects/markdown/syntax) for you."}}
   {{#s.example}}
@@ -20,7 +20,29 @@
     {{/power-select}}
   {{/s.example}}
   <p>You can even qualify your examples with any other markup you want.</p>
-  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) showHTML=true}}
+  {{s.source (array (hash title="route.js" language="JavaScript" src="
+import Ember from 'ember';
+
+const countries = [
+  { name: 'United States',  flagUrl: '/flags/us.svg' },
+  { name: 'Spain',          flagUrl: '/flags/es.svg' },
+  { name: 'Portugal',       flagUrl: '/flags/pt.svg' },
+  { name: 'Russia',         flagUrl: '/flags/ru.svg' },
+  { name: 'Latvia',         flagUrl: '/flags/lv.svg' },
+  { name: 'Brazil',         flagUrl: '/flags/br.svg' },
+  { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
+];
+
+export default Ember.Controller.extend({
+  countries: countries,
+  country: null,
+  actions: {
+    foo(country) {
+      this.set('country', country);
+    }
+  }
+});
+  ")) showHTML=true}}
   <p>Or after them!</p>
 {{/component-showcase}}
 
@@ -29,7 +51,7 @@
   {{#s.example}}
     {{fa-icon "user"}}
   {{/s.example}}
-  {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo'")) showHTML=true}}
+  {{s.source (array (hash title="route.js" language="JavaScript" src="import Ember from 'ember';")) showHTML=true}}
 {{/component-showcase}}
 
 {{outlet}}

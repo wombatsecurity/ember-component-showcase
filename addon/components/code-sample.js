@@ -10,7 +10,7 @@ export default CodeBlock.extend({
 	src: '',
 
   getMatches(string, regex, index) {
-    index || (index = 0); // default to the first capturing group
+    if (!index) index = 0; // default to the first capturing group
     var matches = [];
     var match;
     while (match = regex.exec(string)) {

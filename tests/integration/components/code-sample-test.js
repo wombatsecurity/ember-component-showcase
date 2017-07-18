@@ -1,3 +1,4 @@
+/* global html_beautify, js_beautify */
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -10,7 +11,7 @@ test('it renders Markup', function(assert) {
   assert.equal(this.$('.toolbar .toolbar-item').text(), 'Markup', 'displays default language label');
 	assert.equal(this.$('code').text().trim(), '', 'renders empty component correctly');
 
-	var snippet = "<h1>Earth</h1><h2>Wind</h2><h3>Fire</h3>";
+	let snippet = "<h1>Earth</h1><h2>Wind</h2><h3>Fire</h3>";
 	this.set('snippet', snippet);
   this.render(hbs`{{code-sample src=snippet}}`);
   assert.equal(this.$('code').text().trim(), html_beautify(snippet), 'renders manual source content correctly');
@@ -30,7 +31,7 @@ test('it renders Markup', function(assert) {
 
 test('it renders JavaScript', function(assert) {
 
-  var snippet = `
+  let snippet = `
   var earth = 'earth';
   let wind = ['w', 'i', 'n', 'd'];
   const fire = {'fire': true};

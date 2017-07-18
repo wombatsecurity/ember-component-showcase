@@ -12,10 +12,10 @@ export default Ember.Mixin.create({
     Ember.run.schedule('afterRender', this, function() {
       let anchor = this.get('anchor');
       if (anchor) {
-        let el = $(`#${anchor}`);
+        let el = Ember.$(`#${anchor}`);
         if (el && el.offset()) {
           let fromTop = 90;
-          $('html, body').animate({ scrollTop: el.offset().top - fromTop});
+          Ember.$('html, body').animate({ scrollTop: el.offset().top - fromTop});
         }
       }
     });
