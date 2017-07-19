@@ -29,7 +29,7 @@
     "ember-font-awesome": "3.0.5",
     "ember-lodash": "4.17.5",
     "ember-power-select": "^1.9.2",
-    "ember-prism": "github:nmcclay/ember-prism",
+    "ember-prism": "^0.1.0",
     "ember-remarkable": "3.6.1",
     "eslint": "^4.2.0",
     "node-uuid": "^1.4.7",
