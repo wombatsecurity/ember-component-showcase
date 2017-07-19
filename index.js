@@ -29,16 +29,25 @@ module.exports = {
 
   treeForVendor: function(tree) {
     let app = this.app;
-    let options = this.app.options['yuidocjs'] || {};
+    let options = this.app.options['ember-component-showcase'] || {};
 
-    this.yuidocs = DocGenerator(options);
+    if (options.enabled) {
+      let yuiOptions = options['yuidocjs'] || {};
 
-    let file = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
-    var mergedTree = mergeTrees([tree, file], { overwrite: true });
-    return mergedTree;
+      this.yuidocs = DocGenerator(yuiOptions);
+
+      let file = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
+      var mergedTree = mergeTrees([tree, file], { overwrite: true });
+      return mergedTree;
+    } else {
+      return tree;
+    }
   },
 
-  setupPreprocessorRegistry: ShowcaseBroccoli.import,
+  setupPreprocessorRegistry: function(type, registry) {
+    ShowcaseBroccoli.import.apply(this, [type, registry]);
+    this._super.setupPreprocessorRegistry.apply(this, arguments);
+  },
 
   included: function(app, parentAddon) {
     this.ui.writeLine('Generating Component Showcase Documentation...');
@@ -63,33 +72,37 @@ module.exports = {
     var target = (parentAddon || app);
 
     this.options = target.options || {};
-    this.options['yuidocjs'] = this.options['yuidocjs'] || {
-      "enabled": true,
-      "writeJSON": false,
-      "paths": ["addon", "app"],
-      "exclude": "vendor",
-      "linkNatives": true,
-      "quiet": true,
-      "parseOnly": true,
-      "lint": false
-    };
 
     // font-awesome shim
     this.otherAssetPaths = [];
     this.options['ember-font-awesome'] = this.options['ember-font-awesome'] || {};
     this.options['ember-font-awesome'].includeFontFiles = false;
 
-    ShowcaseBroccoli.export(app);
+    this.options['ember-component-showcase'] = this.options['ember-component-showcase'] || {};
+    if (this.options['ember-component-showcase'].enabled) {
+      this.options['ember-component-showcase']['yuidocjs'] = this.options['ember-component-showcase']['yuidocjs'] || {
+          "enabled": true,
+          "writeJSON": false,
+          "paths": ["addon", "app"],
+          "exclude": "vendor",
+          "linkNatives": true,
+          "quiet": true,
+          "parseOnly": true,
+          "lint": false
+        };
 
-    let bowerDirectory = this.project.bowerDirectory;
-    app.import(bowerDirectory + '/remarkable/dist/remarkable.js');
-    app.import(bowerDirectory + '/js-beautify/js/lib/beautify.js');
-    app.import(bowerDirectory + '/js-beautify/js/lib/beautify-html.js');
-    app.import('vendor/ember-remarkable/shim.js', {
-      type: 'vendor',
-      exports: { 'remarkable': ['default'] }
-    });
-    app.import('vendor/documentation.js');
+      ShowcaseBroccoli.export(app, this.options['ember-component-showcase']);
+
+      let bowerDirectory = this.project.bowerDirectory;
+      app.import(bowerDirectory + '/remarkable/dist/remarkable.js');
+      app.import(bowerDirectory + '/js-beautify/js/lib/beautify.js');
+      app.import(bowerDirectory + '/js-beautify/js/lib/beautify-html.js');
+      app.import('vendor/ember-remarkable/shim.js', {
+        type: 'vendor',
+        exports: { 'remarkable': ['default'] }
+      });
+      app.import('vendor/documentation.js');
+    }
 
     this._super.included.apply(this, arguments);
   }

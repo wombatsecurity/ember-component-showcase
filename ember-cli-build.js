@@ -14,16 +14,19 @@ module.exports = function(defaults) {
       'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
       'plugins': ['toolbar', 'show-language']
     },
-    'yuidocjs': {
-      "enabled": true,
-      "writeJSON": false,
-      "paths": ["addon"],
-      "githubRepo": "https://github.com/wombatsecurity/ember-component-showcase",
-      "githubTag": "v" + getVersion(),
-      "linkNatives": true,
-      "quiet": true,
-      "parseOnly": false,
-      "lint": false
+    'ember-component-showcase': {
+      'enabled': true,
+      'yuidocjs': {
+        "enabled": true,
+        "writeJSON": false,
+        "paths": ["addon"],
+        "githubRepo": "https://github.com/wombatsecurity/ember-component-showcase",
+        "githubTag": "v" + getVersion(),
+        "linkNatives": true,
+        "quiet": true,
+        "parseOnly": false,
+        "lint": false
+      },
     }
   });
 
