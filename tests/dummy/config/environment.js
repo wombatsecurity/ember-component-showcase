@@ -1,5 +1,6 @@
 /* eslint-env node */
 'use strict';
+var getVersion = require('git-repo-version');
 
 module.exports = function(environment) {
   let ENV = {
@@ -21,6 +22,21 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    'ember-component-showcase': {
+      'enabled': true,
+      'yuidocjs': {
+        "enabled": true,
+        "writeJSON": false,
+        "paths": ["addon"],
+        "githubRepo": "https://github.com/wombatsecurity/ember-component-showcase",
+        "githubTag": "v" + getVersion(0),
+        "linkNatives": true,
+        "quiet": true,
+        "parseOnly": false,
+        "lint": false
+      }
     }
   };
 

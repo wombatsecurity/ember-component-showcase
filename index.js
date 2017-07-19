@@ -27,12 +27,25 @@ module.exports = {
   //   return workingTree;
   // },
 
+  getConfig: function() {
+    return this.project.config(process.env.EMBER_ENV)['ember-component-showcase'] || {};
+  },
+
   treeForVendor: function(tree) {
     let app = this.app;
-    let options = this.app.options['ember-component-showcase'] || {};
+    let showcaseOptions = this.getConfig() || {};
 
-    if (options.enabled) {
-      let yuiOptions = options['yuidocjs'] || {};
+    if (showcaseOptions.enabled) {
+      let yuiOptions = showcaseOptions['yuidocjs'] || {
+        "enabled": true,
+        "writeJSON": false,
+        "paths": ["addon", "app"],
+        "exclude": "vendor",
+        "linkNatives": true,
+        "quiet": true,
+        "parseOnly": true,
+        "lint": false
+      };
 
       this.yuidocs = DocGenerator(yuiOptions);
 
@@ -45,13 +58,12 @@ module.exports = {
   },
 
   setupPreprocessorRegistry: function(type, registry) {
-    ShowcaseBroccoli.import.apply(this, [type, registry]);
+    let options = this.getConfig();
+    ShowcaseBroccoli.import.apply(this, [type, registry, options]);
     this._super.setupPreprocessorRegistry.apply(this, arguments);
   },
 
   included: function(app, parentAddon) {
-    this.ui.writeLine('Generating Component Showcase Documentation...');
-
     // Quick fix for add-on nesting
     // https://github.com/aexmachina/ember-cli-sass/blob/v5.3.0/index.js#L73-L75
     // see: https://github.com/ember-cli/ember-cli/issues/3718
@@ -78,20 +90,11 @@ module.exports = {
     this.options['ember-font-awesome'] = this.options['ember-font-awesome'] || {};
     this.options['ember-font-awesome'].includeFontFiles = false;
 
-    this.options['ember-component-showcase'] = this.options['ember-component-showcase'] || {};
-    if (this.options['ember-component-showcase'].enabled) {
-      this.options['ember-component-showcase']['yuidocjs'] = this.options['ember-component-showcase']['yuidocjs'] || {
-          "enabled": true,
-          "writeJSON": false,
-          "paths": ["addon", "app"],
-          "exclude": "vendor",
-          "linkNatives": true,
-          "quiet": true,
-          "parseOnly": true,
-          "lint": false
-        };
+    var showcaseConfig = this.getConfig();
+    if (showcaseConfig.enabled) {
+      this.ui.writeLine('Generating Component Showcase Documentation...');
 
-      ShowcaseBroccoli.export(app, this.options['ember-component-showcase']);
+      ShowcaseBroccoli.export(app, showcaseConfig);
 
       let bowerDirectory = this.project.bowerDirectory;
       app.import(bowerDirectory + '/remarkable/dist/remarkable.js');
