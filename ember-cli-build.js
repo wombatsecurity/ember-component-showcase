@@ -5,9 +5,6 @@ module.exports = function(defaults) {
     'ember-cli-babel': {
       includePolyfill: true
     },
-    'ember-cli-qunit': {
-      useLintTree: false // disables JSHint
-    },
     'ember-prism': {
       'theme': 'coy',
       'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
