@@ -60,7 +60,6 @@ module.exports = {
   setupPreprocessorRegistry: function(type, registry) {
     let options = this.getConfig();
     ShowcaseBroccoli.import.apply(this, [type, registry, options]);
-    this._super.setupPreprocessorRegistry.apply(this, arguments);
   },
 
   included: function(app, parentAddon) {
