@@ -31,7 +31,7 @@ module.exports = function(environment) {
         "writeJSON": false,
         "paths": ["addon"],
         "githubRepo": "https://github.com/wombatsecurity/ember-component-showcase",
-        "githubTag": "v" + getVersion(0),
+        "githubTag": "v" + getVersion({shaLength: 0}),
         "linkNatives": true,
         "quiet": true,
         "parseOnly": false,
