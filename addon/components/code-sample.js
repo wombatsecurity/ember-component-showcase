@@ -1,5 +1,5 @@
 /* global html_beautify js_beautify */
-import Ember from 'ember';
+import $ from 'jquery';
 import CodeBlock from 'ember-prism/components/code-block';
 import layout from '../templates/components/code-sample';
 
@@ -21,7 +21,7 @@ export default CodeBlock.extend({
 
 	// clean up Ember droppings
 	cleanEmberHTML(html) {
-		let $element = Ember.$(html);
+		let $element = $(html);
 
 		// examples: id="ember123" class="ember-view" data-ember-action="123" data-ember-action-345="345"
 		$element.find('[id]').filter(function() {
@@ -40,7 +40,7 @@ export default CodeBlock.extend({
 	},
 
 	didInsertElement() {
-		let wrapper = Ember.$(this.getElement());
+		let wrapper = $(this.getElement());
 		let html = wrapper.html().trim();
 		let language = this.get('language').toLowerCase();
 

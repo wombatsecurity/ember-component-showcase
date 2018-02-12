@@ -1,7 +1,7 @@
 <div class="description">
-	<p>{{md-text text=src}}</p>
+	<p>{{markdown-text text=src}}</p>
 	{{#if classDocs}}
-		{{md-text text=classDocs.description}}
+		{{markdown-text text=classDocs.description}}
 	{{/if}}
 </div>
 {{#if apiDocs}}
@@ -38,7 +38,7 @@
 					</div>
 
 					<div class="sample-docs-api-description">
-						{{md-text text=doc.description}}
+						{{markdown-text text=doc.description}}
 						<div>
 							<small>Defined in <a target="_blank" href="{{doc.github}}">{{doc.file}}:{{doc.line}}</a></small>
 						</div>

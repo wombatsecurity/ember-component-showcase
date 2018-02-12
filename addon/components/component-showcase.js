@@ -1,4 +1,8 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import { getOwner } from '@ember/application';
+import { dasherize } from '@ember/string';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import layout from '../templates/components/component-showcase';
 
 /**
@@ -7,7 +11,7 @@ import layout from '../templates/components/component-showcase';
  * @module Component-Showcase
  * @class ComponentShowcase
  */
-const ComponentShowcase = Ember.Component.extend({
+const ComponentShowcase = Component.extend({
   layout: layout,
   currentPath: '',
   tagName: 'section',
@@ -25,17 +29,17 @@ const ComponentShowcase = Ember.Component.extend({
   selfHBS: '',
   selfReflection: false,
 
-  sourceId: Ember.computed('elementId', function() {
+  sourceId: computed('elementId', function() {
     return this.get('elementId') + '-source';
   }),
 
-  anchorId: Ember.computed('title', function() {
-    return Ember.String.dasherize(this.get('title'));
+  anchorId: computed('title', function() {
+    return dasherize(this.get('title'));
   }).readOnly(),
 
   init() {
-    let currentApplication = Ember.getOwner(this).lookup('route:application');
-    if (!Ember.isEmpty(currentApplication)) {
+    let currentApplication = getOwner(this).lookup('route:application');
+    if (!isEmpty(currentApplication)) {
       // Ember voodoo to get current route name
       this.set('currentPath', currentApplication.get('controller.currentRouteName'));
     }

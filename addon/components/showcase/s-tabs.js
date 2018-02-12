@@ -1,27 +1,30 @@
-import Ember from 'ember';
+import { camelize } from '@ember/string';
+import { A } from '@ember/array';
+import EmberObject, { computed } from '@ember/object';
+import Component from '@ember/component';
 import layout from '../../templates/components/showcase/s-tabs';
 
-const SampleTabs = Ember.Component.extend({
+const SampleTabs = Component.extend({
   layout: layout,
   sourceId: null,
   includeSource: false,
-  tabs: Ember.computed('tabsInput', function () {
+  tabs: computed('tabsInput', function () {
     let tabsInput = this.get('tabsInput');
     let elementId = this.get('elementId');
-    let tabs = Ember.A();
+    let tabs = A();
 
     // for some reason the array helper wraps our input into another array, this correct this behavior
     if (tabsInput && tabsInput.length > 0 && tabsInput[0].length > 0) {
       tabsInput[0].forEach(function (tab) {
-        tab.id = `${elementId}-${Ember.String.camelize(tab.title)}`.toLowerCase();
-        tabs.push(Ember.Object.create(tab));
+        tab.id = `${elementId}-${camelize(tab.title)}`.toLowerCase();
+        tabs.push(EmberObject.create(tab));
       });
     }
 
     return tabs;
   }),
 
-  selectedTab: Ember.computed('tabs.@each.active', function () {
+  selectedTab: computed('tabs.@each.active', function () {
     return this.get('tabs').findBy('active', true);
   }),
 

@@ -1,16 +1,24 @@
-/* jshint node: true */
 'use strict';
 const path = require('path');
 const fs = require('fs');
-
 const DocGenerator = require('./lib/documentation');
+const Funnel = require('broccoli-funnel');
 const ShowcaseBroccoli = require('./lib/broccoli-showcase');
 const writeFile = require('broccoli-file-creator');
-const mergeTrees = require('broccoli-merge-trees');
+const MergeTrees = require('broccoli-merge-trees');
+
+var log = require('broccoli-stew').log;
+
 
 module.exports = {
   name: 'ember-component-showcase',
   yuidocs: null,
+
+  // fix for ember-font-awesome issue: https://github.com/martndemus/ember-font-awesome/pull/138
+  init() {
+    this._super.init.apply(this, arguments);
+    this.otherAssetPaths = [];
+  },
 
   // TODO: add support for genuine yuidocs
   // postprocessTree: function(type, workingTree) {
@@ -31,6 +39,40 @@ module.exports = {
     return this.project.config(process.env.EMBER_ENV)['ember-component-showcase'] || {};
   },
 
+  treeForAddon(tree) {
+    let addonTree = this._super.treeForAddon.apply(this, arguments);
+    let moduleTree = [addonTree];
+
+    const nodeModules = [
+      path.join('remarkable', 'dist', 'remarkable.js'),
+      path.join('js-beautify', 'js', 'lib', 'beautify.js'),
+      path.join('js-beautify', 'js', 'lib', 'beautify-html.js')
+    ];
+
+    // use our local node_modules if available, otherwise use project version.
+    nodeModules.forEach((modulePath) => {
+      let localModulePath = path.resolve(this.root, 'node_modules');
+      let projectModulePath = path.resolve(this.project.root, 'node_modules');
+      let targetModulePath = projectModulePath;
+      if (fs.existsSync(path.resolve(localModulePath, modulePath))) targetModulePath = localModulePath;
+
+
+      let treeToFile = new Funnel(targetModulePath, {
+        files: [modulePath]
+      });
+
+      // console.log(targetModulePath, modulePath, treeToFile);
+
+      moduleTree.push(treeToFile);
+    });
+
+    let mergedTree = new MergeTrees(moduleTree, {overwrite: true});
+
+    let loggedApp = log(mergedTree, { output: 'tree', label: 'my-app-name tree' });
+
+    return loggedApp
+  },
+
   treeForVendor: function(tree) {
     let app = this.app;
     let showcaseOptions = this.getConfig() || {};
@@ -49,11 +91,7 @@ module.exports = {
 
       this.yuidocs = DocGenerator(yuiOptions);
 
-      let file = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
-      var mergedTree = mergeTrees([tree, file], { overwrite: true });
-      return mergedTree;
-    } else {
-      return tree;
+      return writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
     }
   },
 
@@ -80,26 +118,18 @@ module.exports = {
 
     // Per the ember-cli documentation
     // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
-    var target = (parentAddon || app);
-
+    let target = (parentAddon || app);
     this.options = target.options || {};
-
-    // font-awesome shim
-    this.otherAssetPaths = [];
     this.options['ember-font-awesome'] = this.options['ember-font-awesome'] || {};
-    this.options['ember-font-awesome'].includeFontFiles = false;
+    this.options['ember-font-awesome'].includeFontAwesomeAssets = this.options['ember-font-awesome'].includeFontAwesomeAssets || false;
+    this.options['ember-font-awesome'].useScss = this.options['ember-font-awesome'].useScss || true;
 
     var showcaseConfig = this.getConfig();
     if (showcaseConfig.enabled) {
       this.ui.writeLine('Generating Component Showcase Documentation...');
-
       ShowcaseBroccoli.export(app, showcaseConfig);
 
-      let bowerDirectory = this.project.bowerDirectory;
-      app.import(bowerDirectory + '/remarkable/dist/remarkable.js');
-      app.import(bowerDirectory + '/js-beautify/js/lib/beautify.js');
-      app.import(bowerDirectory + '/js-beautify/js/lib/beautify-html.js');
-      app.import('vendor/ember-remarkable/shim.js', {
+      app.import('vendor/remarkable/shim.js', {
         type: 'vendor',
         exports: { 'remarkable': ['default'] }
       });

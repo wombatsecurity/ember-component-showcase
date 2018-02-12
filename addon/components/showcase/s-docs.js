@@ -1,27 +1,30 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import { isEmpty } from '@ember/utils';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import Docs from 'documentation';
 import layout from '../../templates/components/showcase/s-docs';
 
-const SampleDocComponent = Ember.Component.extend({
+const SampleDocComponent = Component.extend({
   layout: layout,
 	classNames: ['sample-docs'],
-	src: Ember.computed('params.[]', function() {
+	src: computed('params.[]', function() {
 		let params = this.get('params');
-		if (!Ember.isEmpty(params) && params.length > 0) {
+		if (!isEmpty(params) && params.length > 0) {
 			return params[0];
 		}
 	}),
 	api: null,
-	classDocs: Ember.computed('api', function() {
+	classDocs: computed('api', function() {
 		let className = this.get('api');
 		if (className && Docs.classes && Docs.classes[className]) {
 			return Docs.classes[className];
 		} else {
-			if (!Ember.isEmpty(className)) Ember.Logger.warn(`No class documentation found for '${className}'`);
+			if (!isEmpty(className)) console.warn(`No class documentation found for '${className}'`);
 			return {};
 		}
 	}),
-	apiDocs: Ember.computed.alias('classDocs.classitems')
+	apiDocs: alias('classDocs.classitems')
 });
 
 SampleDocComponent.reopenClass({

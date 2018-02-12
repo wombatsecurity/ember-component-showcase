@@ -1,16 +1,18 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { alias, not } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../../templates/components/showcase/s-source';
 
-const ShowcaseSource = Ember.Component.extend({
+const ShowcaseSource = Component.extend({
   layout: layout,
 	sample: null,
-	sourceId: Ember.computed.alias('sample.sourceId'),
-	src: Ember.computed.alias('sample.src'),
-  hbs: Ember.computed.alias('sample.hbs'),
-  selfHBS: Ember.computed.alias('sample.selfHBS'),
+	sourceId: alias('sample.sourceId'),
+	src: alias('sample.src'),
+  hbs: alias('sample.hbs'),
+  selfHBS: alias('sample.selfHBS'),
   hideHTML: true,
-  showHTML: Ember.computed.not('hideHTML'),
-  htmlTab: Ember.computed('sourceId', function() {
+  showHTML: not('hideHTML'),
+  htmlTab: computed('sourceId', function() {
     return {
       title: "markup.html",
       language: "Markup",
@@ -19,8 +21,8 @@ const ShowcaseSource = Ember.Component.extend({
     }
   }),
   hideHBS: false,
-  showHBS: Ember.computed.not('hideHBS'),
-  hbsTab: Ember.computed('hbs', function() {
+  showHBS: not('hideHBS'),
+  hbsTab: computed('hbs', function() {
     return {
       title: "example.hbs",
       language: "Handlebars",
@@ -29,8 +31,8 @@ const ShowcaseSource = Ember.Component.extend({
     }
   }),
   hideSelfHBS: true,
-  showSelfHBS: Ember.computed.not('hideSelfHBS'),
-  selfHBSTab: Ember.computed('selfHBS', function() {
+  showSelfHBS: not('hideSelfHBS'),
+  selfHBSTab: computed('selfHBS', function() {
     return {
       title: "showcase.hbs",
       language: "Handlebars",
@@ -39,7 +41,7 @@ const ShowcaseSource = Ember.Component.extend({
     }
   }),
 
-  extraTabs: Ember.computed('tabsInput', function() {
+  extraTabs: computed('tabsInput', function() {
     let tabsInput = this.get('tabsInput');
     let tabs = [];
 
@@ -53,7 +55,7 @@ const ShowcaseSource = Ember.Component.extend({
     return tabs;
   }),
 
-  tabs: Ember.computed('showHBS', 'hbsTab', 'showHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', 'extraTabs', function() {
+  tabs: computed('showHBS', 'hbsTab', 'showHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', 'extraTabs', function() {
     let  tabs = [];
     if (this.get('showSelfHBS')) tabs.push(this.get('selfHBSTab'));
     if (this.get('showHBS')) tabs.push(this.get('hbsTab'));
