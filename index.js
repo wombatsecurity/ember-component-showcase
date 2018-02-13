@@ -7,9 +7,6 @@ const ShowcaseBroccoli = require('./lib/broccoli-showcase');
 const writeFile = require('broccoli-file-creator');
 const MergeTrees = require('broccoli-merge-trees');
 
-var log = require('broccoli-stew').log;
-
-
 module.exports = {
   name: 'ember-component-showcase',
   yuidocs: null,
@@ -56,21 +53,14 @@ module.exports = {
       let targetModulePath = projectModulePath;
       if (fs.existsSync(path.resolve(localModulePath, modulePath))) targetModulePath = localModulePath;
 
-
       let treeToFile = new Funnel(targetModulePath, {
         files: [modulePath]
       });
 
-      // console.log(targetModulePath, modulePath, treeToFile);
-
       moduleTree.push(treeToFile);
     });
 
-    let mergedTree = new MergeTrees(moduleTree, {overwrite: true});
-
-    let loggedApp = log(mergedTree, { output: 'tree', label: 'my-app-name tree' });
-
-    return loggedApp
+    return new MergeTrees(moduleTree, {overwrite: true});
   },
 
   treeForVendor: function(tree) {

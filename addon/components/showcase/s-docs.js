@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { alias } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import { computed } from '@ember/object';

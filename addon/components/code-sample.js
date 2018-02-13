@@ -9,15 +9,14 @@ export default CodeBlock.extend({
 	attributeBindings: ['language:data-language'],
 	src: '',
 
-  getMatches(string, regex, index) {
-    if (!index) index = 0; // default to the first capturing group
-    var matches = [];
-    var match;
-    while (match = regex.exec(string)) {
-      matches.push(match[index]);
-    }
-    return matches;
-  },
+  // getMatches(string, regex, index = 0) {
+  //   var matches = [];
+  //   var match;
+  //   while (match = regex.exec(string)) {
+  //     matches.push(match[index]);
+  //   }
+  //   return matches;
+  // },
 
 	// clean up Ember droppings
 	cleanEmberHTML(html) {
