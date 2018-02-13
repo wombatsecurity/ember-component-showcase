@@ -9,9 +9,6 @@ module.exports = function(environment, appConfig) {
       'theme': 'coy',
       'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
       'plugins': ['toolbar', 'show-language']
-    },
-    'ember-font-awesome': {
-      includeFontFiles: false
     }
   };
 };

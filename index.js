@@ -14,7 +14,6 @@ module.exports = {
   // fix for ember-font-awesome issue: https://github.com/martndemus/ember-font-awesome/pull/138
   init() {
     this._super.init.apply(this, arguments);
-    this.otherAssetPaths = [];
   },
 
   // TODO: add support for genuine yuidocs
@@ -64,7 +63,6 @@ module.exports = {
   },
 
   treeForVendor: function(tree) {
-    let app = this.app;
     let showcaseOptions = this.getConfig() || {};
 
     if (showcaseOptions.enabled) {
@@ -110,11 +108,7 @@ module.exports = {
     // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
     let target = (parentAddon || app);
     this.options = target.options || {};
-    this.options['ember-font-awesome'] = this.options['ember-font-awesome'] || {};
-    this.options['ember-font-awesome'].includeFontAwesomeAssets = this.options['ember-font-awesome'].includeFontAwesomeAssets || false;
-    this.options['ember-font-awesome'].useScss = this.options['ember-font-awesome'].useScss || true;
-
-    var showcaseConfig = this.getConfig();
+    let showcaseConfig = this.getConfig();
     if (showcaseConfig.enabled) {
       this.ui.writeLine('Generating Component Showcase Documentation...');
       ShowcaseBroccoli.export(app, showcaseConfig);
