@@ -63,6 +63,7 @@ module.exports = {
   },
 
   treeForVendor: function(tree) {
+    let vendorTree = this._super.treeForVendor.apply(this, arguments);
     let showcaseOptions = this.getConfig() || {};
 
     if (showcaseOptions.enabled) {
@@ -78,17 +79,25 @@ module.exports = {
       };
 
       this.yuidocs = DocGenerator(yuiOptions);
-
-      return writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
     }
+
+    let remarkableShim = writeFile('/shims/remarkable.js', `define('remarkable', [], function() { return { 'default': Remarkable }; });`);
+    let documentationShim = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
+    return new MergeTrees([vendorTree, remarkableShim, documentationShim], {overwrite: true});
   },
 
   setupPreprocessorRegistry: function(type, registry) {
-    let options = this.getConfig();
-    ShowcaseBroccoli.import.apply(this, [type, registry, options]);
+    this._super.setupPreprocessorRegistry.apply(this, arguments);
+
+    let showcaseOptions = this.getConfig() || {};
+    if (showcaseOptions.enabled) {
+      ShowcaseBroccoli.import.apply(this, [type, registry, showcaseOptions]);
+    }
   },
 
   included: function(app, parentAddon) {
+    this._super.included.apply(this, arguments);
+
     // Quick fix for add-on nesting
     // https://github.com/aexmachina/ember-cli-sass/blob/v5.3.0/index.js#L73-L75
     // see: https://github.com/ember-cli/ember-cli/issues/3718
@@ -112,14 +121,8 @@ module.exports = {
     if (showcaseConfig.enabled) {
       this.ui.writeLine('Generating Component Showcase Documentation...');
       ShowcaseBroccoli.export(app, showcaseConfig);
-
-      app.import('vendor/remarkable/shim.js', {
-        type: 'vendor',
-        exports: { 'remarkable': ['default'] }
-      });
-      app.import('vendor/documentation.js');
     }
-
-    this._super.included.apply(this, arguments);
+    app.import('vendor/shims/remarkable.js');
+    app.import('vendor/documentation.js');
   }
 };
