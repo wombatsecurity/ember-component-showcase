@@ -63,9 +63,7 @@ module.exports = {
   },
 
   treeForVendor: function(tree) {
-    let vendorTree = this._super.treeForVendor.apply(this, arguments);
     let showcaseOptions = this.getConfig() || {};
-
     if (showcaseOptions.enabled) {
       let yuiOptions = showcaseOptions['yuidocjs'] || {
         "enabled": true,
@@ -83,12 +81,10 @@ module.exports = {
 
     let remarkableShim = writeFile('/shims/remarkable.js', `define('remarkable', [], function() { return { 'default': Remarkable }; });`);
     let documentationShim = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
-    return new MergeTrees([vendorTree, remarkableShim, documentationShim], {overwrite: true});
+    return new MergeTrees([remarkableShim, documentationShim], {overwrite: true});
   },
 
   setupPreprocessorRegistry: function(type, registry) {
-    this._super.setupPreprocessorRegistry.apply(this, arguments);
-
     let showcaseOptions = this.getConfig() || {};
     if (showcaseOptions.enabled) {
       ShowcaseBroccoli.import.apply(this, [type, registry, showcaseOptions]);
