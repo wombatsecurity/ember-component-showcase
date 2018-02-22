@@ -11,11 +11,6 @@ module.exports = {
   name: 'ember-component-showcase',
   yuidocs: null,
 
-  // fix for ember-font-awesome issue: https://github.com/martndemus/ember-font-awesome/pull/138
-  init() {
-    this._super.init.apply(this, arguments);
-  },
-
   // TODO: add support for genuine yuidocs
   // postprocessTree: function(type, workingTree) {
   //   if(type === 'all') {

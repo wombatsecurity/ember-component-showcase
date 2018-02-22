@@ -1,6 +1,6 @@
 <nav class="tab-nav">
 	{{#each tabs as |tab|}}
-		<span {{action "setSelectedTab" tab}} class="tab-nav-item {{if tab.active 'active'}}">{{fa-icon 'code'}} {{tab.title}}</span>
+		<span {{action "setSelectedTab" tab}} class="tab-nav-item {{if tab.active 'active'}}">{{showcase/s-icon 'code'}} {{tab.title}}</span>
 	{{/each}}
 </nav>
 
