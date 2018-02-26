@@ -1,7 +1,9 @@
 @import "ember-power-select";
 @import "ember-component-showcase";
+@import "font-awesome";
 
 html, body {
+  font-family: 'Roboto', sans-serif;
   background-color: $color-gray-100;
 }
 

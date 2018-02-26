@@ -1,13 +1,19 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/showcase/s-icon';
+import { computed } from '@ember/object';
 
 const ShowcaseIcon = Component.extend({
-  layout:layout
+  tagName: 'i',
+  icon: null,
+  ariaHidden: "true",
+  iconClass: computed('icon', function() {
+    return `fa fa-${this.get('icon')}`;
+  }),
+  classNameBindings: ['iconClass'],
+  attributeBindings: ['ariaHidden:aria-hidden']
 });
 
 ShowcaseIcon.reopenClass({
   positionalParams: ['icon'],
-  icon: null
 });
 
 export default ShowcaseIcon;
