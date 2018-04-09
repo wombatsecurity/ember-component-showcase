@@ -74,7 +74,7 @@ export default CodeBlock.extend({
 			wrapper.html(html).unwrap();
 		}
 
-		if (language === 'javascript') {
+		if (language === 'javascript' || language === 'json') {
       // Remove ALL newlines
       html = html.replace(/\n/g, '');
       // reindent and align js whitespace
@@ -85,7 +85,6 @@ export default CodeBlock.extend({
     }
 
     if (language === 'handlebars') {
-
       // temporarily remove escaping for tags
       html = html.replace(/&lt;/g, '<');
       html = html.replace(/&gt;/g, '>');
