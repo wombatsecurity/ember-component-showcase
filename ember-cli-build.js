@@ -10,7 +10,7 @@ module.exports = function(defaults) {
     },
     'ember-prism': {
       'theme': 'coy',
-      'components': ['markup-templating', 'javascript', 'handlebars'], //needs to be an array, or undefined.
+      'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
       'plugins': ['toolbar', 'show-language']
     },
     sassOptions: {
