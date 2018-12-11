@@ -8,24 +8,6 @@ export default CodeBlock.extend({
 	attributeBindings: ['language:data-language'],
 	src: '',
 
-	wrap(elms) {
-		if (!elms.length) elms = [elms];
-
-		for (let i = elms.length - 1; i >= 0; i--) {
-				const child = (i > 0) ? this.cloneNode(true) : this;
-				const el    = elms[i];
-				const parent  = el.parentNode;
-				const sibling = el.nextSibling;
-
-				child.appendChild(el);
-
-				if (sibling) {
-						parent.insertBefore(child, sibling);
-				} else {
-						parent.appendChild(child);
-				}
-		}
-	},
 	// clean up Ember droppings
 	cleanEmberHTML(html) {
 		let $element = document.createElement('div')
