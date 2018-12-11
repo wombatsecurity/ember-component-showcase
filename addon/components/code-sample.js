@@ -31,7 +31,6 @@ export default CodeBlock.extend({
 		let $element = document.createElement('div')
 		$element.innerHTML = html;
 		$element = $element.querySelector('code');
-		console.log($element)
 
 		// examples: id="ember123" class="ember-view" data-ember-action="123" data-ember-action-345="345"
 		Array.from($element.querySelectorAll('[id]')).filter(function(el) {
@@ -74,8 +73,8 @@ export default CodeBlock.extend({
 			// reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
 			html = html_beautify(html, {
 				unformatted: ['i'],
-        indent_size: 2,
-        wrap_line_length: 100
+				indent_size: 2,
+				wrap_line_length: 100
 			});
 
 			// return tag escaping for proper rendering in HTML
