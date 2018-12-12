@@ -1,5 +1,4 @@
 /* global html_beautify js_beautify */
-import $ from 'jquery';
 import CodeBlock from 'ember-prism/components/code-block';
 import layout from '../templates/components/code-sample';
 
@@ -9,52 +8,46 @@ export default CodeBlock.extend({
 	attributeBindings: ['language:data-language'],
 	src: '',
 
-  // getMatches(string, regex, index = 0) {
-  //   var matches = [];
-  //   var match;
-  //   while (match = regex.exec(string)) {
-  //     matches.push(match[index]);
-  //   }
-  //   return matches;
-  // },
-
 	// clean up Ember droppings
 	cleanEmberHTML(html) {
-		let $element = $(html);
+		let $element = document.createElement('div')
+		$element.innerHTML = html;
+		$element = $element.querySelector('code');
 
 		// examples: id="ember123" class="ember-view" data-ember-action="123" data-ember-action-345="345"
-		$element.find('[id]').filter(function() {
-			return this.id.match(new RegExp('ember[0-9]+', 'g'));
-		}).removeAttr('id');
-		$element.find('[data-ember-action|=""]').filter(function() {
-			let matches = new RegExp('data-ember-action-[0-9]+', 'g').exec(this.outerHTML);
-			this.removeAttribute('data-ember-action');
-			matches.forEach((match) => {
-				this.removeAttribute(match);
+		Array.from($element.querySelectorAll('[id]')).filter(function(el) {
+			return el.id.match(new RegExp('ember[0-9]+', 'g'));
+		}).forEach(function(el) {
+			el.removeAttribute('id');
+		});
+
+		Array.from($element.querySelectorAll('[data-ember-action|=""]')).filter(function(el) {
+			let matches = new RegExp('data-ember-action-[0-9]+', 'g').exec(el.outerHTML);
+			el.removeAttribute('data-ember-action');
+			matches.forEach(match => {
+				el.removeAttribute(match);
 			});
 		});
-		$element.find('.ember-view').removeClass('ember-view');
 
-		return $element.html();
+		$element.querySelectorAll('.ember-view').forEach(el => {
+			el.classList.remove('ember-view');
+		});
+
+		return $element.innerHTML;
 	},
 
 	didInsertElement() {
-		let wrapper = $(this.getElement());
-		let html = wrapper.html().trim();
+		let wrapper = this.getElement();
+		let html = wrapper.innerHTML.trim();
 		let language = this.get('language').toLowerCase();
 
 		if (language === 'markup') {
-			html = wrapper.wrap('<div/>').parent().html();
+			html = wrapper.parentNode.innerHTML;
 
-			// temporarily remove escaping for tags
-			html = html.replace(/&lt;/g, '<');
-			html = html.replace(/&gt;/g, '>');
-
-			// Remove ALL html comments
-			html = html.replace(/<!--.*?-->/g, '');
-
-      // Remove ALL newlines
-      html = html.replace(/\n/g, '');
+			html = html.replace(/&lt;/g, '<'); 			// Temporarily remove 
+			html = html.replace(/&gt;/g, '>'); 			// escaping for tags
+			html = html.replace(/<!--.*?-->/g, ''); // and ALL html comments
+			html = html.replace(/\n/g, '');					// and ALL newlines
 
 			// Remove HTML Ember Droppings
 			html = this.cleanEmberHTML(html);
@@ -62,8 +55,8 @@ export default CodeBlock.extend({
 			// reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
 			html = html_beautify(html, {
 				unformatted: ['i'],
-        indent_size: 2,
-        wrap_line_length: 100
+				indent_size: 2,
+				wrap_line_length: 100
 			});
 
 			// return tag escaping for proper rendering in HTML
@@ -71,7 +64,7 @@ export default CodeBlock.extend({
 			html = html.replace(/>/g, '&gt;');
 
 			// set our code element's markup to our newly reformatted version
-			wrapper.html(html).unwrap();
+			wrapper.innerHTML = html;
 		}
 
 		if (language === 'javascript' || language === 'json') {
@@ -104,7 +97,7 @@ export default CodeBlock.extend({
       html = html.replace(/>/g, '&gt;');
     }
 
-		wrapper.html(html);
+		wrapper.innerHTML = html;
 
 		// apply prism styling
 		this._super(...arguments);
