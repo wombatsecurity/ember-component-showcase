@@ -73,7 +73,7 @@ module.exports = {
 
     let remarkableShim = writeFile('/shims/remarkable.js', `define('remarkable', [], function() { return { 'default': Remarkable }; });`);
     let documentationShim = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
-    return new MergeTrees([remarkableShim, documentationShim], {overwrite: true});
+    return new MergeTrees([remarkableShim, documentationShim], { overwrite: true });
   },
 
   setupPreprocessorRegistry: function(type, registry) {
@@ -85,7 +85,7 @@ module.exports = {
 
   prismOptions: {
     'theme': 'coy',
-    'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
+    'components': ['markup', 'javascript', 'handlebars', 'markup-templating'], //needs to be an array, or undefined.
     'plugins': ['toolbar', 'show-language']
   },
 
