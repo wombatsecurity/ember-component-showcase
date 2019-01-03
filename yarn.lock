@@ -2570,10 +2570,10 @@ cli-width@^2.0.0:
   resolved "https://registry.yarnpkg.com/cli-width/-/cli-width-2.1.0.tgz#b234ca209b29ef66fc518d9b98d5847b00edf00a"
   integrity sha1-sjTKIJsp72b8UY2bmNWEewDt8Ao=
 
-clipboard@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/clipboard/-/clipboard-1.7.1.tgz#360d6d6946e99a7a1fef395e42ba92b5e9b5a16b"
-  integrity sha1-Ng1taUbpmnof7zleQrqStem1oWs=
+clipboard@^2.0.0:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/clipboard/-/clipboard-2.0.4.tgz#836dafd66cf0fea5d71ce5d5b0bf6e958009112d"
+  integrity sha512-Vw26VSLRpJfBofiVaFb/I8PVfdI1OxKcYShe6fm0sP/DtmiWQNCjhM/okTvdCo0G+lMMm1rMYbk4IK4x1X+kgQ==
   dependencies:
     good-listener "^1.2.2"
     select "^1.1.2"
@@ -3677,15 +3677,14 @@ ember-power-select@^1.10.4:
     ember-text-measurer "^0.4.0"
     ember-truth-helpers "^2.0.0"
 
-ember-prism@^0.3.0:
+"ember-prism@github:nmcclay/ember-prism":
   version "0.3.0"
-  resolved "https://registry.yarnpkg.com/ember-prism/-/ember-prism-0.3.0.tgz#487870c8ee3969511bd5d501a3c38385892d293f"
-  integrity sha512-Qt8G5+G2yha7LSl0fXfYOCaOq5NtixoTK2vehq/cWGv3ATTsT3l5/KiCaKKwGMeGL2J2bmNsEPNEXgxWCmPLjQ==
+  resolved "https://codeload.github.com/nmcclay/ember-prism/tar.gz/bb94afdf1926f1a5ce9066e146394e7e406cbd13"
   dependencies:
     ember-cli-babel "^6.8.2"
     ember-cli-htmlbars "^2.0.3"
     ember-cli-node-assets "^0.2.2"
-    prismjs "^1.8.3"
+    prismjs "^1.15.0"
 
 ember-qunit@^3.3.1:
   version "3.3.1"
@@ -7041,12 +7040,12 @@ printf@^0.2.3:
   resolved "https://registry.yarnpkg.com/printf/-/printf-0.2.5.tgz#c438ca2ca33e3927671db4ab69c0e52f936a4f0f"
   integrity sha1-xDjKLKM+OSdnHbSracDlL5NqTw8=
 
-prismjs@^1.11.0, prismjs@^1.8.3:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.11.0.tgz#297aef33eb79421bfdb19273a5092ca515970d29"
-  integrity sha1-KXrvM+t5Qhv9sZJzpQkspRWXDSk=
+prismjs@1.15.0, prismjs@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.15.0.tgz#8801d332e472091ba8def94976c8877ad60398d9"
+  integrity sha512-Lf2JrFYx8FanHrjoV5oL8YHCclLQgbJcVZR+gikGGMqz6ub5QVWDTM6YIwm3BuPxM/LOV+rKns3LssXNLIf+DA==
   optionalDependencies:
-    clipboard "^1.7.1"
+    clipboard "^2.0.0"
 
 private@^0.1.6, private@~0.1.5:
   version "0.1.7"

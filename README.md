@@ -7,9 +7,25 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 * Install the ember addon: `ember install ember-component-showcase`
 * Add `ember-cli-htmlbars-inline-precompile` and `ember-cli-htmlbars` to the `dependencies section` of your application.  Adding them to `devDependencies` will not work.
 
-## Demo Site
+## Configuration
 
-* Coming soon...
+Provide a custom showcaseConfig to your environment.js or ember-cli-build.js:
+``` json
+showcaseConfig: {
+    enabled: true,
+    'yuidocjs': {
+      'enabled': true,
+      'writeJSON': false,
+      'paths': ['addon'],
+      'githubRepo': 'https://github.com/user/foo-bar',
+      'githubTag': 'v1.0.0',
+      'linkNatives': true,
+      'quiet': true,
+      'parseOnly': false,
+      'lint': false
+    }
+  }
+```
 
 ## Simple Usage Examples
 If you just want to see your HBS source code, simply wrap a component with the component-showcase block.

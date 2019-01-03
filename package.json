@@ -31,10 +31,10 @@
     "ember-cli-htmlbars-inline-precompile": "^0.4.4",
     "ember-elsewhere": "1.0.4",
     "ember-lodash": "4.19.4",
-    "ember-prism": "^0.3.0",
+    "ember-prism": "github:nmcclay/ember-prism",
     "js-beautify": "^1.8.9",
     "node-uuid": "^1.4.8",
-    "prismjs": "^1.11.0",
+    "prismjs": "1.15.0",
     "remarkable": "^1.7.1",
     "yuidocjs": "^0.10.2"
   },

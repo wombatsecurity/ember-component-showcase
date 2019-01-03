@@ -26,9 +26,11 @@ module.exports = {
   //   return workingTree;
   // },
 
+  // 1) project config, 2) build config, 3) default config
   getConfig: function() {
+    const projectConfig = this.project.config(process.env.EMBER_ENV)['showcaseConfig'];
+    if (projectConfig) return projectConfig;
     if (this.options && this.options.showcaseConfig) return this.options.showcaseConfig;
-
     return {
       enabled: true,
       yuidocjs: {
