@@ -26,7 +26,7 @@ test('it renders', function(assert) {
 {{#component-showcase "123" "Title" as |s|}}
   {{s.docs "description"}}
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{showcase/s-icon "code"}}
   {{/s.example}}
   {{s.source hbs='{{fa-icon "code"}}'}}
 {{/component-showcase}}`);
@@ -38,7 +38,7 @@ test('it renders', function(assert) {
 {{#component-showcase "123" as |s|}}
   {{s.docs "description"}}
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{showcase/s-icon "code"}}
   {{/s.example}}
   {{s.source showHTML=true}}
 {{/component-showcase}}`);
@@ -50,7 +50,7 @@ test('it renders', function(assert) {
 {{#component-showcase "123" as |s|}}
   {{s.docs "description"}}
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{showcase/s-icon "code"}}
   {{/s.example}}
   {{s.source hideHBS=true showHTML=true}}
 {{/component-showcase}}`);
@@ -61,7 +61,7 @@ test('it renders', function(assert) {
   this.render(hbs`
 {{#component-showcase "123" as |s|}}
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{showcase/s-icon "code"}}
   {{/s.example}}
 {{/component-showcase}}`);
 
@@ -71,7 +71,7 @@ test('it renders', function(assert) {
   this.render(hbs`
 {{#component-showcase as |s|}}
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{showcase/s-icon "code"}}
   {{/s.example}}
   {{s.source (array (hash title="route.js" language="JavaScript" src="var foo = 'foo';")) showHTML=true }}
 {{/component-showcase}}`);
@@ -82,7 +82,7 @@ test('it renders', function(assert) {
   this.render(hbs`
 {{#component-showcase as |s|}}
   {{#s.example}}
-    {{fa-icon "code"}}
+    {{showcase/s-icon "code"}}
   {{/s.example}}
   {{s.source (array
         (hash title="Route.js" language="JavaScript" src="var foo = 'foo';")

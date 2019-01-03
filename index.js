@@ -27,40 +27,11 @@ module.exports = {
   // },
 
   getConfig: function() {
-    return this.project.config(process.env.EMBER_ENV)['ember-component-showcase'] || {};
-  },
+    if (this.options && this.options.showcaseConfig) return this.options.showcaseConfig;
 
-  treeForAddon(tree) {
-    let addonTree = this._super.treeForAddon.apply(this, arguments);
-    let moduleTree = [addonTree];
-
-    const nodeModules = [
-      path.join('remarkable', 'dist', 'remarkable.js'),
-      path.join('js-beautify', 'js', 'lib', 'beautify.js'),
-      path.join('js-beautify', 'js', 'lib', 'beautify-html.js')
-    ];
-
-    // use our local node_modules if available, otherwise use project version.
-    nodeModules.forEach((modulePath) => {
-      let localModulePath = path.resolve(this.root, 'node_modules');
-      let projectModulePath = path.resolve(this.project.root, 'node_modules');
-      let targetModulePath = projectModulePath;
-      if (fs.existsSync(path.resolve(localModulePath, modulePath))) targetModulePath = localModulePath;
-
-      let treeToFile = new Funnel(targetModulePath, {
-        files: [modulePath]
-      });
-
-      moduleTree.push(treeToFile);
-    });
-
-    return new MergeTrees(moduleTree, {overwrite: true});
-  },
-
-  treeForVendor: function(tree) {
-    let showcaseOptions = this.getConfig() || {};
-    if (showcaseOptions.enabled) {
-      let yuiOptions = showcaseOptions['yuidocjs'] || {
+    return {
+      enabled: true,
+      yuidocjs: {
         "enabled": true,
         "writeJSON": false,
         "paths": ["addon", "app"],
@@ -69,9 +40,35 @@ module.exports = {
         "quiet": true,
         "parseOnly": true,
         "lint": false
-      };
+      }
+    };
+  },
 
-      this.yuidocs = DocGenerator(yuiOptions);
+  treeForAddon() {
+    const addonTree = this._super.treeForAddon.apply(this, arguments);
+    const nodeModules = [
+      path.join('remarkable', 'dist', 'remarkable.js'),
+      path.join('js-beautify', 'js', 'lib', 'beautify.js'),
+      path.join('js-beautify', 'js', 'lib', 'beautify-html.js')
+    ];
+
+    let moduleTree = [addonTree];
+    nodeModules.forEach((modulePath) => {
+      const fileName = path.basename(modulePath);
+      const targetModulePath = path.dirname(require.resolve(modulePath, {paths: [this.root, this.project.root]}));
+      const treeToFile = new Funnel(targetModulePath, {
+        files: [fileName]
+      });
+      moduleTree.push(treeToFile);
+    });
+
+    return new MergeTrees(moduleTree, {overwrite: true});
+  },
+
+  treeForVendor: function() {
+    let showcaseOptions = this.getConfig();
+    if (showcaseOptions.enabled && showcaseOptions.yuidocjs) {
+      this.yuidocs = DocGenerator(showcaseOptions.yuidocjs);
     }
 
     let remarkableShim = writeFile('/shims/remarkable.js', `define('remarkable', [], function() { return { 'default': Remarkable }; });`);
@@ -80,15 +77,19 @@ module.exports = {
   },
 
   setupPreprocessorRegistry: function(type, registry) {
-    let showcaseOptions = this.getConfig() || {};
+    let showcaseOptions = this.getConfig();
     if (showcaseOptions.enabled) {
       ShowcaseBroccoli.import.apply(this, [type, registry, showcaseOptions]);
     }
   },
 
-  included: function(app, parentAddon) {
-    this._super.included.apply(this, arguments);
+  prismOptions: {
+    'theme': 'coy',
+    'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
+    'plugins': ['toolbar', 'show-language']
+  },
 
+  included: function(app, parentAddon) {
     // Quick fix for add-on nesting
     // https://github.com/aexmachina/ember-cli-sass/blob/v5.3.0/index.js#L73-L75
     // see: https://github.com/ember-cli/ember-cli/issues/3718
@@ -108,12 +109,16 @@ module.exports = {
     // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
     let target = (parentAddon || app);
     this.options = target.options || {};
-    let showcaseConfig = this.getConfig();
-    if (showcaseConfig.enabled) {
+    this.options['ember-prism'] = target.options['ember-prism'] || this.prismOptions;
+    this.options.showcaseConfig = target.options.showcaseConfig || this.getConfig();
+
+    if (this.options.showcaseConfig.enabled) {
       this.ui.writeLine('Generating Component Showcase Documentation...');
-      ShowcaseBroccoli.export(app, showcaseConfig);
+      ShowcaseBroccoli.export(app, this.options.showcaseConfig);
     }
     app.import('vendor/shims/remarkable.js');
     app.import('vendor/documentation.js');
+
+    this._super.included.apply(this, arguments);
   }
 };

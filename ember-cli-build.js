@@ -8,11 +8,6 @@ module.exports = function(defaults) {
     'ember-cli-babel': {
       includePolyfill: true
     },
-    'ember-prism': {
-      'theme': 'coy',
-      'components': ['markup', 'javascript', 'handlebars'], //needs to be an array, or undefined.
-      'plugins': ['toolbar', 'show-language']
-    },
     sassOptions: {
       includePaths: [
         path.join(__dirname, 'node_modules', 'font-awesome', 'scss')
