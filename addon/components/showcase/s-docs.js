@@ -1,12 +1,12 @@
-/* eslint-disable no-console */
-import { alias } from '@ember/object/computed';
-import { isEmpty } from '@ember/utils';
-import { computed } from '@ember/object';
 import Component from '@ember/component';
-import Docs from 'documentation';
+import { alias } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import { inject as service } from '@ember/service';
 import layout from '../../templates/components/showcase/s-docs';
 
 const SampleDocComponent = Component.extend({
+  documentation: service(),
   layout: layout,
 	classNames: ['sample-docs'],
 	src: computed('params.[]', function() {
@@ -16,14 +16,9 @@ const SampleDocComponent = Component.extend({
 		}
 	}),
 	api: null,
-	classDocs: computed('api', function() {
+	classDocs: computed('api', 'documentation', function() {
 		let className = this.get('api');
-		if (className && Docs.classes && Docs.classes[className]) {
-			return Docs.classes[className];
-		} else {
-			if (!isEmpty(className)) console.warn(`No class documentation found for '${className}'`);
-			return {};
-		}
+    return this.get('documentation').getClass(className);
 	}),
 	apiDocs: alias('classDocs.classitems')
 });

@@ -27,6 +27,13 @@ const ComponentShowcase = Component.extend({
   simple: false,
   description: '',
   selfHBS: '',
+
+  /**
+   * A flag for displaying the entire documentation block's content, not just the example section.
+   *
+   * @property selfReflection
+   * @type {Boolean}
+   */
   selfReflection: false,
 
   sourceId: computed('elementId', function() {
