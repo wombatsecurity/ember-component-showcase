@@ -1,6 +1,5 @@
 'use strict';
 const path = require('path');
-const fs = require('fs');
 const DocGenerator = require('./lib/documentation');
 const Funnel = require('broccoli-funnel');
 const ShowcaseBroccoli = require('./lib/broccoli-showcase');
@@ -8,7 +7,7 @@ const writeFile = require('broccoli-file-creator');
 const MergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
-  name: 'ember-component-showcase',
+  name: require('./package').name,
   yuidocs: null,
 
   // TODO: add support for genuine yuidocs
@@ -94,8 +93,6 @@ module.exports = {
   },
 
   included: function(app, parentAddon) {
-    this._super.included.apply(this, arguments);
-
     // Quick fix for add-on nesting
     // https://github.com/aexmachina/ember-cli-sass/blob/v5.3.0/index.js#L73-L75
     // see: https://github.com/ember-cli/ember-cli/issues/3718
@@ -127,5 +124,7 @@ module.exports = {
     app.import('vendor/lunr/lunr.js', {
       using: [{ transformation: 'amd', as: 'lunr' }]
     });
+
+    this._super.included.apply(this, arguments);
   }
 };

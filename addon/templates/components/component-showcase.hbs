@@ -1,9 +1,9 @@
-<div class="card" id="{{anchorId}}">
+<div class="card" id={{anchorId}}>
   <div class="card-content">
     <h2 class="card-title">
       {{title}}
       <span class="pull-right">
-        {{#link-to currentPath (query-params anchor=anchorId) class='btn btn-lg btn-square btn-link'}}
+        {{#link-to currentPath (query-params anchor=anchorId) class="btn btn-lg btn-square btn-link"}}
           {{showcase/s-icon "link"}}
         {{/link-to}}
       </span>
@@ -19,9 +19,9 @@
         {{yield (hash
                   src=src
                   hbs=hbs
-                  docs=(component 'showcase/s-docs' sample=this)
-                  example=(component 'showcase/s-example' sample=this)
-                  source=(component 'showcase/s-source' sample=this showSelfHBS=selfReflection)
+                  docs=(component "showcase/s-docs" sample=this)
+                  example=(component "showcase/s-example" sample=this)
+                  source=(component "showcase/s-source" sample=this showSelfHBS=selfReflection)
                 )}}
       {{/if}}
     {{else}}

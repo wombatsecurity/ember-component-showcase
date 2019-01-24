@@ -50,3 +50,8 @@ Usually you will want a little more documentation along with your samples.  Conf
 
 * HBS = Ember-CLI hooks + Regex + Glimmer AST traversal
 * HTML = Ember Component hooks + jQuery selectors
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
