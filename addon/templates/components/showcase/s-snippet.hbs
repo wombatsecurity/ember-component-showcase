@@ -1,7 +1,7 @@
 {{#if sourceId}}
-	{{#showcase/s-tabs (array (hash title=title language=language icon=icon) ) as |tab| }}
-		{{from-elsewhere name=sourceId}}
-	{{/showcase/s-tabs}}
+  {{#showcase/s-tabs (array (hash title=title language=language icon=icon)) }}
+    {{from-elsewhere name=sourceId}}
+  {{/showcase/s-tabs}}
 {{else}}
-	{{showcase/s-tabs (array (hash title=title language=language src=src icon=icon) ) }}
+  {{showcase/s-tabs (array (hash title=title language=language src=src icon=icon) ) }}
 {{/if}}

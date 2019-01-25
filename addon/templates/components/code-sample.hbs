@@ -1,7 +1,14 @@
-<code class={{languageClass}}>
-  {{#if hasBlock}}
-    {{yield}}
-  {{else}}
-    {{src}}
-  {{/if}}
-</code>
+{{#if hasBlock}}
+  <pre data-language={{language}}>
+    <code class={{languageClass}}>
+      {{yield}}
+    </code>
+  </pre>
+{{else}}
+  <pre data-language={{language}}>
+    <code class={{languageClass}}>
+      {{src}}
+    </code>
+  </pre>
+{{/if}}
+

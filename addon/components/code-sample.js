@@ -1,16 +1,25 @@
-/* global html_beautify js_beautify */
-import CodeBlock from 'ember-prism/components/code-block';
+/* global html_beautify js_beautify Prism */
+import Component from '@ember/component';
 import layout from '../templates/components/code-sample';
+import { computed } from '@ember/object';
 
-export default CodeBlock.extend({
+export default Component.extend({
   layout: layout,
-  language: 'Markup',
-	attributeBindings: ['language:data-language'],
+  // classNames: ['code-block'],
+  language: 'markup',
 	src: '',
+
+  languageClass: computed('language', function() {
+    return `language-${this.get('language')}`;
+  }),
+
+  getElement() {
+    return this.element.querySelector('[class*=language-]');
+  },
 
 	// clean up Ember droppings
 	cleanEmberHTML(html) {
-		let $element = document.createElement('div')
+		let $element = document.createElement('div');
 		$element.innerHTML = html;
 		$element = $element.querySelector('code');
 
@@ -36,7 +45,7 @@ export default CodeBlock.extend({
 		return $element.innerHTML;
 	},
 
-	didInsertElement() {
+  didInsertElement() {
 		let wrapper = this.getElement();
 		let html = wrapper.innerHTML.trim();
 		let language = this.get('language').toLowerCase();
@@ -44,7 +53,7 @@ export default CodeBlock.extend({
 		if (language === 'markup') {
 			html = wrapper.parentNode.innerHTML;
 
-			html = html.replace(/&lt;/g, '<'); 			// Temporarily remove 
+			html = html.replace(/&lt;/g, '<'); 			// Temporarily remove
 			html = html.replace(/&gt;/g, '>'); 			// escaping for tags
 			html = html.replace(/<!--.*?-->/g, ''); // and ALL html comments
 			html = html.replace(/\n/g, '');					// and ALL newlines
@@ -98,8 +107,6 @@ export default CodeBlock.extend({
     }
 
 		wrapper.innerHTML = html;
-
-		// apply prism styling
-		this._super(...arguments);
+    Prism.highlightElement(this.getElement());
 	}
 });

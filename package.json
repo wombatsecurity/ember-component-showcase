@@ -33,7 +33,7 @@
     "ember-cli-htmlbars-inline-precompile": "^2.1.0",
     "ember-elsewhere": "1.0.5",
     "ember-lodash": "4.19.4",
-    "ember-prism": "github:nmcclay/ember-prism",
+    "ember-prism": "^0.4.0",
     "js-beautify": "^1.8.9",
     "lunr": "^2.3.3",
     "node-uuid": "^1.4.8",
@@ -42,6 +42,7 @@
     "yuidocjs": "^0.10.2"
   },
   "devDependencies": {
+    "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.1.0",

@@ -1,11 +1,9 @@
-import { alias } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../../templates/components/showcase/s-example';
 
 export default Component.extend({
   layout: layout,
-	sample: null,
-	sourceId: alias('sample.sourceId'),
+	sourceId: null,
 	src: '',
 
 	didInsertElement() {

@@ -1,7 +1,9 @@
 <nav class="tab-nav">
-	{{#each tabs as |tab|}}
-		<span {{action "setSelectedTab" tab}} class="tab-nav-item {{if tab.active 'active'}}">{{showcase/s-icon 'code'}} {{tab.title}}</span>
-	{{/each}}
+  {{#each tabs as |tab|}}
+    <span role="button" onclick={{action "setSelectedTab" tab}} class="tab-nav-item {{if tab.active "active"}}">
+      {{showcase/s-icon "code"}} {{tab.title}}
+    </span>
+  {{/each}}
 </nav>
 
 {{#each tabs as |tab|}}

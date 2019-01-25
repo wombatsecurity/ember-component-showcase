@@ -22,6 +22,7 @@ const ComponentShowcase = Component.extend({
    * @type {User}
    */
   title: '',
+  src: '',
   hbs: '', // where the hbs source code will end up from ast hook
   showcaseId: null, // uuid created by template preprocessor hook
   simple: false,
