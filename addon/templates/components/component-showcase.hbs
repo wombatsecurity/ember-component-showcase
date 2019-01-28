@@ -1,27 +1,36 @@
-<div class="card" id="{{anchorId}}">
+<div class="card" id={{anchorId}}>
   <div class="card-content">
     <h2 class="card-title">
       {{title}}
       <span class="pull-right">
-        {{#link-to currentPath (query-params anchor=anchorId) class='btn btn-lg btn-square btn-link'}}
+        {{#link-to currentPath (query-params anchor=anchorId) class="btn btn-lg btn-square btn-link"}}
           {{showcase/s-icon "link"}}
         {{/link-to}}
       </span>
     </h2>
     {{#if hasBlock}}
       {{#if simple}}
-        {{showcase/s-docs description sample=this}}
-        {{#showcase/s-example sample=this}}
+        {{showcase/s-docs description}}
+        {{#showcase/s-example sourceId=sourceId}}
           {{yield}}
         {{/showcase/s-example}}
-        {{showcase/s-source sample=this showSelfHBS=selfReflection}}
+        {{showcase/s-source  src=src
+                             hbs=hbs
+                             sourceId=sourceId
+                             selfHBS=selfHBS
+                             showSelfHBS=selfReflection}}
       {{else}}
         {{yield (hash
                   src=src
                   hbs=hbs
-                  docs=(component 'showcase/s-docs' sample=this)
-                  example=(component 'showcase/s-example' sample=this)
-                  source=(component 'showcase/s-source' sample=this showSelfHBS=selfReflection)
+                  docs=(component "showcase/s-docs")
+                  example=(component "showcase/s-example" sourceId=sourceId)
+                  source=(component "showcase/s-source"
+                    src=src
+                    hbs=hbs
+                    sourceId=sourceId
+                    selfHBS=selfHBS
+                    showSelfHBS=selfReflection)
                 )}}
       {{/if}}
     {{else}}

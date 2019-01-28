@@ -1,15 +1,15 @@
 import { computed } from '@ember/object';
-import { alias, not } from '@ember/object/computed';
+import { not } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../../templates/components/showcase/s-source';
 
 const ShowcaseSource = Component.extend({
   layout: layout,
 	sample: null,
-	sourceId: alias('sample.sourceId'),
-	src: alias('sample.src'),
-  hbs: alias('sample.hbs'),
-  selfHBS: alias('sample.selfHBS'),
+	sourceId: null,
+	src: null,
+  hbs: '',
+  selfHBS: '',
   hideHTML: true,
   showHTML: not('hideHTML'),
   htmlTab: computed('sourceId', function() {

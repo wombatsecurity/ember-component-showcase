@@ -1,6 +1,5 @@
 'use strict';
 const path = require('path');
-const fs = require('fs');
 const DocGenerator = require('./lib/documentation');
 const Funnel = require('broccoli-funnel');
 const ShowcaseBroccoli = require('./lib/broccoli-showcase');
@@ -8,7 +7,7 @@ const writeFile = require('broccoli-file-creator');
 const MergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
-  name: 'ember-component-showcase',
+  name: require('./package').name,
   yuidocs: null,
 
   // TODO: add support for genuine yuidocs
@@ -75,7 +74,9 @@ module.exports = {
 
     let remarkableShim = writeFile('/shims/remarkable.js', `define('remarkable', [], function() { return { 'default': Remarkable }; });`);
     let documentationShim = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
-    return new MergeTrees([remarkableShim, documentationShim], { overwrite: true });
+    let lunrTree = new Funnel(path.dirname(require.resolve('lunr/package.json')), { destDir: 'lunr' });
+
+    return new MergeTrees([lunrTree, remarkableShim, documentationShim], { overwrite: true });
   },
 
   setupPreprocessorRegistry: function(type, registry) {
@@ -120,6 +121,9 @@ module.exports = {
     }
     app.import('vendor/shims/remarkable.js');
     app.import('vendor/documentation.js');
+    app.import('vendor/lunr/lunr.js', {
+      using: [{ transformation: 'amd', as: 'lunr' }]
+    });
 
     this._super.included.apply(this, arguments);
   }
