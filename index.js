@@ -70,6 +70,8 @@ module.exports = {
     let showcaseOptions = this.getConfig();
     if (showcaseOptions.enabled && showcaseOptions.yuidocjs) {
       this.yuidocs = DocGenerator(showcaseOptions.yuidocjs);
+    } else {
+      this.yuidocs = { 'default': false };
     }
 
     let remarkableShim = writeFile('/shims/remarkable.js', `define('remarkable', [], function() { return { 'default': Remarkable }; });`);

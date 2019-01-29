@@ -8,7 +8,7 @@ export default Service.extend({
 
   init() {
     this._super(...arguments);
-    this.index = this.generateIndex(Docs.classitems);
+    if (Docs) this.index = this.generateIndex(Docs.classitems);
   },
 
   index: null,
@@ -38,5 +38,4 @@ export default Service.extend({
       return {};
     }
   }
-
 });
