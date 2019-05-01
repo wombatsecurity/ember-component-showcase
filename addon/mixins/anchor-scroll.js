@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { schedule } from '@ember/runloop';
 import { observer } from '@ember/object';
 import Mixin from '@ember/object/mixin';
@@ -15,10 +14,14 @@ export default Mixin.create({
     schedule('afterRender', this, function() {
       let anchor = this.get('anchor');
       if (anchor) {
-        let el = $(`#${anchor}`);
-        if (el && el.offset()) {
+        let el = document.querySelector(`#${anchor}`);
+        if (el) {
           let fromTop = 90;
-          $('html, body').animate({ scrollTop: el.offset().top - fromTop});
+          document.querySelector('html, body').scrollTo({
+            top: el.offsetTop - fromTop,
+            left: 0,
+            behavior: 'smooth'
+          });
         }
       }
     });
