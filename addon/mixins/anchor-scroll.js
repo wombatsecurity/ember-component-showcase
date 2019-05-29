@@ -1,5 +1,4 @@
 import { schedule } from '@ember/runloop';
-import { observer } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
@@ -10,8 +9,14 @@ export default Mixin.create({
       scope: 'controller'
     }
   },
-  anchorChanged: observer('anchor', function() {
-    schedule('afterRender', this, function() {
+
+  init: function() {
+    this._super();
+    schedule('afterRender', () => this.send('scrollToAnchor'));
+  },
+
+  actions: {
+    scrollToAnchor() {
       let anchor = this.get('anchor');
       if (anchor) {
         let el = document.querySelector(`#${anchor}`);
@@ -24,6 +29,6 @@ export default Mixin.create({
           });
         }
       }
-    });
-  }),
+    }
+  }
 });
