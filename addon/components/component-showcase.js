@@ -2,6 +2,7 @@ import { isEmpty } from '@ember/utils';
 import { getOwner } from '@ember/application';
 import { dasherize } from '@ember/string';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import layout from '../templates/components/component-showcase';
 
@@ -13,6 +14,7 @@ import layout from '../templates/components/component-showcase';
  */
 const ComponentShowcase = Component.extend({
   layout: layout,
+  router: service(),
   currentPath: '',
   tagName: 'section',
   /**
@@ -49,7 +51,7 @@ const ComponentShowcase = Component.extend({
     let currentApplication = getOwner(this).lookup('route:application');
     if (!isEmpty(currentApplication)) {
       // Ember voodoo to get current route name
-      this.set('currentPath', currentApplication._router.currentRouteName);
+      this.set('currentPath', this.router.currentRouteName);
     }
 
     this._super(...arguments);
