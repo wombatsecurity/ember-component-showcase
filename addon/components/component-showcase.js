@@ -49,7 +49,7 @@ const ComponentShowcase = Component.extend({
     let currentApplication = getOwner(this).lookup('route:application');
     if (!isEmpty(currentApplication)) {
       // Ember voodoo to get current route name
-      this.set('currentPath', currentApplication.get('controller.currentRouteName'));
+      this.set('currentPath', currentApplication._router.currentRouteName);
     }
 
     this._super(...arguments);
