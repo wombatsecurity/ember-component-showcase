@@ -1,5 +1,4 @@
 import { computed } from '@ember/object';
-import { not } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../../templates/components/showcase/s-source';
 
@@ -11,32 +10,56 @@ const ShowcaseSource = Component.extend({
   hbs: '',
   selfHBS: '',
   hideHTML: true,
-  showHTML: not('hideHTML'),
+  showHTML: computed('hideHTML', {
+    get() {
+      if (this._showHTML) return this._showHTML;
+      return !this.hideHTML;
+    },
+    set(key, value) {
+      return this._showHTML = value;
+    }
+  }),
   htmlTab: computed('sourceId', function() {
     return {
       title: "markup.html",
       language: "Markup",
-      sourceId: this.get('sourceId'),
+      sourceId: this.sourceId,
       active: false
     }
   }),
   hideHBS: false,
-  showHBS: not('hideHBS'),
+  showHBS: computed('hideHBS', {
+    get() {
+      if (this._showHBS) return this._showHBS;
+      return !this.hideHBS;
+    },
+    set(key, value) {
+      return this._showHBS = value;
+    }
+  }),
   hbsTab: computed('hbs', function() {
     return {
       title: "example.hbs",
       language: "Handlebars",
-      src: this.get('hbs'),
+      src: this.hbs,
       active: false
     }
   }),
   hideSelfHBS: true,
-  showSelfHBS: not('hideSelfHBS'),
+  showSelfHBS: computed('hideSelfHBS', {
+    get() {
+      if (this._showSelfHBS) return this._showSelfHBS;
+      return !this.hideSelfHBS;
+    },
+    set(key, value) {
+      return this._showSelfHBS = value;
+    }
+  }),
   selfHBSTab: computed('selfHBS', function() {
     return {
       title: "showcase.hbs",
       language: "Handlebars",
-      src: this.get('selfHBS'),
+      src: this.selfHBS,
       active: false
     }
   }),
