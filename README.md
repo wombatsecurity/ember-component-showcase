@@ -46,6 +46,15 @@ Usually you will want a little more documentation along with your samples.  Conf
 {{/component-showcase}}
 ```
 
+## Usage with nested addons
+the `setupPreprocessorRegistry` hook will only act on its [direct parent's content](https://github.com/ember-cli/ember-cli/issues/6670).  
+So to traverse for example a 'dummy' app's templates, you must manually import it into `ShowcaseBroccoli` by adding your own hook to `index.js`:
+```
+  setupPreprocessorRegistry: function(type, registry) {
+    ShowcaseBroccoli.import(registry);
+  },
+```
+
 ## How does it work?
 
 * HBS = Ember-CLI hooks + Regex + Glimmer AST traversal
