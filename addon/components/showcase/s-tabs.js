@@ -16,7 +16,8 @@ const SampleTabs = Component.extend({
     // for some reason the array helper wraps our input into another array, this correct this behavior
     if (tabsInput && tabsInput.length > 0 && tabsInput[0].length > 0) {
       tabsInput[0].forEach(function (tab) {
-        tab.id = `${elementId}-${camelize(tab.title)}`.toLowerCase();
+        tab.id = `${elementId}-${camelize(tab.title.trim())}`.toLowerCase();
+        if (tab.language) tab.language = tab.language.trim().toLowerCase();
         tabs.push(EmberObject.create(tab));
       });
     }

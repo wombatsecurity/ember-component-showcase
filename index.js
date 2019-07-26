@@ -26,23 +26,11 @@ module.exports = {
   // },
 
   // 1) project config, 2) build config, 3) default config
-  getConfig: function() {
+  getShowcaseConfig: function() {
     const projectConfig = this.project.config(process.env.EMBER_ENV)['showcaseConfig'];
     if (projectConfig) return projectConfig;
     if (this.options && this.options.showcaseConfig) return this.options.showcaseConfig;
-    return {
-      enabled: true,
-      yuidocjs: {
-        "enabled": true,
-        "writeJSON": false,
-        "paths": ["addon", "app"],
-        "exclude": "vendor",
-        "linkNatives": true,
-        "quiet": true,
-        "parseOnly": true,
-        "lint": false
-      }
-    };
+    return false;
   },
 
   treeForAddon() {
@@ -67,8 +55,8 @@ module.exports = {
   },
 
   treeForVendor: function() {
-    let showcaseOptions = this.getConfig();
-    if (showcaseOptions.enabled && showcaseOptions.yuidocjs) {
+    let showcaseOptions = this.getShowcaseConfig();
+    if (showcaseOptions && showcaseOptions.enabled && showcaseOptions.yuidocjs) {
       this.yuidocs = DocGenerator(showcaseOptions.yuidocjs);
     } else {
       this.yuidocs = { 'default': false };
@@ -82,14 +70,13 @@ module.exports = {
   },
 
   setupPreprocessorRegistry: function(type, registry) {
-    let showcaseOptions = this.getConfig();
-    if (showcaseOptions.enabled && type === 'parent') {
+    let showcaseOptions = this.getShowcaseConfig();
+    if (showcaseOptions && showcaseOptions.enabled && type === 'parent') {
       ShowcaseBroccoli.import(registry, showcaseOptions);
     }
   },
 
   prismOptions: {
-    'theme': 'coy',
     'components': ['markup', 'javascript', 'handlebars', 'markup-templating'], //needs to be an array, or undefined.
     'plugins': ['toolbar', 'show-language']
   },
@@ -100,9 +87,9 @@ module.exports = {
     let target = (parentAddon || app);
     this.options = target.options || {};
     this.options['ember-prism'] = target.options['ember-prism'] || this.prismOptions;
-    this.options.showcaseConfig = target.options.showcaseConfig || this.getConfig();
+    this.options.showcaseConfig = target.options.showcaseConfig || this.getShowcaseConfig();
 
-    if (this.options.showcaseConfig.enabled) {
+    if (this.options.showcaseConfig && this.options.showcaseConfig.enabled) {
       this.ui.writeLine('Generating Component Showcase Documentation...');
       ShowcaseBroccoli.export(app, this.options.showcaseConfig);
     }

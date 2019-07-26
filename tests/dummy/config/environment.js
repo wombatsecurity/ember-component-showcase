@@ -22,7 +22,7 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    'ember-component-showcase': {
+    showcaseConfig: {
       'enabled': true,
       'yuidocjs': {
         "enabled": true,

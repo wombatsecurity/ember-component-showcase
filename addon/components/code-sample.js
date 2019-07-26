@@ -1,27 +1,67 @@
 /* global html_beautify js_beautify Prism */
-import Component from '@ember/component';
 import layout from '../templates/components/code-sample';
 import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import CodeBlock from 'ember-prism/components/code-base';
+import { htmlSafe } from '@ember/template';
 
-export default Component.extend({
+export default CodeBlock.extend({
   layout: layout,
-  // classNames: ['code-block'],
-  language: 'markup',
-	src: '',
+  classNames: ['code-block', 'code-toolbar'],
 
-  languageClass: computed('language', function() {
-    return `language-${this.get('language')}`;
+  src: alias('code'),
+
+  languageLabel: computed('language', function() {
+    const language = this.get('language');
+    switch(language) {
+      case 'html':
+        return 'HTML';
+      case 'markup':
+        return 'HTML';
+      case 'handlebars':
+        return 'HBS';
+      case 'javascript':
+        return 'JavaScript';
+      case 'json':
+        return 'JSON';
+      default:
+        return language;
+    }
   }),
 
-  getElement() {
-    return this.element.querySelector('[class*=language-]');
-  },
+  prismCode: computed('code', 'language', function() {
+    const code = this.get('hasBlock') ? this.getBlockContent() : this.get('code');
+    if (!code) throw new Error('Missing code for showcase!');
 
-	// clean up Ember droppings
+    switch(this.get('language')) {
+      case 'html':
+        return this.formatHTML(code);
+      case 'markup':
+        return this.formatHTML(code);
+      case 'handlebars':
+        return this.formatHtmlBars(code);
+      case 'javascript':
+        return this.formatJavaScript(code);
+      case 'json':
+        return this.formatJavaScript(code);
+      default:
+        return code.trim();
+    }
+  }),
+
+  safePrismCode: computed('prismCode', 'language', function () {
+    const language = this.get('language');
+    const grammar = Prism.languages[language];
+    if (!grammar) throw new Error(`Missing Prism grammar for ${language}. Please try updating your environment.js and try again.`);
+
+    let code = this.get('prismCode');
+    const prismCode = Prism.highlight(code, grammar, language);
+    return htmlSafe(prismCode);
+  }),
+
 	cleanEmberHTML(html) {
 		let $element = document.createElement('div');
 		$element.innerHTML = html;
-		$element = $element.querySelector('code');
 
 		// examples: id="ember123" class="ember-view" data-ember-action="123" data-ember-action-345="345"
 		Array.from($element.querySelectorAll('[id]')).filter(function(el) {
@@ -45,68 +85,36 @@ export default Component.extend({
 		return $element.innerHTML;
 	},
 
-  didInsertElement() {
-		let wrapper = this.getElement();
-		let html = wrapper.innerHTML.trim();
-		let language = this.get('language').toLowerCase();
+  formatHtmlBars(hbs) {
+    // currently there is no good way to format inline handlebars content: https://github.com/beautify-web/js-beautify/issues/1173
+    return html_beautify(hbs, {
+      unformatted: ['i'],
+      indent_handlebars: true,
+      indent_size: 2,
+      wrap_line_length: 120
+    });
+  },
 
-		if (language === 'markup') {
-			html = wrapper.parentNode.innerHTML;
+  formatJavaScript(js) {
+    return js_beautify(js, {
+      indent_size: 2,
+      wrap_line_length: 120
+    });
+  },
 
-			html = html.replace(/&lt;/g, '<'); 			// Temporarily remove
-			html = html.replace(/&gt;/g, '>'); 			// escaping for tags
-			html = html.replace(/<!--.*?-->/g, ''); // and ALL html comments
-			html = html.replace(/\n/g, '');					// and ALL newlines
+  formatHTML(html) {
+    html = html.replace(/<!--.*?-->/g, ''); // remove ALL inline html comments
 
-			// Remove HTML Ember Droppings
-			html = this.cleanEmberHTML(html);
+    // Remove HTML Ember Droppings
+    html = this.cleanEmberHTML(html);
 
-			// reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
-			html = html_beautify(html, {
-				unformatted: ['i'],
-				indent_size: 2,
-				wrap_line_length: 100
-			});
+    // reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
+    html = html_beautify(html, {
+      unformatted: ['i'],
+      indent_size: 2,
+      wrap_line_length: 120
+    });
 
-			// return tag escaping for proper rendering in HTML
-			html = html.replace(/</g, '&lt;');
-			html = html.replace(/>/g, '&gt;');
-
-			// set our code element's markup to our newly reformatted version
-			wrapper.innerHTML = html;
-		}
-
-		if (language === 'javascript' || language === 'json') {
-      // Remove ALL newlines
-      html = html.replace(/\n/g, '');
-      // reindent and align js whitespace
-      html = js_beautify(html, {
-        indent_size: 2,
-        wrap_line_length: 100
-      });
-    }
-
-    if (language === 'handlebars') {
-      // temporarily remove escaping for tags
-      html = html.replace(/&lt;/g, '<');
-      html = html.replace(/&gt;/g, '>');
-
-      // reindent and align html whitespace, uses js-beautify options: https://github.com/beautify-web/js-beautify#css--html
-      html = html_beautify(html, {
-        unformatted: ['i'],
-        indent_handlebars: true,
-        indent_size: 2,
-        wrap_line_length: 100
-      });
-
-      // currently there is no good way to format inline handlebars content: https://github.com/beautify-web/js-beautify/issues/1173
-      // let handlebarsMatches = this.getMatches(html, new RegExp('{{([^#\/{]+)}}', 'g'));
-
-      html = html.replace(/</g, '&lt;');
-      html = html.replace(/>/g, '&gt;');
-    }
-
-		wrapper.innerHTML = html;
-    Prism.highlightElement(this.getElement());
-	}
+    return html;
+  }
 });
