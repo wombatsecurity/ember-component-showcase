@@ -41,9 +41,11 @@
 
           <div class="sample-docs-api-description">
             {{markdown-text text=doc.description}}
-            <div>
-              <small>Defined in <a target="_blank" rel="noopener" href={{doc.github}}>{{doc.file}}:{{doc.line}}</a></small>
-            </div>
+            {{#if doc.github}}
+              <div>
+                <small>Defined in <a target="_blank" rel="noopener" href={{doc.github}}>{{doc.file}}:{{doc.line}}</a></small>
+              </div>
+            {{/if}}
             {{#each doc.examples as |example|}}
               {{showcase/s-snippet src=example.content title=example.title language=example.language}}
             {{/each}}
