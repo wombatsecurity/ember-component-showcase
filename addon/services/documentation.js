@@ -8,9 +8,14 @@ export default Service.extend({
 
   init() {
     this._super(...arguments);
-    if (Docs) this.index = this.generateIndex(Docs.classitems);
+
+    if (Docs) {
+      this.classes = Docs.classitems;
+      this.index = this.generateIndex(this.classes);
+    }
   },
 
+  classes: null,
   index: null,
   generateIndex(items) {
     return lunr(function() {
