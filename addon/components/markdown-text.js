@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from "@ember/object";
 import { htmlSafe } from "@ember/string";
-import Remarkable from 'remarkable';
+import { Remarkable } from 'remarkable';
 import hbs from 'htmlbars-inline-precompile';
 import layout from '../templates/components/markdown-text';
 
@@ -18,7 +18,6 @@ export default Component.extend({
   parsedMarkdownUnsafe: computed('text', 'html', 'typographer', 'linkify', 'linkTarget', function () {
     var md = new Remarkable({
       typographer: this.get('typographer'),
-      linkify: this.get('linkify'),
       linkTarget: this.get('linkTarget'),
       html: this.get('html')
     });

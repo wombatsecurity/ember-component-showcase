@@ -62,11 +62,11 @@ module.exports = {
       this.yuidocs = { 'default': false };
     }
 
-    let remarkableShim = writeFile('/shims/remarkable.js', `define('remarkable', [], function() { return { 'default': Remarkable }; });`);
+    let remarkableTree = new Funnel(path.dirname(require.resolve('remarkable/package.json')), { destDir: 'remarkable' });
     let documentationShim = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
     let lunrTree = new Funnel(path.dirname(require.resolve('lunr/package.json')), { destDir: 'lunr' });
 
-    return new MergeTrees([lunrTree, remarkableShim, documentationShim], { overwrite: true });
+    return new MergeTrees([lunrTree, remarkableTree, documentationShim], { overwrite: true });
   },
 
   setupPreprocessorRegistry: function(type, registry) {
@@ -93,7 +93,10 @@ module.exports = {
       this.ui.writeLine('Generating Component Showcase Documentation...');
       ShowcaseBroccoli.export(app, this.options.showcaseConfig);
     }
-    app.import('vendor/shims/remarkable.js');
+
+    app.import('vendor/remarkable/dist/remarkable.js', {
+      using: [{ transformation: 'amd', as: 'remarkable' }]
+    });
     app.import('vendor/documentation.js');
     app.import('vendor/lunr/lunr.js', {
       using: [{ transformation: 'amd', as: 'lunr' }]
