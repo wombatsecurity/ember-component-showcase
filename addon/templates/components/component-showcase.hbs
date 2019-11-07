@@ -1,13 +1,13 @@
-<div class="card" id={{anchorId}}>
-  <div class="card-content">
-    <h2 class="card-title">
-      {{title}}
-      <span class="pull-right">
-        {{#link-to currentPath (query-params anchor=anchorId) class="btn btn-lg btn-square btn-link"}}
-          {{showcase/s-icon "link"}}
-        {{/link-to}}
-      </span>
-    </h2>
+<div class="showcase" id={{anchorId}}>
+  <h2 class="showcase-title">
+    {{title}}
+    <span class="pull-right">
+      {{#link-to currentPath (query-params anchor=anchorId) class="showcase-btn"}}
+        {{showcase/s-icon "link"}}
+      {{/link-to}}
+    </span>
+  </h2>
+  <div class="showcase-body">
     {{#if hasBlock}}
       {{#if simple}}
         {{showcase/s-docs description}}

@@ -7,7 +7,7 @@ import { htmlSafe } from '@ember/template';
 
 export default CodeBlock.extend({
   layout: layout,
-  classNames: ['code-block', 'code-toolbar'],
+  classNames: ['code-block', 'code-toolbar', 'showcase-code'],
 
   src: alias('code'),
 

@@ -2,14 +2,16 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 const ShowcaseIcon = Component.extend({
-  tagName: 'i',
+  tagName: 'span',
+  classNameBindings: ['iconClass', 'iconClassModifier'],
+  attributeBindings: ['ariaHidden:aria-hidden'],
+  ariaHidden: 'true',
+
   icon: null,
-  ariaHidden: "true",
-  iconClass: computed('icon', function() {
-    return `fa fa-${this.get('icon')}`;
-  }),
-  classNameBindings: ['iconClass'],
-  attributeBindings: ['ariaHidden:aria-hidden']
+  iconClass: 'showcase-icon',
+  iconClassModifier: computed('iconClass', 'icon', function() {
+    return `${this.get('iconClass')}-${this.get('icon')}`;
+  })
 });
 
 ShowcaseIcon.reopenClass({

@@ -27,6 +27,23 @@ showcaseConfig: {
   }
 ```
 
+## Styling
+The component and sub-components elements are prefixed with `.showcase` for ease of styling.
+If you wish to use an icon font set such as Font-Awesome, the easiest option is to simply extend the styles with the appropriate icon font selectors.
+```
+.showcase-icon {
+  @extend .fa;
+}
+
+.showcase-icon-code {
+  @extend .fa-code;
+}
+
+.showcase-icon-link {
+  @extend .fa-link;
+}
+```
+
 ## Simple Usage Examples
 If you just want to see your HBS source code, simply wrap a component with the component-showcase block.
 ```
@@ -47,13 +64,15 @@ Usually you will want a little more documentation along with your samples.  Conf
 ```
 
 ## Usage with nested addons
-the `setupPreprocessorRegistry` hook will only act on its [direct parent's content](https://github.com/ember-cli/ember-cli/issues/6670).  
+The `setupPreprocessorRegistry` hook will only act on its [direct parent's content](https://github.com/ember-cli/ember-cli/issues/6670).  
 So to traverse for example a 'dummy' app's templates, you must manually import it into `ShowcaseBroccoli` by adding your own hook to `index.js`:
 ```
   setupPreprocessorRegistry: function(type, registry) {
     ShowcaseBroccoli.import(registry);
   },
 ```
+
+
 
 ## How does it work?
 
