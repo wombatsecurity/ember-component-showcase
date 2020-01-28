@@ -27,6 +27,7 @@ showcaseConfig: {
   }
 ```
 
+<<<<<<< HEAD
 ## Styling
 The component and sub-components elements are prefixed with `.showcase` for ease of styling.
 If you wish to use an icon font set such as Font-Awesome, the easiest option is to simply extend the styles with the appropriate icon font selectors.
@@ -34,6 +35,11 @@ If you wish to use an icon font set such as Font-Awesome, the easiest option is 
 .showcase-icon {
   @extend .fa;
 }
+=======
+* Ember.js v3.4 or above
+* Ember CLI v2.13 or above
+* Node.js v8 or above
+>>>>>>> 905252c... v3.10.1...v3.12.0
 
 .showcase-icon-code {
   @extend .fa-code;
