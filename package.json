@@ -78,6 +78,7 @@
     "configPath": "tests/dummy/config"
   },
   "resolutions": {
-    "request": "2.87.0"
+    "request": "2.87.0",
+    "clean-css": "4.2.1"
   }
 }
