@@ -7,6 +7,10 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 * Install the ember addon: `ember install ember-component-showcase`
 * Add `ember-cli-htmlbars-inline-precompile` and `ember-cli-htmlbars` to the `dependencies section` of your application.  Adding them to `devDependencies` will not work.
 
+* Ember.js v3.12 or above
+* Ember CLI v2.13 or above
+* Node.js v10 or above
+
 ## Configuration
 
 Provide a custom showcaseConfig to your environment.js or ember-cli-build.js:
@@ -27,7 +31,6 @@ showcaseConfig: {
   }
 ```
 
-<<<<<<< HEAD
 ## Styling
 The component and sub-components elements are prefixed with `.showcase` for ease of styling.
 If you wish to use an icon font set such as Font-Awesome, the easiest option is to simply extend the styles with the appropriate icon font selectors.
@@ -35,11 +38,6 @@ If you wish to use an icon font set such as Font-Awesome, the easiest option is 
 .showcase-icon {
   @extend .fa;
 }
-=======
-* Ember.js v3.4 or above
-* Ember CLI v2.13 or above
-* Node.js v8 or above
->>>>>>> 905252c... v3.10.1...v3.12.0
 
 .showcase-icon-code {
   @extend .fa-code;
@@ -77,8 +75,6 @@ So to traverse for example a 'dummy' app's templates, you must manually import i
     ShowcaseBroccoli.import(registry);
   },
 ```
-
-
 
 ## How does it work?
 
