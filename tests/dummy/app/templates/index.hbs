@@ -43,12 +43,12 @@ export default Ember.Controller.extend({
   <p>Or after them!</p>
 {{/component-showcase}}
 
-{{#component-showcase "Additional Sources" selfReflection=true as |s|}}
+<ComponentShowcase @title="Additional Sources" @selfReflection={{true}} as |s|>
   {{s.docs "You can pass additional source documents into the `source` sub-component, this is useful for explaining component configurations in Routes and Controllers."}}
-  {{#s.example}}
+  <s.example>
     {{showcase/s-icon "user"}}
-  {{/s.example}}
+  </s.example>
   {{s.source (array (hash title="route.js" language="JavaScript" src="import Ember from 'ember';")) showHTML=true}}
-{{/component-showcase}}
+</ComponentShowcase>
 
 {{outlet}}
