@@ -2,11 +2,9 @@ import Component from '@ember/component';
 import { computed } from "@ember/object";
 import { htmlSafe } from "@ember/string";
 import { Remarkable } from 'remarkable';
-import hbs from 'htmlbars-inline-precompile';
-import layout from '../templates/components/markdown-text';
+import _hbs from 'htmlbars-inline-precompile';
 
 export default Component.extend({
-  layout: layout,
   tagName: '',
   text: '',
   typographer: false,
@@ -49,6 +47,6 @@ export default Component.extend({
 
   precompiledTemplate: computed('parsedMarkdownUnsafe', function () {
     const parsedMarkdownUnsafe = this.get('parsedMarkdownUnsafe');
-    return hbs.compile(parsedMarkdownUnsafe, false);
+    return _hbs.compile(parsedMarkdownUnsafe, false);
   })
 });

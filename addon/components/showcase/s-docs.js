@@ -3,11 +3,9 @@ import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { inject as service } from '@ember/service';
-import layout from '../../templates/components/showcase/s-docs';
 
 const SampleDocComponent = Component.extend({
   documentation: service(),
-  layout: layout,
 	classNames: ['sample-docs'],
 	src: computed('params.[]', function() {
 		let params = this.params;

@@ -1,9 +1,7 @@
 import { computed } from '@ember/object';
 import Component from '@ember/component';
-import layout from '../../templates/components/showcase/s-source';
 
 const ShowcaseSource = Component.extend({
-  layout: layout,
 	sample: null,
 	sourceId: null,
 	src: null,

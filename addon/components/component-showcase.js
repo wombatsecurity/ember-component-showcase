@@ -4,7 +4,6 @@ import { dasherize } from '@ember/string';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import layout from '../templates/components/component-showcase';
 
 /**
  * The Component-Showcase documentation component.
@@ -13,7 +12,6 @@ import layout from '../templates/components/component-showcase';
  * @class ComponentShowcase
  */
 const ComponentShowcase = Component.extend({
-  layout: layout,
   router: service(),
   currentPath: '',
   tagName: 'section',

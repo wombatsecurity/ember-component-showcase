@@ -2,10 +2,8 @@ import { camelize } from '@ember/string';
 import { A } from '@ember/array';
 import EmberObject, { computed } from '@ember/object';
 import Component from '@ember/component';
-import layout from '../../templates/components/showcase/s-tabs';
 
 const SampleTabs = Component.extend({
-  layout: layout,
   sourceId: null,
   includeSource: false,
   tabs: computed('tabsInput', function () {
