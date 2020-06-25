@@ -1,23 +1,34 @@
-{{#component-showcase "Simple Showcase" "For simple usage just put your component sample inside the `component-showcase` block." selfReflection=true}}
-  {{showcase/s-icon "bell"}}
-{{/component-showcase}}
+<ComponentShowcase
+  @title="Simple Showcase"
+  @description="For simple usage just put your component sample inside the `component-showcase` block."
+  @selfReflection={{true}}
+>
+  <Showcase::SIcon @icon="bell" />
+</ComponentShowcase>
 
-{{#component-showcase "API documentation" "For simple usage just put your component sample inside the `component-showcase` block." selfReflection=true as |s|}}
-  {{#s.example}}
-  {{/s.example}}
-  {{s.docs api="ComponentShowcase"}}
-{{/component-showcase}}
+<ComponentShowcase @title="API documentation" @description="For simple usage just put your component sample inside the `component-showcase` block." @selfReflection={{true}} as |s|>
+  <s.Example></s.Example>
+  <s.Docs @api="ComponentShowcase" />
+</ComponentShowcase>
 
-{{#component-showcase title="Custom Block Showcase" selfReflection=true as |s|}}
-  {{s.docs "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`."}}
-  {{s.docs "You can have as many source blocks as you'd like, they *automatically compile* from [markdown](https://daringfireball.net/projects/markdown/syntax) for you."}}
-  {{#s.example}}
-    {{#power-select options=countries selected=country onchange=(action "foo") as |country|}}
+<ComponentShowcase @title="Custom Block Showcase" @selfReflection={{true}} as |s|>
+  <s.Docs @params={{array "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`."}} />
+  <s.Docs @params={{array "You can have as many source blocks as you'd like, they *automatically compile* from [markdown](https://daringfireball.net/projects/markdown/syntax) for you."}} />
+
+  <s.Example>
+    <PowerSelect
+      @options={{this.countries}}
+      @selected={{this.country}}
+      @onchange={{fn this.foo}}
+      as |country|
+    >
       {{country.name}}
-    {{/power-select}}
-  {{/s.example}}
+    </PowerSelect>
+  </s.Example>
+
   <p>You can even qualify your examples with any other markup you want.</p>
-  {{s.source (array (hash title="route.js" language="JavaScript" src="
+  <s.Source @tabsInput={{array
+  (hash title="route.js" language="JavaScript" src="
 import Ember from 'ember';
 
 const countries = [
@@ -39,16 +50,25 @@ export default Ember.Controller.extend({
     }
   }
 });
-  ")) showHTML=true}}
+  ")}} @showHTML={{true}} />
   <p>Or after them!</p>
-{{/component-showcase}}
-
-<ComponentShowcase @title="Additional Sources" @selfReflection={{true}} as |s|>
-  {{s.docs "You can pass additional source documents into the `source` sub-component, this is useful for explaining component configurations in Routes and Controllers."}}
-  <s.example>
-    {{showcase/s-icon "user"}}
-  </s.example>
-  {{s.source (array (hash title="route.js" language="JavaScript" src="import Ember from 'ember';")) showHTML=true}}
 </ComponentShowcase>
 
-{{outlet}}
+<ComponentShowcase @title="Additional Sources" @selfReflection={{true}} as |s|>
+  <s.Docs @params={{array "You can pass additional source documents into the `source` sub-component, this is useful for explaining component configurations in Routes and Controllers."}} />
+
+  <s.Example>
+    <Showcase::SIcon @icon="user" />
+  </s.Example>
+
+  <s.source
+    @tabsInput={{array
+      (hash
+        title="route.js"
+        language="JavaScript"
+        src="import Ember from 'ember';"
+      )
+    }}
+    @showHTML={{true}}
+  />
+</ComponentShowcase>

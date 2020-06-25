@@ -10,15 +10,15 @@ const SampleDocComponent = Component.extend({
   layout: layout,
 	classNames: ['sample-docs'],
 	src: computed('params.[]', function() {
-		let params = this.get('params');
+		let params = this.params;
 		if (!isEmpty(params) && params.length > 0) {
 			return params[0];
 		}
 	}),
 	api: null,
 	classDocs: computed('api', 'documentation', function() {
-		let className = this.get('api');
-    return this.get('documentation').getClass(className);
+		let className = this.api;
+    return this.documentation.getClass(className);
 	}),
 	apiDocs: alias('classDocs.classitems')
 });

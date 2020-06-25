@@ -40,11 +40,11 @@ const ComponentShowcase = Component.extend({
   selfReflection: false,
 
   sourceId: computed('elementId', function() {
-    return this.get('elementId') + '-source';
+    return this.elementId + '-source';
   }),
 
   anchorId: computed('title', function() {
-    return dasherize(this.get('title'));
+    return dasherize(this.title);
   }).readOnly(),
 
   init() {
@@ -56,11 +56,6 @@ const ComponentShowcase = Component.extend({
 
     this._super(...arguments);
   }
-});
-
-ComponentShowcase.reopenClass({
-  // showcaseId is always inserted as the first positional parameter
-  positionalParams: ['showcaseId', 'title', 'description']
 });
 
 export default ComponentShowcase;

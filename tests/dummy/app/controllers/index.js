@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
 const countries = [
   { name: 'United States',  flagUrl: '/flags/us.svg' },
@@ -10,12 +11,11 @@ const countries = [
   { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
 ];
 
-export default Controller.extend({
-  countries: countries,
-  country: null,
-  actions: {
-    foo(country) {
-      this.set('country', country);
-    }
+export default class Index extends Controller {
+  countries = countries;
+  @tracked country = null;
+
+  foo(country) {
+    this.country = country;
   }
-});
+}

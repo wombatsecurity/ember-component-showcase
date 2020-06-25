@@ -1,6 +1,6 @@
 {
   "name": "ember-component-showcase",
-  "version": "0.12.0",
+  "version": "1.0.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
@@ -25,20 +25,20 @@
   "dependencies": {
     "broccoli-file-creator": "^2.1.1",
     "broccoli-filter": "^1.3.0",
-    "broccoli-funnel": "^2.0.1",
-    "broccoli-merge-trees": "^3.0.2",
+    "broccoli-funnel": "^3.0.3",
+    "broccoli-merge-trees": "^4.2.0",
     "ember-array-helper": "^5.0.0",
     "ember-cli-babel": "^7.20.5",
     "ember-cli-htmlbars": "^5.1.2",
-    "ember-elsewhere": "1.1.0",
-    "ember-in-element-polyfill": "^0.2.0",
+    "ember-elsewhere": "1.2.0",
+    "ember-in-element-polyfill": "^1.0.0",
     "ember-lodash": "4.19.5",
-    "ember-prism": "^0.5.0",
-    "js-beautify": "^1.10.1",
+    "ember-prism": "^0.7.0",
+    "js-beautify": "^1.11.0",
     "lunr": "^2.3.3",
     "node-uuid": "^1.4.8",
-    "prismjs": "1.17.1",
-    "remarkable": "^2.0.0",
+    "prismjs": "1.20.0",
+    "remarkable": "^2.0.1",
     "yuidocjs": "^0.10.2"
   },
   "devDependencies": {
@@ -47,18 +47,18 @@
     "@glimmer/tracking": "^1.0.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
-    "broccoli-stew": "^2.0.1",
+    "broccoli-stew": "^3.0.0",
     "ember-auto-import": "^1.5.3",
     "ember-cli": "~3.19.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-inject-live-reload": "^2.0.2",
-    "ember-cli-sass": "8.0.1",
+    "ember-cli-sass": "10.0.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-uglify": "^3.0.0",
     "ember-export-application-global": "^2.0.1",
     "ember-load-initializers": "^2.1.1",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-power-select": "^2.3.2",
+    "ember-power-select": "^4.0.2",
     "ember-qunit": "^4.6.0",
     "ember-resolver": "^8.0.0",
     "ember-source": "~3.19.0",
@@ -73,7 +73,7 @@
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
     "qunit-dom": "^1.2.0",
-    "sass": "^1.22.6"
+    "sass": "^1.26.9"
   },
   "engines": {
     "node": "10.* || >= 12"
@@ -83,9 +83,5 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  },
-  "resolutions": {
-    "request": "2.87.0",
-    "clean-css": "4.2.1"
   }
 }
