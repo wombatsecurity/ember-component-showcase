@@ -1,5 +1,3 @@
-import { isEmpty } from '@ember/utils';
-import { getOwner } from '@ember/application';
 import { dasherize } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';

@@ -10,7 +10,7 @@ export default CodeBlock.extend({
   src: alias('code'),
 
   languageLabel: computed('language', function() {
-    const language = this.get('language');
+    const language = this.language;
     switch(language) {
       case 'html':
         return 'HTML';
@@ -27,11 +27,11 @@ export default CodeBlock.extend({
     }
   }),
 
-  prismCode: computed('code', 'language', function() {
-    const code = this.get('hasBlock') ? this.getBlockContent() : this.get('code');
+  prismCode: computed('code', 'hasBlock', 'language', function() {
+    const code = this.hasBlock ? this.getBlockContent() : this.code;
     if (!code) throw new Error('Missing code for showcase!');
 
-    switch(this.get('language')) {
+    switch(this.language) {
       case 'html':
         return this.formatHTML(code);
       case 'markup':
@@ -48,11 +48,11 @@ export default CodeBlock.extend({
   }),
 
   safePrismCode: computed('prismCode', 'language', function () {
-    const language = this.get('language');
+    const language = this.language;
     const grammar = Prism.languages[language];
     if (!grammar) throw new Error(`Missing Prism grammar for ${language}. Please try updating your environment.js and try again.`);
 
-    let code = this.get('prismCode');
+    let code = this.prismCode;
     const prismCode = Prism.highlight(code, grammar, language);
     return htmlSafe(prismCode);
   }),

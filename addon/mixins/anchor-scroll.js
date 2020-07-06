@@ -17,7 +17,7 @@ export default Mixin.create({
 
   actions: {
     scrollToAnchor() {
-      let anchor = this.get('anchor');
+      let anchor = this.anchor;
       if (anchor) {
         let el = document.querySelector(`#${anchor}`);
         if (el) {
