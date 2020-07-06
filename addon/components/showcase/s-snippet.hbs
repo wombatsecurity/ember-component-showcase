@@ -1,7 +1,11 @@
-{{#if sourceId}}
-  {{#showcase/s-tabs (array (hash title=title language=language icon=icon)) }}
-    {{from-elsewhere name=sourceId}}
-  {{/showcase/s-tabs}}
+{{#if @sourceId}}
+  <Showcase::STabs @tabsInput={{array
+    (hash title=this.title language=this.language icon=this.icon)
+  }}>
+    <FromElsewhere @name={{@sourceId}} />
+  </Showcase::STabs>
 {{else}}
-  {{showcase/s-tabs (array (hash title=title language=language src=src icon=icon) ) }}
+  <Showcase::STabs @tabsInput={{array
+    (hash title=this.title language=this.language src=this.src icon=this.icon)
+  }} />
 {{/if}}
