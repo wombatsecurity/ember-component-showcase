@@ -20,6 +20,10 @@ module.exports = {
   env: {
     browser: true
   },
+  global: {
+    require: true,
+    module: true
+  },
   rules: {},
   overrides: [
     // node files

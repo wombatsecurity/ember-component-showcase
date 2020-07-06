@@ -1,14 +1,15 @@
 <hr>
-<nav id="{{elementId}}-collapse" role="tablist">
+
+<nav id="{{this.elementId}}-collapse" role="tablist">
   {{#if hasBlock}}
     {{yield
       (hash
         tabs=(component "showcase/s-tabs")
-        html=htmlTab
-        hbs=hbsTab
+        html=this.htmlTab
+        hbs=this.hbsTab
       )
     }}
   {{else}}
-    {{showcase/s-tabs tabs}}
+    <Showcase::STabs @tabsInput={{this.tabs}} />
   {{/if}}
 </nav>

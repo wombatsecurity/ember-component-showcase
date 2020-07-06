@@ -6,20 +6,29 @@
   <Showcase::SIcon @icon="bell" />
 </ComponentShowcase>
 
-<ComponentShowcase @title="API documentation" @description="For simple usage just put your component sample inside the `component-showcase` block." @selfReflection={{true}} as |s|>
+<ComponentShowcase
+  @title="API documentation"
+  @description="For simple usage just put your component sample inside the `component-showcase` block."
+  @selfReflection={{true}}
+  as |s|
+>
   <s.Example></s.Example>
   <s.Docs @api="ComponentShowcase" />
 </ComponentShowcase>
 
-<ComponentShowcase @title="Custom Block Showcase" @selfReflection={{true}} as |s|>
-  <s.Docs @params={{array "More sophisticated showcases can be composed using the sub-components `docs`, `example` & `source`."}} />
+<ComponentShowcase
+  @title="Custom Block Showcase"
+  @selfReflection={{true}}
+  as |s|
+>
+  <s.Docs @params={{array "More sophisticated showcases can be composed using the sub-components `Docs`, `Example` & `Source`."}} />
   <s.Docs @params={{array "You can have as many source blocks as you'd like, they *automatically compile* from [markdown](https://daringfireball.net/projects/markdown/syntax) for you."}} />
 
   <s.Example>
     <PowerSelect
       @options={{this.countries}}
       @selected={{this.country}}
-      @onchange={{fn this.foo}}
+      @onChange={{fn this.foo}}
       as |country|
     >
       {{country.name}}

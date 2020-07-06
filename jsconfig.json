@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "ember-component-showcase/tests/*": ["./tests/*"],
+      "ember-component-showcase/*": ["./app/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "bower_components",
+    "tmp",
+    "vendor",
+    ".git",
+    "dist"
+  ]
+}
