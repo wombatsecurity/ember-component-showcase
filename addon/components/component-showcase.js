@@ -30,7 +30,7 @@ export default class ComponentShowcase extends Component {
    * @property selfReflection
    * @type {Boolean}
    */
-  get selfReflection() { return this.args.simple || false; }
+  get selfReflection() { return this.args.selfReflection || this.args.simple || false; }
   /**
    * The description for the current showcase sample.
    *
