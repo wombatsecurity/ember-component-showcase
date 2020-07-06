@@ -45,7 +45,7 @@ export default class ComponentShowcase extends Component {
   }
 
   get anchorId() {
-    return dasherize(this.args.title);
+    return dasherize(this.title);
   }
 
   // The following 3 props are added with broccoli magic

@@ -25,6 +25,7 @@ export default class ShowcaseSource extends Component {
   // ======================
 
   get showHBS() {
+    if (this.args.hideHBS) return false;
     return this.args.showHBS ?? true;
   }
 

@@ -21,8 +21,8 @@
   @selfReflection={{true}}
   as |s|
 >
-  <s.Docs @params={{array "More sophisticated showcases can be composed using the sub-components `Docs`, `Example` & `Source`."}} />
-  <s.Docs @params={{array "You can have as many source blocks as you'd like, they *automatically compile* from [markdown](https://daringfireball.net/projects/markdown/syntax) for you."}} />
+  <s.Docs @src="More sophisticated showcases can be composed using the sub-components `Docs`, `Example` & `Source`." />
+  <s.Docs @src="You can have as many source blocks as you'd like, they *automatically compile* from [markdown](https://daringfireball.net/projects/markdown/syntax) for you." />
 
   <s.Example>
     <PowerSelect
@@ -64,7 +64,7 @@ export default Ember.Controller.extend({
 </ComponentShowcase>
 
 <ComponentShowcase @title="Additional Sources" @selfReflection={{true}} as |s|>
-  <s.Docs @params={{array "You can pass additional source documents into the `source` sub-component, this is useful for explaining component configurations in Routes and Controllers."}} />
+  <s.Docs @src="You can pass additional source documents into the `source` sub-component, this is useful for explaining component configurations in Routes and Controllers." />
 
   <s.Example>
     <Showcase::SIcon @icon="user" />

@@ -20,7 +20,7 @@ module.exports = {
   env: {
     browser: true
   },
-  global: {
+  globals: {
     require: true,
     module: true
   },
