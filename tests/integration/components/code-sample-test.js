@@ -3,7 +3,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { run } from 'addon/controllers/@ember/runloop';
+import { run } from '@ember/runloop';
 
 module('Integration | Component | code sample', function(hooks) {
   setupRenderingTest(hooks);
