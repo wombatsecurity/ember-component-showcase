@@ -51,20 +51,20 @@ If you wish to use an icon font set such as Font-Awesome, the easiest option is 
 ## Simple Usage Examples
 If you just want to see your HBS source code, simply wrap a component with the component-showcase block.
 ```
-{{#component-showcase "My Component" as |s|}}
-    {{my-component "hello world" api=true onchange=(action "foobar") }}
-{{/component-showcase}}
+<ComponentShowcase @title="My Component" as |s|>
+    <MyComponent @label="hello world" @api={{true}} {{on "change" this.foobar"}} />
+</ComponentShowcase>
 ```
 
-Usually you will want a little more documentation along with your samples.  Configure these with `docs` `example` and `source` sub-components.
+Usually you will want a little more documentation along with your samples.  Configure these with `Docs` `Example` and `Source` sub-components.
 ```
-{{#component-showcase "My Component" as |s|}}
-  {{s.docs "A simple explanation of what my component does."}}
-  {{#s.example}}
-    {{my-component "hello world" api=true onchange=(action "foobar") }}
-  {{/s.example}}
-  {{s.source}}
-{{/component-showcase}}
+<ComponentShowcase @title="My Component" as |s|>
+  <s.Docs @src="A simple explanation of what my component does." />
+  <s.Example>
+    <MyComponent @label="hello world" @api={{true}} {{on "change" this.foobar"}} />
+  </s.Example>
+  <s.Source />
+</ComponentShowcase>
 ```
 
 ## Usage with nested addons
@@ -79,7 +79,7 @@ So to traverse for example a 'dummy' app's templates, you must manually import i
 ## How does it work?
 
 * HBS = Ember-CLI hooks + Regex + Glimmer AST traversal
-* HTML = Ember Component hooks + jQuery selectors
+* HTML = Ember Component hooks + selectors
 
 License
 ------------------------------------------------------------------------------
