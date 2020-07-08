@@ -1,5 +1,3 @@
-import Controller from '@ember/controller';
-import AnchorScroll from 'ember-component-showcase/mixins/anchor-scroll';
+import AnchorScroll from 'ember-component-showcase/controllers/anchor-scroll';
 
-export default Controller.extend(AnchorScroll, {
-});
+export default class AppController extends AnchorScroll {}
