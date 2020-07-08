@@ -1,4 +1,11 @@
-<pre class={{this.languageClass}} data-language={{this.language}}>{{#if hasBlock}}{{#in-element this.blockElement}}{{yield}}{{/in-element}}{{/if}}<code class={{this.languageClass}}>{{this.safePrismCode}}</code></pre>
+<pre class={{this.languageClass}} data-language={{this.language}}>
+  {{#if hasBlock}}
+    {{#in-element this.blockElement}}
+      {{yield}}
+    {{/in-element}}
+  {{/if}}
+  <code class={{this.languageClass}}>{{this.safePrismCode}}</code>
+</pre>
 <div class="toolbar">
   <div class="toolbar-item">
     <span>{{this.languageLabel}}</span>
