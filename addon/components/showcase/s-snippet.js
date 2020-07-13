@@ -1,9 +1,8 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 export default class ShowcaseSnippet extends Component {
-	sample = null;
-	language = 'HTML';
-	title = 'markup.html';
-	icon = 'code';
-	classNames = ['sample-snippet'];
+	get sample() { return this.args.sample || null; }
+	get language() { return this.args.language || 'HTML'; }
+	get title() { return this.args.title || 'markup.html'; }
+	get icon() { return this.args.icon || 'code'; }
 }
