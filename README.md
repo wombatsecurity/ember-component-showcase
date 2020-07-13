@@ -11,6 +11,8 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 * Ember CLI v2.13 or above
 * Node.js v10 or above
 
+:warning: If you encounter `setComponentTemplate` errors, try updating to the latest `ember-cli-babel` and `ember-cli-htmlbars`.
+
 ## Configuration
 
 Provide a custom showcaseConfig to your environment.js or ember-cli-build.js:
