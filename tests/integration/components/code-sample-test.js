@@ -16,7 +16,7 @@ module('Integration | Component | code sample', function(hooks) {
     await render(hbs`<CodeSample @src={{this.snippet}} />`);
     assert.dom('code').exists();
     assert.dom('code').hasText(html_beautify(snippet), 'renders manual source content correctly');
-    assert.dom('code > *').exists({ count: 6 }); // 1 child per <tag> OR </tag>
+    assert.dom('code > *').exists({ count: 6 });
     assert.dom('.toolbar .toolbar-item').hasText('HTML', 'displays default language label');
 
       // Template block usage:"
@@ -27,8 +27,8 @@ module('Integration | Component | code sample', function(hooks) {
     `);
       assert.dom('code').hasClass('language-markup', 'sets default language');
       assert.dom('.toolbar .toolbar-item').hasText('HTML', 'displays default language label');
-      assert.dom('code').hasText(html_beautify(snippet), 'correctly renders block content');
-      assert.dom('code > *').exists({count: 6});
+      assert.dom('code').hasText(html_beautify(snippet).replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\s+/g, ''), 'correctly renders block content'); // Updated code escapes brackets
+      assert.dom('code > *').exists({count: 12});
   });
 
   test('it renders JavaScript', async function(assert) {

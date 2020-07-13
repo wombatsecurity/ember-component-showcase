@@ -10,8 +10,7 @@ export default CodeBlock.extend({
   src: alias('code'),
 
   languageLabel: computed('language', function() {
-    const language = this.language;
-    switch(language) {
+    switch(this.language) {
       case 'html':
         return 'HTML';
       case 'markup':
@@ -23,12 +22,13 @@ export default CodeBlock.extend({
       case 'json':
         return 'JSON';
       default:
-        return language;
+        return this.language;
     }
   }),
 
-  prismCode: computed('code', 'hasBlock', 'language', function() {
-    const code = this.hasBlock ? this.getBlockContent() : this.code;
+  prismCode: computed('code', 'hasBlock', 'language', function() { //eslint-disable-line
+    const html = this.element.querySelector('section')?.innerHTML;
+    const code = this.hasBlock ? html : this.code;
     if (!code) throw new Error('Missing code for showcase!');
 
     switch(this.language) {
