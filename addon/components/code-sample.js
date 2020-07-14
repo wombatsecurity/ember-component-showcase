@@ -3,13 +3,16 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import CodeBlock from 'ember-prism/components/code-base';
 import { htmlSafe } from '@ember/template';
+import classic from 'ember-classic-decorator';
 
-export default CodeBlock.extend({
-  classNames: ['code-block', 'code-toolbar', 'showcase-code'],
+@classic
+export default class CodeSample extends CodeBlock {
+  classNames = ['code-block', 'code-toolbar', 'showcase-code'];
 
-  src: alias('code'),
+  @alias('code') src;
 
-  languageLabel: computed('language', function() {
+  @computed('language')
+  get languageLabel() {
     switch(this.language) {
       case 'html':
         return 'HTML';
@@ -24,9 +27,10 @@ export default CodeBlock.extend({
       default:
         return this.language;
     }
-  }),
+  }
 
-  prismCode: computed('code', 'hasBlock', 'language', function() { //eslint-disable-line
+  @computed('code', 'hasBlock', 'language') // eslint-disable-line
+  get prismCode() {
     const html = this.element.querySelector('section')?.innerHTML;
     const code = this.hasBlock ? html : this.code;
     if (!code) throw new Error('Missing code for showcase!');
@@ -45,9 +49,10 @@ export default CodeBlock.extend({
       default:
         return code.trim();
     }
-  }),
+  }
 
-  safePrismCode: computed('prismCode', 'language', function () {
+  @computed('prismCode', 'language')
+  get safePrismCode() {
     const language = this.language;
     const grammar = Prism.languages[language];
     if (!grammar) throw new Error(`Missing Prism grammar for ${language}. Please try updating your environment.js and try again.`);
@@ -55,20 +60,20 @@ export default CodeBlock.extend({
     let code = this.prismCode;
     const prismCode = Prism.highlight(code, grammar, language);
     return htmlSafe(prismCode);
-  }),
+  }
 
 	cleanEmberHTML(html) {
-		let $element = document.createElement('div');
-		$element.innerHTML = html;
+		let el = document.createElement('div');
+		el.innerHTML = html;
 
 		// examples: id="ember123" class="ember-view" data-ember-action="123" data-ember-action-345="345"
-		Array.from($element.querySelectorAll('[id]')).filter(function(el) {
+		Array.from(el.querySelectorAll('[id]')).filter(function(el) {
 			return el.id.match(new RegExp('ember[0-9]+', 'g'));
 		}).forEach(function(el) {
 			el.removeAttribute('id');
 		});
 
-		Array.from($element.querySelectorAll('[data-ember-action|=""]')).filter(function(el) {
+		Array.from(el.querySelectorAll('[data-ember-action|=""]')).filter(function(el) {
 			let matches = new RegExp('data-ember-action-[0-9]+', 'g').exec(el.outerHTML);
 			el.removeAttribute('data-ember-action');
 			matches.forEach(match => {
@@ -76,12 +81,12 @@ export default CodeBlock.extend({
 			});
 		});
 
-		$element.querySelectorAll('.ember-view').forEach(el => {
+		el.querySelectorAll('.ember-view').forEach(el => {
 			el.classList.remove('ember-view');
 		});
 
-		return $element.innerHTML;
-	},
+		return el.innerHTML;
+	}
 
   formatHtmlBars(hbs) {
     // currently there is no good way to format inline handlebars content: https://github.com/beautify-web/js-beautify/issues/1173
@@ -91,14 +96,14 @@ export default CodeBlock.extend({
       indent_size: 2,
       wrap_line_length: 120
     });
-  },
+  }
 
   formatJavaScript(js) {
     return js_beautify(js, {
       indent_size: 2,
       wrap_line_length: 120
     });
-  },
+  }
 
   formatHTML(html) {
     html = html.replace(/<!--.*?-->/g, ''); // remove ALL inline html comments
@@ -115,4 +120,4 @@ export default CodeBlock.extend({
 
     return html;
   }
-});
+}

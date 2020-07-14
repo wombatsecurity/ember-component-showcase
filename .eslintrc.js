@@ -24,7 +24,10 @@ module.exports = {
     require: true,
     module: true
   },
-  rules: {},
+  rules: {
+    'ember/classic-decorator-hooks': 'error',
+    'ember/classic-decorator-no-classic-methods': 'error'
+  },
   overrides: [
     // node files
     {
