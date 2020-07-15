@@ -1,0 +1,19 @@
+<nav class="showcase-tabs">
+  {{#each this.tabs as |tab|}}
+    <span role="button" {{on "click" (fn this.setSelectedTab tab)}} class="showcase-tabs-item {{if tab.active "active"}}">
+      <Showcase::SIcon @icon="code"/> {{tab.title}}
+    </span>
+  {{/each}}
+</nav>
+
+{{#each this.tabs as |tab|}}
+  {{#if tab.active}}
+    {{#if tab.src}}
+      <CodeSample @language={{tab.language}} @src={{tab.src}} />
+    {{/if}}
+
+    {{#if tab.sourceId}}
+      <FromElsewhere @name={{tab.sourceId}} />
+    {{/if}}
+  {{/if}}
+{{/each}}

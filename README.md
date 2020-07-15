@@ -7,6 +7,12 @@ Need to demonstrate how to configure your ember component?  Want some easy to se
 * Install the ember addon: `ember install ember-component-showcase`
 * Add `ember-cli-htmlbars-inline-precompile` and `ember-cli-htmlbars` to the `dependencies section` of your application.  Adding them to `devDependencies` will not work.
 
+* Ember.js v3.12 or above
+* Ember CLI v2.13 or above
+* Node.js v10 or above
+
+:warning: If you encounter `setComponentTemplate` errors, try updating to the latest `ember-cli-babel` and `ember-cli-htmlbars`.
+
 ## Configuration
 
 Provide a custom showcaseConfig to your environment.js or ember-cli-build.js:
@@ -27,7 +33,6 @@ showcaseConfig: {
   }
 ```
 
-<<<<<<< HEAD
 ## Styling
 The component and sub-components elements are prefixed with `.showcase` for ease of styling.
 If you wish to use an icon font set such as Font-Awesome, the easiest option is to simply extend the styles with the appropriate icon font selectors.
@@ -35,11 +40,6 @@ If you wish to use an icon font set such as Font-Awesome, the easiest option is 
 .showcase-icon {
   @extend .fa;
 }
-=======
-* Ember.js v3.4 or above
-* Ember CLI v2.13 or above
-* Node.js v8 or above
->>>>>>> 905252c... v3.10.1...v3.12.0
 
 .showcase-icon-code {
   @extend .fa-code;
@@ -53,20 +53,20 @@ If you wish to use an icon font set such as Font-Awesome, the easiest option is 
 ## Simple Usage Examples
 If you just want to see your HBS source code, simply wrap a component with the component-showcase block.
 ```
-{{#component-showcase "My Component" as |s|}}
-    {{my-component "hello world" api=true onchange=(action "foobar") }}
-{{/component-showcase}}
+<ComponentShowcase @title="My Component" as |s|>
+    <MyComponent @label="hello world" @api={{true}} {{on "change" this.foobar"}} />
+</ComponentShowcase>
 ```
 
-Usually you will want a little more documentation along with your samples.  Configure these with `docs` `example` and `source` sub-components.
+Usually you will want a little more documentation along with your samples.  Configure these with `Docs` `Example` and `Source` sub-components.
 ```
-{{#component-showcase "My Component" as |s|}}
-  {{s.docs "A simple explanation of what my component does."}}
-  {{#s.example}}
-    {{my-component "hello world" api=true onchange=(action "foobar") }}
-  {{/s.example}}
-  {{s.source}}
-{{/component-showcase}}
+<ComponentShowcase @title="My Component" as |s|>
+  <s.Docs @src="A simple explanation of what my component does." />
+  <s.Example>
+    <MyComponent @label="hello world" @api={{true}} {{on "change" this.foobar"}} />
+  </s.Example>
+  <s.Source />
+</ComponentShowcase>
 ```
 
 ## Usage with nested addons
@@ -78,12 +78,10 @@ So to traverse for example a 'dummy' app's templates, you must manually import i
   },
 ```
 
-
-
 ## How does it work?
 
 * HBS = Ember-CLI hooks + Regex + Glimmer AST traversal
-* HTML = Ember Component hooks + jQuery selectors
+* HTML = Ember Component hooks + selectors
 
 License
 ------------------------------------------------------------------------------

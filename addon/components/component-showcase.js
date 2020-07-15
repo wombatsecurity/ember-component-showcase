@@ -1,10 +1,8 @@
-import { isEmpty } from '@ember/utils';
-import { getOwner } from '@ember/application';
 import { dasherize } from '@ember/string';
-import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import layout from '../templates/components/component-showcase';
+import { tracked } from '@glimmer/tracking';
+import { guidFor } from '@ember/object/internals';
+import Component from '@glimmer/component';
 
 /**
  * The Component-Showcase documentation component.
@@ -12,24 +10,17 @@ import layout from '../templates/components/component-showcase';
  * @module Component-Showcase
  * @class ComponentShowcase
  */
-const ComponentShowcase = Component.extend({
-  layout: layout,
-  router: service(),
-  currentPath: '',
-  tagName: 'section',
+export default class ComponentShowcase extends Component {
+  @service router;
+  @tracked currentPath = this.router.currentRouteName;
+
   /**
    * The title for the current showcase sample.
    *
-   * @property foobar
-   * @type {User}
+   * @property title
+   * @type {String}
    */
-  title: '',
-  src: '',
-  hbs: '', // where the hbs source code will end up from ast hook
-  showcaseId: null, // uuid created by template preprocessor hook
-  simple: false,
-  description: '',
-  selfHBS: '',
+  get title() { return this.args.title || ''; }
 
   /**
    * A flag for displaying the entire documentation block's content, not just the example section.
@@ -37,30 +28,31 @@ const ComponentShowcase = Component.extend({
    * @property selfReflection
    * @type {Boolean}
    */
-  selfReflection: false,
+  get selfReflection() { return this.args.selfReflection || this.args.simple || false; }
+  /**
+   * The description for the current showcase sample.
+   *
+   * @property description
+   * @type {String}
+   */
+  get description() { return this.args.description || ''; }
+  get selfHBS() { return this.args.selfHBS || ''; }
 
-  sourceId: computed('elementId', function() {
-    return this.get('elementId') + '-source';
-  }),
-
-  anchorId: computed('title', function() {
-    return dasherize(this.get('title'));
-  }).readOnly(),
-
-  init() {
-    let currentApplication = getOwner(this).lookup('route:application');
-    if (!isEmpty(currentApplication)) {
-      // Ember voodoo to get current route name
-      this.set('currentPath', this.router.currentRouteName);
-    }
-
-    this._super(...arguments);
+  get sourceId() {
+    return `${guidFor(this)}-source`;
   }
-});
 
-ComponentShowcase.reopenClass({
-  // showcaseId is always inserted as the first positional parameter
-  positionalParams: ['showcaseId', 'title', 'description']
-});
+  get anchorId() {
+    return dasherize(this.title);
+  }
 
-export default ComponentShowcase;
+  // The following 3 props are added with broccoli magic
+  // ====================================================
+  get src() { return this.args.src || ''; }
+
+  // where the hbs source code will end up from ast hook
+  get hbs() { return this.args.hbs || ''; }
+
+  // uuid created by template preprocessor hook
+  get showcaseId() { return this.args.showcaseId || null; }
+}

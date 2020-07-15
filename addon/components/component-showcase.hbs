@@ -1,0 +1,55 @@
+<section>
+  <div class="showcase" id={{this.anchorId}}>
+    <h2 class="showcase-title">
+      {{@title}}
+
+      <span class="pull-right">
+        <LinkTo
+          class="showcase-btn"
+          @route={{this.currentPath}}
+          @query={{hash anchor=this.anchorId}}
+        >
+          <Showcase::SIcon @icon="link" />
+        </LinkTo>
+      </span>
+    </h2>
+
+    <div class="showcase-body">
+      {{#if hasBlock}}
+        {{#if @simple}}
+          <Showcase::SDocs @params={{array this.description}} />
+
+          <Showcase::SExample @sourceId={{this.sourceId}}>
+            {{yield}}
+          </Showcase::SExample>
+
+          <Showcase::SSource
+            @src={{this.src}}
+            @hbs={{this.hbs}}
+            @sourceId={{this.sourceId}}
+            @selfHBS={{this.selfHBS}}
+            @showSelfHBS={{this.selfReflection}}
+          />
+        {{else}}
+          {{yield
+            (hash
+              src=this.src
+              hbs=this.hbs
+              Docs=(component "showcase/s-docs")
+              Example=(component "showcase/s-example" sourceId=this.sourceId)
+              Source=(component "showcase/s-source"
+                src=this.src
+                hbs=this.hbs
+                sourceId=this.sourceId
+                selfHBS=this.selfHBS
+                showSelfHBS=this.selfReflection
+              )
+            )
+          }}
+        {{/if}}
+      {{else}}
+        <p>Showcase requires use of the block syntax to work correctly.</p>
+      {{/if}}
+    </div>
+  </div>
+</section>

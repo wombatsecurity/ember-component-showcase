@@ -32,7 +32,7 @@ export default Service.extend({
   },
 
   search(value) {
-    return this.get('index').search(value);
+    return this.index.search(value);
   },
 
   getClass(className) {

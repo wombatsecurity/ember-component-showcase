@@ -1,101 +1,67 @@
-import { computed } from '@ember/object';
-import Component from '@ember/component';
-import layout from '../../templates/components/showcase/s-source';
+import { guidFor } from '@ember/object/internals';
+import Component from '@glimmer/component';
 
-const ShowcaseSource = Component.extend({
-  layout: layout,
-	sample: null,
-	sourceId: null,
-	src: null,
-  hbs: '',
-  selfHBS: '',
-  hideHTML: true,
-  showHTML: computed('hideHTML', {
-    get() {
-      if (this._showHTML) return this._showHTML;
-      return !this.hideHTML;
-    },
-    set(key, value) {
-      return this._showHTML = value;
-    }
-  }),
-  htmlTab: computed('sourceId', function() {
+export default class ShowcaseSource extends Component {
+  elementId = guidFor(this);
+
+  get sample() { return this.args.sample || null; }
+  get src() { return this.args.src || null; }
+  get selfHBS() { return this.args.selfHBS || ''; }
+  get hbs() { return this.args.hbs || ''; }
+
+  get htmlTab() {
     return {
       title: "markup.html",
       language: "Markup",
-      sourceId: this.sourceId,
+      sourceId: this.args.sourceId,
       active: false
     }
-  }),
-  hideHBS: false,
-  showHBS: computed('hideHBS', {
-    get() {
-      if (this._showHBS) return this._showHBS;
-      return !this.hideHBS;
-    },
-    set(key, value) {
-      return this._showHBS = value;
-    }
-  }),
-  hbsTab: computed('hbs', function() {
+  }
+
+  // ======================
+  // The predefined tabs
+  // ======================
+
+  get showHBS() {
+    if (this.args.hideHBS) return false;
+    return this.args.showHBS ?? true;
+  }
+
+  get hbsTab() {
     return {
       title: "example.hbs",
       language: "Handlebars",
       src: this.hbs,
       active: false
     }
-  }),
-  hideSelfHBS: true,
-  showSelfHBS: computed('hideSelfHBS', {
-    get() {
-      if (this._showSelfHBS) return this._showSelfHBS;
-      return !this.hideSelfHBS;
-    },
-    set(key, value) {
-      return this._showSelfHBS = value;
-    }
-  }),
-  selfHBSTab: computed('selfHBS', function() {
+  }
+
+  get selfHBSTab() {
     return {
       title: "showcase.hbs",
       language: "Handlebars",
       src: this.selfHBS,
       active: false
     }
-  }),
+  }
 
-  extraTabs: computed('tabsInput', function() {
-    let tabsInput = this.get('tabsInput');
+  get extraTabs() {
+    return this.args.tabsInput;
+  }
+
+  get tabs() {
     let tabs = [];
+    if (this.args.showSelfHBS) tabs.push(this.selfHBSTab);
+    if (this.showHBS) tabs.push(this.hbsTab);
+    if (this.args.showHTML) tabs.push(this.htmlTab);
 
-    // for some reason the array helper wraps our input into another array, this correct this behavior
-    if (tabsInput && tabsInput.length > 0 && tabsInput[0].length > 0) {
-      tabsInput[0].forEach(function(tab) {
+    if (this.extraTabs?.length) {
+      this.extraTabs.forEach(function(tab) {
         tabs.push(tab);
       });
     }
 
     return tabs;
-  }),
+  }
+}
 
-  tabs: computed('showHBS', 'hbsTab', 'showHTML', 'htmlTab', 'showSelfHBS', 'selfHBSTab', 'extraTabs', function() {
-    let  tabs = [];
-    if (this.get('showSelfHBS')) tabs.push(this.get('selfHBSTab'));
-    if (this.get('showHBS')) tabs.push(this.get('hbsTab'));
-    if (this.get('showHTML')) tabs.push(this.get('htmlTab'));
-
-    let extraTabs = this.get('extraTabs');
-    if (extraTabs.length > 0) {
-      extraTabs.forEach(function(tab) {
-        tabs.push(tab);
-      });
-    }
-    return tabs;
-  })
-});
-
-ShowcaseSource.reopenClass({
-  positionalParams: 'tabsInput'
-});
-
-export default ShowcaseSource;

@@ -1,0 +1,13 @@
+<div class="sample-snippet">
+  {{#if @sourceId}}
+    <Showcase::STabs @tabsInput={{array
+      (hash title=this.title language=this.language icon=this.icon)
+    }}>
+      <FromElsewhere @name={{@sourceId}} />
+    </Showcase::STabs>
+  {{else}}
+    <Showcase::STabs @tabsInput={{array
+      (hash title=this.title language=this.language src=this.src icon=this.icon)
+    }} />
+  {{/if}}
+</div>

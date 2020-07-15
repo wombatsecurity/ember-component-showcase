@@ -1,0 +1,8 @@
+<div class="content-wrapper" sample-example-source {{did-insert this.insertedElement}}>
+  {{yield}}
+</div>
+
+<ToElsewhere
+  @named={{@sourceId}}
+  @send={{component "code-sample" src=this.src}}
+/>

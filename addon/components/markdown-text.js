@@ -1,28 +1,25 @@
-import Component from '@ember/component';
-import { computed } from "@ember/object";
+import Component from '@glimmer/component';
 import { htmlSafe } from "@ember/string";
 import { Remarkable } from 'remarkable';
-import hbs from 'htmlbars-inline-precompile';
-import layout from '../templates/components/markdown-text';
+import _hbs from 'htmlbars-inline-precompile';
 
-export default Component.extend({
-  layout: layout,
-  tagName: '',
-  text: '',
-  typographer: false,
-  linkify: false,
-  linkTarget: '',
-  html: false,
-  extensions: true,
+export default class MDText extends Component {
+  get text() { return this.args.text || ''; }
+  typographer = false;
+  linkify = false;
+  linkTarget = '';
+  html = false;
+  extensions = true;
 
-  parsedMarkdownUnsafe: computed('text', 'html', 'typographer', 'linkify', 'linkTarget', function () {
-    var md = new Remarkable({
-      typographer: this.get('typographer'),
-      linkTarget: this.get('linkTarget'),
-      html: this.get('html')
+  // @computed('text', 'html', 'typographer', 'linkify', 'linkTarget')
+  get parsedMarkdownUnsafe() {
+    const md = new Remarkable({
+      typographer: this.typographer,
+      linkTarget: this.linkTarget,
+      html: this.html
     });
 
-    if (this.get('extensions')) {
+    if (this.extensions) {
       md.core.ruler.enable([
         'abbr'
       ]);
@@ -39,16 +36,16 @@ export default Component.extend({
       ]);
     }
 
-    return md.render(this.get('text'));
-  }),
+    return md.render(this.text);
+  }
 
-  parsedMarkdown: computed('parsedMarkdownUnsafe', function () {
-    const parsedMarkdownUnsafe = this.get('parsedMarkdownUnsafe');
+  get parsedMarkdown() {
+    const parsedMarkdownUnsafe = this.parsedMarkdownUnsafe;
     return new htmlSafe(parsedMarkdownUnsafe);
-  }),
+  }
 
-  precompiledTemplate: computed('parsedMarkdownUnsafe', function () {
-    const parsedMarkdownUnsafe = this.get('parsedMarkdownUnsafe');
-    return hbs.compile(parsedMarkdownUnsafe, false);
-  })
-});
+  get precompiledTemplate() {
+    const parsedMarkdownUnsafe = this.parsedMarkdownUnsafe;
+    return _hbs.compile(parsedMarkdownUnsafe, false);
+  }
+}
