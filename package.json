@@ -83,5 +83,8 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "resolutions": {
+    "request": "^2.88.2"
   }
 }
