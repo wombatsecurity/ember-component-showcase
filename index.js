@@ -49,33 +49,23 @@ module.exports = {
     return new MergeTrees(moduleTree, {overwrite: true});
   },
 
-  treeForVendor: function() {
+  treeForVendor() {
     let showcaseOptions = this.getShowcaseConfig();
-    if (showcaseOptions && showcaseOptions.enabled && showcaseOptions.docs) {
-      documentation.build(['addon/**/*.js'], showcaseOptions.docs).then(res => {
-        this.yuidocs = res;
-      });
-    } else {
-      this.yuidocs = { 'default': false };
-    }
-  
-    let remarkableTree = new Funnel(
-      path.dirname(require.resolve('remarkable/package.json')), 
-      { destDir: 'remarkable' }
-    );
+
+    const opts = showcaseOptions && showcaseOptions.enabled && showcaseOptions.docs ? showcaseOptions.docs : {};
+    this.yuidocs = { 'default': false };
 
     let docShim = writeFile(
       '/docs.js', 
-      `define('docs', [], function() { return ${JSON.stringify(this.yuidocs)}});`
-    );
-
-    let lunrTree = new Funnel(
-      path.dirname(require.resolve('lunr/package.json')), 
-      { destDir: 'lunr' }
+      async () => {
+        const d = await documentation.build(['addon/**/*.js'], opts);
+        if (d.length) this.yuidocs = d;
+        return `define('docs', [], function() { return ${JSON.stringify(d)}});`
+      }
     );
 
     return new MergeTrees(
-      [lunrTree, remarkableTree, docShim], 
+      [docShim], 
       { overwrite: true }
     );
   },
@@ -105,13 +95,7 @@ module.exports = {
       ShowcaseBroccoli.export(app, this.options.showcaseConfig);
     }
 
-    app.import('vendor/remarkable/dist/remarkable.js', {
-      using: [{ transformation: 'amd', as: 'remarkable' }]
-    });
     app.import('vendor/docs.js');
-    app.import('vendor/lunr/lunr.js', {
-      using: [{ transformation: 'amd', as: 'lunr' }]
-    });
 
     this._super.included.apply(this, arguments);
   }
