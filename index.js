@@ -52,13 +52,33 @@ module.exports = {
   treeForVendor() {
     let showcaseOptions = this.getShowcaseConfig();
 
-    const opts = showcaseOptions && showcaseOptions.enabled && showcaseOptions.docs ? showcaseOptions.docs : {};
+    const opts = showcaseOptions 
+      && showcaseOptions.enabled 
+      && showcaseOptions.docs 
+        ? showcaseOptions.docs 
+        : {};
     this.yuidocs = { 'default': false };
+
+    console.log(opts)
 
     let docShim = writeFile(
       '/docs.js', 
       async () => {
-        const d = await documentation.build(['addon/**/*.js'], opts);
+        const d = await documentation.build(
+          opts.paths || ['addon/**/*.js'], 
+          opts
+        );
+
+        if (opts.githubRepo) {
+          let githubTag = opts.githubTag || 'master';
+          let githubPath = `${opts.githubRepo}/tree/${githubTag}/`;
+          
+          d.forEach(item => {
+            item.github = githubPath;
+          });
+        }
+
+        console.log(d)
         if (d.length) this.yuidocs = d;
         return `define('docs', [], function() { return ${JSON.stringify(d)}});`
       }

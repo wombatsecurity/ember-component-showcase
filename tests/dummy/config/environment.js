@@ -24,13 +24,14 @@ module.exports = function(environment) {
     },
     showcaseConfig: {
       'enabled': true,
-      'docs': {},
-      'yuidocjs': {
+      'docs': {
         "enabled": true,
-        "writeJSON": false,
         "paths": ["addon"],
         "githubRepo": "https://github.com/wombatsecurity/ember-component-showcase",
         "githubTag": "v" + getVersion({shaLength: 0}),
+      },
+      'yuidocjs': {
+        "writeJSON": false,
         "linkNatives": true,
         "quiet": true,
         "parseOnly": false,

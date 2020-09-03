@@ -10,7 +10,6 @@ export default Service.extend({
     this._super(...arguments);
 
     if (Docs) {
-      console.log(Docs)
       // this.classes = Docs.classitems;
       // this.index = this.generateIndex(this.classes);
     }
@@ -37,8 +36,9 @@ export default Service.extend({
   },
 
   getClass(className) {
-    if (className && Docs.classes && Docs.classes[className]) {
-      return Docs.classes[className];
+    const foundClass = Docs.find(c => c.name === className);
+    if (className && foundClass) {
+      return foundClass;
     } else {
       if (!isEmpty(className)) console.warn(`No class documentation found for '${className}'`);
       return {};

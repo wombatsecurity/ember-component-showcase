@@ -4,11 +4,9 @@ import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 import Component from '@glimmer/component';
 
-/**
- * The Component-Showcase documentation component.
- *
- * @module Component-Showcase
- * @class ComponentShowcase
+/** 
+ * The Component-Showcase documentation component. 
+ * @extends Component
  */
 export default class ComponentShowcase extends Component {
   @service router;
@@ -19,6 +17,7 @@ export default class ComponentShowcase extends Component {
    *
    * @property title
    * @type {String}
+   * @default ''
    */
   get title() { return this.args.title || ''; }
 
@@ -27,13 +26,15 @@ export default class ComponentShowcase extends Component {
    *
    * @property selfReflection
    * @type {Boolean}
+   * @default false
    */
   get selfReflection() { return this.args.selfReflection || this.args.simple || false; }
   /**
    * The description for the current showcase sample.
    *
    * @property description
-   * @type {String}
+   * @type {String\Number}
+   * @default ''
    */
   get description() { return this.args.description || ''; }
   get selfHBS() { return this.args.selfHBS || ''; }

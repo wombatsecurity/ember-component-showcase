@@ -2,7 +2,7 @@
   <div class="description">
     <MarkdownText @text={{@src}} />
 
-    {{#if this.classDocs}}
+    {{#if this.classDocs.description}}
       <MarkdownText @text={{this.classDocs.description}} />
     {{/if}}
   </div>
@@ -19,22 +19,15 @@
           <li class="sample-docs-api">
             <div class="sample-docs-api-title">
               <code>{{doc.name}}</code>
+
               <small class="sample-docs-api-type">
-                {{#if doc.types}}
-                  {{#each doc.types as |type|}}
-                    {{#if type.link}}
-                      <a href={{type.link}} target="_blank" rel="noreferrer noopener">{{type.label}}</a>
-                    {{else}}
-                      {{type.label}}
-                    {{/if}}
-                  {{/each}}
-                {{else}}
-                  {{doc.type}}
-                {{/if}}
+                {{doc.type.name}}
+
                 {{#if doc.required}}
                   <label>(required)</label>
                 {{/if}}
               </small>
+
               {{#if doc.default}}
                 <small>- Default: {{doc.default}}</small>
               {{/if}}
@@ -42,14 +35,16 @@
 
             <div class="sample-docs-api-description">
               <MarkdownText @text={{doc.description}} />
+
               {{#if doc.github}}
                 <div>
-                  <small>Defined in <a target="_blank" rel="noreferrer noopener" href={{doc.github}}>{{doc.file}}:{{doc.line}}</a></small>
+                  <small>Defined in <a target="_blank" rel="noreferrer noopener" href={{concat doc.github doc.file '#L' doc.line}}>{{doc.file}}:{{doc.line}}</a></small>
                 </div>
               {{/if}}
-              {{#each doc.examples as |example|}}
+
+              {{!-- #each doc.examples as |example|}}
                 <Showcase::SSnippet @src={{example.content}} @title={{example.title}} @language={{example.language}} />
-              {{/each}}
+              {{/each}} --}}
             </div>
           </li>
         {{/each}}
