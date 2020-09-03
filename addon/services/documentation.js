@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import Service from '@ember/service';
-import Docs from 'documentation';
+import Docs from 'docs';
 import { isEmpty } from '@ember/utils';
 import lunr from 'lunr';
 
@@ -10,8 +10,9 @@ export default Service.extend({
     this._super(...arguments);
 
     if (Docs) {
-      this.classes = Docs.classitems;
-      this.index = this.generateIndex(this.classes);
+      console.log(Docs)
+      // this.classes = Docs.classitems;
+      // this.index = this.generateIndex(this.classes);
     }
   },
 

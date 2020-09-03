@@ -24,6 +24,7 @@ module.exports = function(environment) {
     },
     showcaseConfig: {
       'enabled': true,
+      'docs': {},
       'yuidocjs': {
         "enabled": true,
         "writeJSON": false,

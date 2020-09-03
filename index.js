@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const DocGenerator = require('./lib/documentation');
+const documentation = require('documentation');
 const Funnel = require('broccoli-funnel');
 const ShowcaseBroccoli = require('./lib/broccoli-showcase');
 const writeFile = require('broccoli-file-creator');
@@ -10,26 +10,17 @@ module.exports = {
   name: require('./package').name,
   yuidocs: null,
 
-  // TODO: add support for genuine yuidocs
-  // postprocessTree: function(type, workingTree) {
-  //   if(type === 'all') {
-  //     var env = this.app.env;
-  //     let options = this.app.options['yuidocjs'] || {};
-  //     let docs = this.yuidocs;
-	//
-  //     if (options.enabled) {
-  //       var yuidocTree = new BroccoliYuiDocs(docs, options);
-  //       return mergeTrees([workingTree, yuidocTree], { overwrite: true });
-  //     }
-  //   }
-  //   return workingTree;
-  // },
-
   // 1) project config, 2) build config, 3) default config
   getShowcaseConfig: function() {
     const projectConfig = this.project.config(process.env.EMBER_ENV)['showcaseConfig'];
+
     if (projectConfig) return projectConfig;
-    if (this.options && this.options.showcaseConfig) return this.options.showcaseConfig;
+
+    if (
+      this.options 
+      && this.options.showcaseConfig
+    ) return this.options.showcaseConfig;
+
     return false;
   },
 
@@ -44,10 +35,14 @@ module.exports = {
     let moduleTree = [addonTree];
     nodeModules.forEach((modulePath) => {
       const fileName = path.basename(modulePath);
-      const targetModulePath = path.dirname(require.resolve(modulePath, {paths: [this.root, this.project.root]}));
+      const targetModulePath = path.dirname(
+        require.resolve(modulePath, {paths: [this.root, this.project.root]})
+      );
+
       const treeToFile = new Funnel(targetModulePath, {
         files: [fileName]
       });
+    
       moduleTree.push(treeToFile);
     });
 
@@ -56,17 +51,33 @@ module.exports = {
 
   treeForVendor: function() {
     let showcaseOptions = this.getShowcaseConfig();
-    if (showcaseOptions && showcaseOptions.enabled && showcaseOptions.yuidocjs) {
-      this.yuidocs = DocGenerator(showcaseOptions.yuidocjs);
+    if (showcaseOptions && showcaseOptions.enabled && showcaseOptions.docs) {
+      documentation.build(['addon/**/*.js'], showcaseOptions.docs).then(res => {
+        this.yuidocs = res;
+      });
     } else {
       this.yuidocs = { 'default': false };
     }
+  
+    let remarkableTree = new Funnel(
+      path.dirname(require.resolve('remarkable/package.json')), 
+      { destDir: 'remarkable' }
+    );
 
-    let remarkableTree = new Funnel(path.dirname(require.resolve('remarkable/package.json')), { destDir: 'remarkable' });
-    let documentationShim = writeFile('/documentation.js', `define('documentation', [], function() { return ${JSON.stringify(this.yuidocs)}});`);
-    let lunrTree = new Funnel(path.dirname(require.resolve('lunr/package.json')), { destDir: 'lunr' });
+    let docShim = writeFile(
+      '/docs.js', 
+      `define('docs', [], function() { return ${JSON.stringify(this.yuidocs)}});`
+    );
 
-    return new MergeTrees([lunrTree, remarkableTree, documentationShim], { overwrite: true });
+    let lunrTree = new Funnel(
+      path.dirname(require.resolve('lunr/package.json')), 
+      { destDir: 'lunr' }
+    );
+
+    return new MergeTrees(
+      [lunrTree, remarkableTree, docShim], 
+      { overwrite: true }
+    );
   },
 
   setupPreprocessorRegistry: function(type, registry) {
@@ -97,7 +108,7 @@ module.exports = {
     app.import('vendor/remarkable/dist/remarkable.js', {
       using: [{ transformation: 'amd', as: 'remarkable' }]
     });
-    app.import('vendor/documentation.js');
+    app.import('vendor/docs.js');
     app.import('vendor/lunr/lunr.js', {
       using: [{ transformation: 'amd', as: 'lunr' }]
     });
