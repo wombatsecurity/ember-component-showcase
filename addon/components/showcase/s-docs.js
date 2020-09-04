@@ -35,7 +35,18 @@ export default class SampleDocComponent extends Component {
 
     if (docs.name && !docs.modified) {
       // Fix descriptions
-      docs.description = docs.description.children[0].children[0].value;
+      const desc = docs.description.children[0].children.map((v) => {
+        switch (v.type) {
+          case "inlineCode":
+            return `\`${v.value}\``;
+          case "link":
+            return `[${v.children[0].value}](${v.url})`;
+          default:
+            return v.value;
+        }
+      });
+
+      docs.description = desc.join(" ");
 
       // Fix/Add some lines per prop
       docs.members.instance.forEach((inst) => {

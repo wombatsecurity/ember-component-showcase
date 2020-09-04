@@ -3,58 +3,55 @@
     <MarkdownText @text={{@src}} />
 
     {{#if this.classDocs.description}}
-      <MarkdownText @text={{this.classDocs.description}} />
+    <MarkdownText @text={{this.classDocs.description}} />
     {{/if}}
   </div>
 
   {{#if this.apiDocs}}
-    <div class="l-section">
-      <h4 class="text-muted sample-docs-class-title">
-        <Showcase::SIcon @icon="gear" />
-        {{this.classDocs.name}} API
-      </h4>
+  <div class="l-section">
+    <h4 class="text-muted sample-docs-class-title">
+      <Showcase::SIcon @icon="gear" />
+      {{this.classDocs.name}} API
+    </h4>
 
-      <ul class="list-unstyled">
-        {{#each this.apiDocs as |doc|}}
-          <li class="sample-docs-api">
-            <div class="sample-docs-api-title">
-              <code>{{doc.name}}</code>
+    <ul class="list-unstyled">
+      {{#each this.apiDocs as |doc|}}
+      <li class="sample-docs-api">
+        <div class="sample-docs-api-title">
+          <code>{{get-prop-name doc.tags doc.name}}</code>
 
-              <small class="sample-docs-api-type">
-                {{doc.type.name}}
+          <small class="sample-docs-api-type">
+            {{doc.type.name}}
 
-                {{!-- @required is not supported by documentation.js yet --}}
-                {{#if doc.required}}
-                  <label>(required)</label>
-                {{/if}}
-              </small>
+            {{!-- @required is not supported by documentation.js yet --}}
+            {{#if doc.required}}
+            <label>(required)</label>
+            {{/if}}
+          </small>
 
-              {{!-- @default is not supported by documentation.js yet --}}
-              {{#if doc.default}}
-                <small>- Default: {{doc.default}}</small>
-              {{/if}}
-            </div>
+          {{!-- @default is not supported by documentation.js yet --}}
+          {{#if doc.default}}
+          <small>- Default: {{doc.default}}</small>
+          {{/if}}
+        </div>
 
-            <div class="sample-docs-api-description">
-              <MarkdownText @text={{doc.description}} />
+        <div class="sample-docs-api-description">
+          <MarkdownText @text={{doc.description}} />
 
-              {{#if doc.github}}
-                <div>
-                  <small>Defined in <a target="_blank" rel="noreferrer noopener" href={{concat doc.github doc.file '#L' doc.line}}>{{doc.file}}:{{doc.line}}</a></small>
-                </div>
-              {{/if}}
+          {{#if doc.github}}
+          <div>
+            <small>Defined in <a target="_blank" rel="noreferrer noopener"
+                href={{concat doc.github doc.file '#L' doc.line}}>{{doc.file}}:{{doc.line}}</a></small>
+          </div>
+          {{/if}}
 
-              {{#each doc.examples as |example|}}
-                <Showcase::SSnippet 
-                  @src={{example.content}} 
-                  @title={{example.title}} 
-                  @language={{example.language}} 
-                />
-              {{/each}}
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
+          {{#each doc.examples as |example|}}
+          <Showcase::SSnippet @src={{example.content}} @title={{example.title}} @language={{example.language}} />
+          {{/each}}
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
   {{/if}}
 </div>
