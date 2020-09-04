@@ -7,7 +7,7 @@
     </Showcase::STabs>
   {{else}}
     <Showcase::STabs @tabsInput={{array
-      (hash title=this.title language=this.language src=this.src icon=this.icon)
+      (hash title=this.title language=this.language src=@src icon=this.icon)
     }} />
   {{/if}}
 </div>

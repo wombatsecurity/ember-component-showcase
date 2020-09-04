@@ -59,8 +59,6 @@ module.exports = {
         : {};
     this.yuidocs = { 'default': false };
 
-    console.log(opts)
-
     let docShim = writeFile(
       '/docs.js', 
       async () => {
@@ -78,7 +76,6 @@ module.exports = {
           });
         }
 
-        console.log(d)
         if (d.length) this.yuidocs = d;
         return `define('docs', [], function() { return ${JSON.stringify(d)}});`
       }

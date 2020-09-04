@@ -33,7 +33,7 @@ export default class ComponentShowcase extends Component {
    * The description for the current showcase sample.
    *
    * @property description
-   * @type {String\Number}
+   * @type {String}
    * @default ''
    */
   get description() { return this.args.description || ''; }

@@ -1,6 +1,10 @@
 <nav class="showcase-tabs">
   {{#each this.tabs as |tab|}}
-    <span role="button" {{on "click" (fn this.setSelectedTab tab)}} class="showcase-tabs-item {{if tab.active "active"}}">
+    <span 
+      class="showcase-tabs-item {{if tab.active "active"}}"
+      role="button" 
+      {{on "click" (fn this.setSelectedTab tab)}} 
+    >
       <Showcase::SIcon @icon="code"/> {{tab.title}}
     </span>
   {{/each}}

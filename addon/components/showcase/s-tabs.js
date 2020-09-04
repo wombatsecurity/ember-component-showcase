@@ -2,13 +2,18 @@ import { camelize } from '@ember/string';
 import { A } from '@ember/array';
 import { action, set } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
+import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 
 export default class SampleTabs extends Component {
   sourceId = null;
   includeSource = false;
 
+  @tracked _tabs = null;
+
   get tabs() {
+    if (this._tabs) return this._tabs;
+
     const tabsInput = this.args.tabsInput;
     const elementId = guidFor(this);
     const tabs = A();
@@ -29,9 +34,22 @@ export default class SampleTabs extends Component {
 
   @action
   setSelectedTab(tabObject) {
+    const updatedTabs = [];
+
     this.tabs.forEach((tab) => {
-      if (tab) set(tab, "active", tab === tabObject ? !tab.active : false);
+      if (tab) {
+        set(
+          tab, 
+          "active", 
+          tab.src === tabObject.src 
+            ? !tab.active 
+            : false
+        );
+        updatedTabs.push(tab)
+      }
     });
+
+    this._tabs = [...updatedTabs];
   }
 }
 

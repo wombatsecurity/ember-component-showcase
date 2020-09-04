@@ -23,11 +23,13 @@
               <small class="sample-docs-api-type">
                 {{doc.type.name}}
 
+                {{!-- @required is not supported by documentation.js yet --}}
                 {{#if doc.required}}
                   <label>(required)</label>
                 {{/if}}
               </small>
 
+              {{!-- @default is not supported by documentation.js yet --}}
               {{#if doc.default}}
                 <small>- Default: {{doc.default}}</small>
               {{/if}}
@@ -42,9 +44,13 @@
                 </div>
               {{/if}}
 
-              {{!-- #each doc.examples as |example|}}
-                <Showcase::SSnippet @src={{example.content}} @title={{example.title}} @language={{example.language}} />
-              {{/each}} --}}
+              {{#each doc.examples as |example|}}
+                <Showcase::SSnippet 
+                  @src={{example.content}} 
+                  @title={{example.title}} 
+                  @language={{example.language}} 
+                />
+              {{/each}}
             </div>
           </li>
         {{/each}}

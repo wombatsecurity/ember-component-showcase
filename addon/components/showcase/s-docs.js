@@ -4,6 +4,29 @@ import { inject as service } from '@ember/service';
 export default class SampleDocComponent extends  Component {
   @service documentation;
 
+  exampleLanguageRegex = new RegExp('^{(.*)}\\n(\\s*[.|\\n|\\W|\\w]*)');
+
+  parseExample(exampleSet) {
+    let examples = [];
+
+    for (let exampleContent of exampleSet) {
+      let example = {
+        language: 'JavaScript',
+        content: exampleContent.description,
+        title: 'Show Example'
+      };
+
+      let regexMatch = exampleContent.description.trim().match(this.exampleLanguageRegex);
+      if (regexMatch && regexMatch[1] && regexMatch[2]) {
+        example.language = regexMatch[1];
+        example.content = regexMatch[2];
+      }
+
+      examples.push(example);
+    }
+    return examples.length > 0 ? examples : null;
+  }
+
 	get classDocs() {
     let className = this.args.api;
     const docs = this.documentation.getClass(className);
@@ -20,6 +43,7 @@ export default class SampleDocComponent extends  Component {
         inst.github = docs.github;
         inst.file = inst.context.file.slice(inst.context.file.indexOf('addon/'));
         inst.line = inst.context.loc.start.line;
+        if (inst.examples) inst.examples = this.parseExample(inst.examples);
       });
 
       // Done modifying
