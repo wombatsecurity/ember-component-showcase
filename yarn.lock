@@ -7196,7 +7196,7 @@ doctrine@^3.0.0:
 
 "documentation@github:mastastealth/documentation#bump/deps":
   version "13.1.0"
-  resolved "https://codeload.github.com/mastastealth/documentation/tar.gz/eb61de1a9ca2d913370c8390a18474427d35bc75"
+  resolved "https://codeload.github.com/mastastealth/documentation/tar.gz/bf769eb4cb04ba126e417fb0ce8726f9aaf400fe"
   dependencies:
     "@babel/core" "^7.11.6"
     "@babel/generator" "^7.11.6"
@@ -7254,7 +7254,7 @@ doctrine@^3.0.0:
     resolve "^1.8.1"
     stream-array "^1.1.2"
     strip-json-comments "^2.0.1"
-    tiny-lr "^1.1.0"
+    tiny-lr "^2.0.0"
     unist-builder "^1.0.2"
     unist-util-visit "^1.3.0"
     vfile "^4.0.0"
@@ -8907,6 +8907,13 @@ fastq@^1.6.0:
   integrity sha512-jmxqQ3Z/nXoeyDmWAzF9kH1aGZSis6e/SbfPmJpUnyZ0ogr6iscHQaml4wsEepEWSdtmpy+eVXmCRIMpxaXqOA==
   dependencies:
     reusify "^1.0.0"
+
+faye-websocket@^0.11.3:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.11.3.tgz#5c0e9a8968e8912c286639fde977a8b209f2508e"
+  integrity sha512-D2y4bovYpzziGgbHYtGCMjlJM36vAl/y+xUyn1C+FVx8szd1E+86KwVw6XvYSzOP8iMpm1X0I4xJD+QtUb36OA==
+  dependencies:
+    websocket-driver ">=0.5.1"
 
 faye-websocket@~0.10.0:
   version "0.10.0"
@@ -10957,6 +10964,11 @@ livereload-js@^2.3.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-2.4.0.tgz#447c31cf1ea9ab52fc20db615c5ddf678f78009c"
   integrity sha512-XPQH8Z2GDP/Hwz2PCDrh2mth4yFejwA1OZ/81Ti3LgKyhDcEjsSsqFWZojHG0va/duGd+WyosY7eXLDoOyqcPw==
+
+livereload-js@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-3.3.1.tgz#61f887468086762e61fb2987412cf9d1dda99202"
+  integrity sha512-CBu1gTEfzVhlOK1WASKAAJ9Qx1fHECTq0SUB67sfxwQssopTyvzqTlgl+c0h9pZ6V+Fzd2rc510ppuNusg9teQ==
 
 load-json-file@^4.0.0:
   version "4.0.0"
@@ -14586,7 +14598,7 @@ tiny-emitter@^2.0.0:
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
   integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
-tiny-lr@^1.1.0, tiny-lr@^1.1.1:
+tiny-lr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/tiny-lr/-/tiny-lr-1.1.1.tgz#9fa547412f238fedb068ee295af8b682c98b2aab"
   integrity sha512-44yhA3tsaRoMOjQQ+5v5mVdqef+kH6Qze9jTpqtVufgYjYt08zyZAwNwwVBj3i1rJMnR52IxOW0LK0vBzgAkuA==
@@ -14595,6 +14607,18 @@ tiny-lr@^1.1.0, tiny-lr@^1.1.1:
     debug "^3.1.0"
     faye-websocket "~0.10.0"
     livereload-js "^2.3.0"
+    object-assign "^4.1.0"
+    qs "^6.4.0"
+
+tiny-lr@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tiny-lr/-/tiny-lr-2.0.0.tgz#863659d7ce1ed201a117d8197d7f8b9a27bdc085"
+  integrity sha512-f6nh0VMRvhGx4KCeK1lQ/jaL0Zdb5WdR+Jk8q9OSUQnaSDxAEGH1fgqLZ+cMl5EW3F2MGnCsalBO1IsnnogW1Q==
+  dependencies:
+    body "^5.1.0"
+    debug "^3.1.0"
+    faye-websocket "^0.11.3"
+    livereload-js "^3.3.1"
     object-assign "^4.1.0"
     qs "^6.4.0"
 
